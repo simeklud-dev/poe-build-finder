@@ -1,5 +1,6 @@
 from pathlib import Path
 
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 # apps/api/app/config.py -> repo root is three levels up
@@ -8,6 +9,26 @@ REPO_ROOT_ENV_FILE = Path(__file__).resolve().parents[3] / ".env"
 
 class Settings(BaseSettings):
     database_url: str = "postgresql+psycopg://poe:poe@localhost:5432/poe_build_finder"
+
+    # Railway (a další hostingy) dávají DATABASE_URL bez '+psycopg' driveru — SQLAlchemy
+    # ho ale vyžaduje. Bez tohohle by šlo o ruční úpravu proměnné na hostingu při každém
+    # nasazení; takhle funguje surová platformní DATABASE_URL beze změny.
+    @field_validator("database_url")
+    @classmethod
+    def normalize_database_url(cls, v: str) -> str:
+        if v.startswith("postgresql://"):
+            return v.replace("postgresql://", "postgresql+psycopg://", 1)
+        if v.startswith("postgres://"):
+            return v.replace("postgres://", "postgresql+psycopg://", 1)
+        return v
+
+    # CORS — čárkou oddělený seznam povolených originů frontendu. Lokálně jen dev
+    # server; na hostingu sem přidej produkční URL frontendu (ZMĚŇ/DOPLŇ v .env).
+    cors_origins: str = "http://localhost:3000"
+
+    @property
+    def cors_origins_list(self) -> list[str]:
+        return [origin.strip() for origin in self.cors_origins.split(",") if origin.strip()]
 
     # admin (pre-moderation) — single shared admin account, no user accounts yet (fáze 2)
     admin_username: str = "admin"
