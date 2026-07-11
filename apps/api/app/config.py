@@ -3,8 +3,13 @@ from pathlib import Path
 from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-# apps/api/app/config.py -> repo root is three levels up
-REPO_ROOT_ENV_FILE = Path(__file__).resolve().parents[3] / ".env"
+# Lokálně (celý monorepo pohromadě) je config.py na apps/api/app/config.py, takže
+# kořen repa je o 3 úrovně výš. Na hostingu (Railway apod.), kde bývá Root Directory
+# nastavený rovnou na apps/api, tahle hlubší struktura neexistuje — v tom případě
+# žádný .env soubor nenačítáme a spoléháme čistě na proměnné prostředí z UI hostingu.
+_here = Path(__file__).resolve()
+_repo_root = _here.parents[3] if len(_here.parents) > 3 else None
+REPO_ROOT_ENV_FILE = (_repo_root / ".env") if _repo_root else None
 
 
 class Settings(BaseSettings):
@@ -56,7 +61,7 @@ class Settings(BaseSettings):
     auth_rate_limit_per_hour: int = 10
 
     model_config = SettingsConfigDict(
-        env_file=str(REPO_ROOT_ENV_FILE),
+        env_file=str(REPO_ROOT_ENV_FILE) if REPO_ROOT_ENV_FILE else None,
         env_file_encoding="utf-8",
         extra="ignore",
     )
