@@ -31,6 +31,7 @@ def _new_matches_count(db: Session, saved_filter: SavedFilter) -> int:
         main_skill=params.get("main_skill"),
         league_patch=params.get("league_patch"),
         tags=params.get("tags") or [],
+        author=params.get("author"),
     )
     conditions.append(Build.indexed_at > saved_filter.last_checked_at)
     return db.scalar(select(func.count()).select_from(Build).where(*conditions)) or 0

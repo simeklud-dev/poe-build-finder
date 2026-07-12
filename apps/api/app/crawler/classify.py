@@ -79,6 +79,38 @@ LEAGUE_PATCH_RE = re.compile(r"\b[0-3]\.\d{1,2}\b")
 BUILD_HINT_RE = re.compile(r"\b(build|guide|league\s*start|pob|ascendancy)\b", re.IGNORECASE)
 BUILD_FLAIRS = {"build showcase", "guide", "build", "showcase"}
 
+# YouTube search nemá způsob, jak omezit výsledky jen na jednu hru — dotaz
+# "Path of Exile build guide" (mířený na poe1) běžně vrátí i videa o PoE2, protože
+# název "Path of Exile 2" obsahuje "Path of Exile" jako podřetězec a tvůrci obsahu
+# běžně tagují videa hashtagy typu "#POE2". Proto se hra, zjištěná z hledacího
+# dotazu, ještě ověřuje/přebíjí podle skutečného textu videa (title+description).
+POE2_SIGNAL_RE = re.compile(
+    r"\bpoe\s*-?\s*2\b|\bpath\s+of\s+exile\s*2\b|#pathofexile2|\bpoe2\b",
+    re.IGNORECASE,
+)
+POE1_SIGNAL_RE = re.compile(
+    r"\bpoe\s*-?\s*1\b|\bpath\s+of\s+exile\s*1\b|#pathofexile1(?!\d)",
+    re.IGNORECASE,
+)
+
+
+def detect_game_from_text(text: str, fallback: str) -> str:
+    """Zkusí z volného textu (title+description) rozpoznat, jestli jde o PoE1 nebo
+    PoE2 podle explicitní zmínky ("PoE2", "Path of Exile 2", hashtagy). Když je
+    zmíněná jen jedna z her, vrátí ji (i kdyby to bylo v rozporu s `fallback`) —
+    explicitní zmínka v textu je spolehlivější signál než to, na jaký dotaz video
+    zareagovalo. Když je zmíněné obojí nebo nic, použije se `fallback` (hra, pro
+    kterou byl vyhledávací dotaz sestavený)."""
+
+    has_poe2 = bool(POE2_SIGNAL_RE.search(text))
+    has_poe1 = bool(POE1_SIGNAL_RE.search(text))
+
+    if has_poe2 and not has_poe1:
+        return "poe2"
+    if has_poe1 and not has_poe2:
+        return "poe1"
+    return fallback
+
 
 def _find_keyword(text: str, keywords: list[str]) -> str | None:
     for kw in keywords:

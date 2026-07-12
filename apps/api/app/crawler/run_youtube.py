@@ -15,8 +15,12 @@ from app.db import SessionLocal
 
 # (hra, vyhledávací dotaz) dvojice — SPEC.md sekce 4: "Search dle klíčových slov"
 DEFAULT_SEARCH_QUERIES: list[tuple[str, str]] = [
-    ("poe1", "Path of Exile build guide"),
-    ("poe1", "Path of Exile league starter build"),
+    # "-poe2"/"-\"path of exile 2\"" jen omezuje počet PoE2 videí v poe1 dotazech
+    # (YouTube search podporuje "-" jako vyloučení) — skutečná hra se navíc ještě
+    # ověřuje z textu videa v youtube_ingest.py (detect_game_from_text), protože
+    # samotné vyloučení ve full-text search není spolehlivé.
+    ("poe1", 'Path of Exile build guide -poe2 -"path of exile 2"'),
+    ("poe1", 'Path of Exile league starter build -poe2 -"path of exile 2"'),
     ("poe2", "Path of Exile 2 build guide"),
 ]
 VIDEOS_PER_QUERY = 25

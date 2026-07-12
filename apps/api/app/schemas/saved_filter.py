@@ -15,6 +15,7 @@ class SavedFilterCreateRequest(BaseModel):
     main_skill: Optional[str] = None
     league_patch: Optional[str] = None
     tags: list[str] = Field(default_factory=list)
+    author: Optional[str] = None
 
     model_config = {"populate_by_name": True}
 

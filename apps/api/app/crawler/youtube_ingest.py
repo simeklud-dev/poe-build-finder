@@ -4,7 +4,7 @@ from datetime import datetime
 
 from sqlalchemy.orm import Session
 
-from app.crawler.classify import classify_text, looks_like_build_post
+from app.crawler.classify import classify_text, detect_game_from_text, looks_like_build_post
 from app.crawler.common import build_already_exists, enrich_with_inline_pob_code, save_build, short_description
 from app.crawler.youtube_client import YouTubeVideo
 from app.models.build import Build
@@ -34,7 +34,8 @@ def ingest_youtube_videos(db: Session, videos: list[YouTubeVideo], game: str) ->
             continue
 
         combined_text = f"{video.title}\n{video.description}"
-        classification = classify_text(game, combined_text)
+        actual_game = detect_game_from_text(combined_text, fallback=game)
+        classification = classify_text(actual_game, combined_text)
         enriched = enrich_with_inline_pob_code(combined_text, classification)
 
         build = Build(
@@ -45,7 +46,7 @@ def ingest_youtube_videos(db: Session, videos: list[YouTubeVideo], game: str) ->
             source_id=video.id,
             author=video.channel_title,
             moderation_status="approved",  # automaticky nalezené buildy jsou approved rovnou (sekce 11)
-            game=game,
+            game=actual_game,
             class_=enriched.class_,
             ascendancy=enriched.ascendancy,
             main_skill=enriched.main_skill,

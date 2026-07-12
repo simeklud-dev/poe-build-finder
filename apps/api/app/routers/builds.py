@@ -99,6 +99,7 @@ def list_builds(
     source: Optional[str] = None,
     class_: Optional[str] = Query(default=None, alias="class"),
     tags: list[str] = Query(default_factory=list),
+    author: Optional[str] = Query(default=None, description="Content creator / autor (částečná shoda)"),
     sort: str = Query(default="date"),
     page: int = Query(default=1, ge=1),
     page_size: int = Query(default=20, ge=1, le=100),
@@ -117,6 +118,7 @@ def list_builds(
         main_skill=main_skill,
         league_patch=league_patch,
         tags=tags,
+        author=author,
     )
 
     total = db.scalar(select(func.count()).select_from(Build).where(*conditions))

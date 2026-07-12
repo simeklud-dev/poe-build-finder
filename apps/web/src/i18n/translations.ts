@@ -22,6 +22,7 @@ export interface Dictionary {
     searchPlaceholder: string;
     classPlaceholder: string;
     ascendancyPlaceholder: string;
+    creatorPlaceholder: string;
     mainSkillPlaceholder: string;
     leaguePlaceholder: string;
     tagsPlaceholder: string;
@@ -175,6 +176,7 @@ const en: Dictionary = {
     searchPlaceholder: "Search title and description...",
     classPlaceholder: "Class",
     ascendancyPlaceholder: "Ascendancy",
+    creatorPlaceholder: "Content creator (e.g. Zizaran)",
     mainSkillPlaceholder: "Main skill",
     leaguePlaceholder: "League / patch",
     tagsPlaceholder: "Tags (comma separated)",
@@ -339,6 +341,7 @@ const cs: Dictionary = {
     searchPlaceholder: "Hledat v názvu a popisu...",
     classPlaceholder: "Class",
     ascendancyPlaceholder: "Ascendancy",
+    creatorPlaceholder: "Content creator (např. Zizaran)",
     mainSkillPlaceholder: "Hlavní skill",
     leaguePlaceholder: "Liga / patch",
     tagsPlaceholder: "Tagy (odděl čárkou)",
@@ -508,6 +511,7 @@ const pl: Dictionary = {
     searchPlaceholder: "Szukaj w tytule i opisie...",
     classPlaceholder: "Klasa",
     ascendancyPlaceholder: "Ascendancja",
+    creatorPlaceholder: "Twórca treści (np. Zizaran)",
     mainSkillPlaceholder: "Główna umiejętność",
     leaguePlaceholder: "Liga / patch",
     tagsPlaceholder: "Tagi (oddziel przecinkiem)",
@@ -677,6 +681,7 @@ const ru: Dictionary = {
     searchPlaceholder: "Поиск по названию и описанию...",
     classPlaceholder: "Класс",
     ascendancyPlaceholder: "Асцендант",
+    creatorPlaceholder: "Автор контента (напр. Zizaran)",
     mainSkillPlaceholder: "Основной навык",
     leaguePlaceholder: "Лига / патч",
     tagsPlaceholder: "Теги (через запятую)",
@@ -840,6 +845,7 @@ const de: Dictionary = {
     searchPlaceholder: "Titel und Beschreibung durchsuchen...",
     classPlaceholder: "Klasse",
     ascendancyPlaceholder: "Aszendenz",
+    creatorPlaceholder: "Content Creator (z. B. Zizaran)",
     mainSkillPlaceholder: "Hauptfähigkeit",
     leaguePlaceholder: "Liga / Patch",
     tagsPlaceholder: "Tags (kommagetrennt)",

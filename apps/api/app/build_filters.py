@@ -21,6 +21,7 @@ def build_filter_conditions(
     main_skill: Optional[str] = None,
     league_patch: Optional[str] = None,
     tags: Optional[list[str]] = None,
+    author: Optional[str] = None,
 ) -> tuple[list, object | None]:
     """Vrací (podmínky, ts_query). `ts_query` je None, pokud `q` není zadané —
     volající ho může znovupoužít pro řazení podle relevance."""
@@ -40,6 +41,10 @@ def build_filter_conditions(
         conditions.append(func.lower(Build.league_patch) == league_patch.lower())
     if tags:
         conditions.append(Build.tags.overlap(tags))
+    if author:
+        # ILIKE (částečná shoda, case-insensitive) — tvůrci obsahu se často píšou
+        # s drobnými variacemi (mezery, velká/malá písmena, přezdívka vs. celý název kanálu)
+        conditions.append(Build.author.ilike(f"%{author.strip()}%"))
 
     ts_query = None
     cleaned_q = q.strip() if q else None

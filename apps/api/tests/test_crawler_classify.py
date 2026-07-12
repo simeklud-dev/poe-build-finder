@@ -1,4 +1,9 @@
-from app.crawler.classify import classify_text, game_for_subreddit, looks_like_build_post
+from app.crawler.classify import (
+    classify_text,
+    detect_game_from_text,
+    game_for_subreddit,
+    looks_like_build_post,
+)
 
 
 def test_game_for_subreddit():
@@ -47,3 +52,28 @@ def test_classify_text_returns_none_when_nothing_matches():
     assert result.main_skill is None
     assert result.league_patch is None
     assert result.tags == []
+
+
+def test_detect_game_from_text_overrides_when_poe2_mentioned():
+    # regression test: YouTube search for a "poe1" query used to blindly tag every
+    # result as poe1, even when the video was clearly about PoE2 (e.g. "#POE2" in
+    # the title) — see run_youtube.py / youtube_ingest.py.
+    text = "End Game 1000 Div Build #POE2 #PathOfExile"
+    assert detect_game_from_text(text, fallback="poe1") == "poe2"
+
+
+def test_detect_game_from_text_keeps_fallback_when_only_poe1_signal():
+    text = "My Righteous Fire Juggernaut league starter build guide"
+    assert detect_game_from_text(text, fallback="poe1") == "poe1"
+
+
+def test_detect_game_from_text_keeps_fallback_when_ambiguous():
+    # both explicitly mentioned -> trust the search query bucket
+    text = "Comparing PoE1 vs PoE2 endgame builds"
+    assert detect_game_from_text(text, fallback="poe1") == "poe1"
+    assert detect_game_from_text(text, fallback="poe2") == "poe2"
+
+
+def test_detect_game_from_text_explicit_poe1_mention():
+    text = "Path of Exile 1 is still great in 2026"
+    assert detect_game_from_text(text, fallback="poe2") == "poe1"

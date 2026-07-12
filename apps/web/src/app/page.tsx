@@ -19,6 +19,7 @@ export default function Home() {
   const [source, setSource] = useState("");
   const [buildClass, setBuildClass] = useState("");
   const [ascendancy, setAscendancy] = useState("");
+  const [creator, setCreator] = useState("");
   const [mainSkill, setMainSkill] = useState("");
   const [leaguePatch, setLeaguePatch] = useState("");
   const [tags, setTags] = useState("");
@@ -46,6 +47,7 @@ export default function Home() {
         if (source) params.set("source", source);
         if (buildClass) params.set("class", buildClass);
         if (ascendancy) params.set("ascendancy", ascendancy);
+        if (creator.trim()) params.set("author", creator.trim());
         if (mainSkill) params.set("main_skill", mainSkill);
         if (leaguePatch) params.set("league_patch", leaguePatch);
         tags
@@ -103,6 +105,7 @@ export default function Home() {
     if (source) payload.source = source;
     if (buildClass) payload.class = buildClass;
     if (ascendancy) payload.ascendancy = ascendancy;
+    if (creator.trim()) payload.author = creator.trim();
     if (mainSkill) payload.main_skill = mainSkill;
     if (leaguePatch) payload.league_patch = leaguePatch;
     const tagList = tags
@@ -176,6 +179,12 @@ export default function Home() {
                 value={ascendancy}
                 onChange={(e) => setAscendancy(e.target.value)}
                 placeholder={t.home.ascendancyPlaceholder}
+                className="input"
+              />
+              <input
+                value={creator}
+                onChange={(e) => setCreator(e.target.value)}
+                placeholder={t.home.creatorPlaceholder}
                 className="input"
               />
               <input

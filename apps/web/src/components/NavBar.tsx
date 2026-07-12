@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useAuth } from "@/lib/auth-context";
 import { useLocale } from "@/i18n/LocaleContext";
 import LanguageSwitcher from "./LanguageSwitcher";
@@ -15,7 +16,18 @@ export default function NavBar() {
       style={{ background: "rgba(8,7,10,0.6)", backdropFilter: "blur(6px)" }}
     >
       <nav className="mx-auto flex max-w-5xl items-center justify-between">
-        <Link href="/" className="font-semibold" style={{ color: "var(--accent-gold)" }}>
+        <Link
+          href="/"
+          className="flex items-center gap-2 font-semibold"
+          style={{ color: "var(--accent-gold)" }}
+        >
+          <Image
+            src="/images/poe/logo.png"
+            alt=""
+            width={28}
+            height={28}
+            priority
+          />
           {t.nav.brand}
         </Link>
         <div className="flex items-center gap-4 text-sm">
