@@ -39,6 +39,12 @@ export interface Dictionary {
     next: string;
     pageInfo: string; // {page}/{totalPages} ({total})
   };
+  news: {
+    title: string;
+    subtitle: string;
+    viewAll: string;
+    source: string;
+  };
   games: { all: string; poe1: string; poe2: string };
   sources: {
     all: string;
@@ -159,7 +165,8 @@ const en: Dictionary = {
     logout: "Sign out",
   },
   footer: {
-    disclaimer: "This site is not affiliated with or endorsed by Grinding Gear Games.",
+    disclaimer:
+      "This site is not affiliated with or endorsed by Grinding Gear Games.",
   },
   home: {
     title: "Find builds",
@@ -185,6 +192,13 @@ const en: Dictionary = {
     next: "Next",
     pageInfo: "Page {page} of {totalPages} ({total} builds)",
   },
+  news: {
+    title: "PoE News",
+    subtitle:
+      "Latest official announcements from Path of Exile and Path of Exile 2.",
+    viewAll: "View all news",
+    source: "Official news",
+  },
   games: { all: "All games", poe1: "Path of Exile 1", poe2: "Path of Exile 2" },
   sources: {
     all: "All sources",
@@ -195,7 +209,11 @@ const en: Dictionary = {
     poe_ninja: "poe.ninja",
     community: "Community",
   },
-  sorts: { date: "Newest", popularity: "Most popular", relevance: "Relevance (requires search text)" },
+  sorts: {
+    date: "Newest",
+    popularity: "Most popular",
+    relevance: "Relevance (requires search text)",
+  },
   meta: {
     title: "Meta overview",
     subtitle: "The most popular approved builds by league/patch.",
@@ -228,7 +246,8 @@ const en: Dictionary = {
     myFavorites: "My favorite builds →",
     savedFilters: "Saved filters",
     loading: "Loading...",
-    noFilters: 'Nothing here yet — save a filter on the home page with the "Save filter" button.',
+    noFilters:
+      'Nothing here yet — save a filter on the home page with the "Save filter" button.',
     newMatches: "new",
     markSeen: "Mark as seen",
     delete: "Delete",
@@ -263,7 +282,8 @@ const en: Dictionary = {
     subtitle:
       "Paste a link to your build (PoB export, YouTube video, Reddit post, custom guide). This form is anonymous — the contact field below is optional. The build appears publicly only after manual approval.",
     success: "Thanks! Your build was submitted and is awaiting approval.",
-    rateLimited: "Too many builds were submitted from this address, please try again later.",
+    rateLimited:
+      "Too many builds were submitted from this address, please try again later.",
     genericError: "Something went wrong, please try again.",
     connectionError: "Couldn't connect to the server.",
     titleLabel: "Build title",
@@ -278,7 +298,8 @@ const en: Dictionary = {
     tagsPlaceholder: "League Starter, Bossing, Budget",
     pobLinkLabel: "Link to PoB export (optional)",
     pobCodeLabel: "PoB export code (optional, for automatic stats)",
-    pobCodePlaceholder: "Paste the code from Path of Building → Export Build → Generate & copy code…",
+    pobCodePlaceholder:
+      "Paste the code from Path of Building → Export Build → Generate & copy code…",
     pobCodeHint:
       "Don't paste a link here — just the copied code itself. It's used to auto-fill class/ascendancy/main skill and DPS/Life/EHP, if provided.",
     authorLabel: "Build author (optional)",
@@ -307,7 +328,10 @@ const cs: Dictionary = {
     login: "Přihlásit",
     logout: "Odhlásit",
   },
-  footer: { disclaimer: "Tento web není přidružen ke Grinding Gear Games ani jimi podporován." },
+  footer: {
+    disclaimer:
+      "Tento web není přidružen ke Grinding Gear Games ani jimi podporován.",
+  },
   home: {
     title: "Hledat buildy",
     subtitle:
@@ -325,14 +349,26 @@ const cs: Dictionary = {
     saveFilterError: "Uložení filtru se nepovedlo.",
     loadError: "Nepodařilo se načíst buildy.",
     loading: "Načítám...",
-    noResults: "Žádné buildy neodpovídají zadaným filtrům. Zkus je uvolnit, nebo",
+    noResults:
+      "Žádné buildy neodpovídají zadaným filtrům. Zkus je uvolnit, nebo",
     addYourOwn: "přidej svůj vlastní",
     notFoundHint: "Nenašel jsi, co hledáš? Zkus hledat i na",
     prev: "Předchozí",
     next: "Další",
     pageInfo: "Strana {page} z {totalPages} ({total} buildů)",
   },
-  games: { all: "Všechny hry", poe1: "Path of Exile 1", poe2: "Path of Exile 2" },
+  news: {
+    title: "PoE novinky",
+    subtitle:
+      "Nejnovější oficiální oznámení z Path of Exile a Path of Exile 2.",
+    viewAll: "Zobrazit všechny novinky",
+    source: "Oficiální novinky",
+  },
+  games: {
+    all: "Všechny hry",
+    poe1: "Path of Exile 1",
+    poe2: "Path of Exile 2",
+  },
   sources: {
     all: "Všechny zdroje",
     reddit: "Reddit",
@@ -342,7 +378,11 @@ const cs: Dictionary = {
     poe_ninja: "poe.ninja",
     community: "Komunita",
   },
-  sorts: { date: "Nejnovější", popularity: "Nejpopulárnější", relevance: "Relevance (vyžaduje hledaný výraz)" },
+  sorts: {
+    date: "Nejnovější",
+    popularity: "Nejpopulárnější",
+    relevance: "Relevance (vyžaduje hledaný výraz)",
+  },
   meta: {
     title: "Meta přehled",
     subtitle: "Nejpopulárnější schválené buildy podle ligy/patche.",
@@ -375,7 +415,8 @@ const cs: Dictionary = {
     myFavorites: "Moje oblíbené buildy →",
     savedFilters: "Uložené filtry",
     loading: "Načítám...",
-    noFilters: 'Zatím žádné — ulož si filtr na hlavní stránce tlačítkem "Uložit filtr".',
+    noFilters:
+      'Zatím žádné — ulož si filtr na hlavní stránce tlačítkem "Uložit filtr".',
     newMatches: "nových",
     markSeen: "Označit jako viděné",
     delete: "Smazat",
@@ -410,7 +451,8 @@ const cs: Dictionary = {
     subtitle:
       "Vlož odkaz na svůj build (PoB export, YouTube video, reddit post, vlastní guide). Formulář je anonymní — kontakt níže je nepovinný. Build se zobrazí veřejně až po ručním schválení.",
     success: "Díky! Build byl odeslán a čeká na schválení.",
-    rateLimited: "Z této adresy bylo odesláno příliš mnoho buildů, zkus to prosím později.",
+    rateLimited:
+      "Z této adresy bylo odesláno příliš mnoho buildů, zkus to prosím později.",
     genericError: "Něco se nepovedlo, zkus to prosím znovu.",
     connectionError: "Nepodařilo se spojit se serverem.",
     titleLabel: "Název buildu",
@@ -425,7 +467,8 @@ const cs: Dictionary = {
     tagsPlaceholder: "League Starter, Bossing, Budget",
     pobLinkLabel: "Odkaz na PoB export (nepovinné)",
     pobCodeLabel: "PoB export kód (nepovinné, pro automatické staty)",
-    pobCodePlaceholder: "Vlož kód z Path of Building → Export Build → Generate & copy code…",
+    pobCodePlaceholder:
+      "Vlož kód z Path of Building → Export Build → Generate & copy code…",
     pobCodeHint:
       "Nevkládej sem odkaz — jen samotný zkopírovaný kód. Použije se k automatickému doplnění class/ascendancy/hlavního skillu a DPS/Life/EHP, pokud ho vložíš.",
     authorLabel: "Autor buildu (nepovinné)",
@@ -454,7 +497,10 @@ const pl: Dictionary = {
     login: "Zaloguj się",
     logout: "Wyloguj się",
   },
-  footer: { disclaimer: "Ta strona nie jest powiązana z Grinding Gear Games ani przez nich wspierana." },
+  footer: {
+    disclaimer:
+      "Ta strona nie jest powiązana z Grinding Gear Games ani przez nich wspierana.",
+  },
   home: {
     title: "Szukaj buildów",
     subtitle:
@@ -479,7 +525,18 @@ const pl: Dictionary = {
     next: "Następna",
     pageInfo: "Strona {page} z {totalPages} ({total} buildów)",
   },
-  games: { all: "Wszystkie gry", poe1: "Path of Exile 1", poe2: "Path of Exile 2" },
+  news: {
+    title: "Nowości PoE",
+    subtitle:
+      "Najnowsze oficjalne ogłoszenia z Path of Exile i Path of Exile 2.",
+    viewAll: "Zobacz wszystkie nowości",
+    source: "Oficjalne nowości",
+  },
+  games: {
+    all: "Wszystkie gry",
+    poe1: "Path of Exile 1",
+    poe2: "Path of Exile 2",
+  },
   sources: {
     all: "Wszystkie źródła",
     reddit: "Reddit",
@@ -489,7 +546,11 @@ const pl: Dictionary = {
     poe_ninja: "poe.ninja",
     community: "Społeczność",
   },
-  sorts: { date: "Najnowsze", popularity: "Najpopularniejsze", relevance: "Trafność (wymaga frazy)" },
+  sorts: {
+    date: "Najnowsze",
+    popularity: "Najpopularniejsze",
+    relevance: "Trafność (wymaga frazy)",
+  },
   meta: {
     title: "Przegląd meta",
     subtitle: "Najpopularniejsze zatwierdzone buildy według ligi/patcha.",
@@ -522,7 +583,8 @@ const pl: Dictionary = {
     myFavorites: "Moje ulubione buildy →",
     savedFilters: "Zapisane filtry",
     loading: "Ładowanie...",
-    noFilters: 'Jeszcze nic tu nie ma — zapisz filtr na stronie głównej przyciskiem "Zapisz filtr".',
+    noFilters:
+      'Jeszcze nic tu nie ma — zapisz filtr na stronie głównej przyciskiem "Zapisz filtr".',
     newMatches: "nowych",
     markSeen: "Oznacz jako obejrzane",
     delete: "Usuń",
@@ -557,7 +619,8 @@ const pl: Dictionary = {
     subtitle:
       "Wklej link do swojego builda (eksport PoB, film YouTube, post z Reddita, własny poradnik). Formularz jest anonimowy — kontakt poniżej jest opcjonalny. Build pojawi się publicznie dopiero po ręcznym zatwierdzeniu.",
     success: "Dzięki! Build został wysłany i czeka na zatwierdzenie.",
-    rateLimited: "Z tego adresu wysłano zbyt wiele buildów, spróbuj ponownie później.",
+    rateLimited:
+      "Z tego adresu wysłano zbyt wiele buildów, spróbuj ponownie później.",
     genericError: "Coś poszło nie tak, spróbuj ponownie.",
     connectionError: "Nie udało się połączyć z serwerem.",
     titleLabel: "Tytuł builda",
@@ -571,8 +634,10 @@ const pl: Dictionary = {
     tagsLabel: "Tagi (oddziel przecinkiem)",
     tagsPlaceholder: "League Starter, Bossing, Budget",
     pobLinkLabel: "Link do eksportu PoB (opcjonalnie)",
-    pobCodeLabel: "Kod eksportu PoB (opcjonalnie, dla automatycznych statystyk)",
-    pobCodePlaceholder: "Wklej kod z Path of Building → Export Build → Generate & copy code…",
+    pobCodeLabel:
+      "Kod eksportu PoB (opcjonalnie, dla automatycznych statystyk)",
+    pobCodePlaceholder:
+      "Wklej kod z Path of Building → Export Build → Generate & copy code…",
     pobCodeHint:
       "Nie wklejaj tu linku — tylko sam skopiowany kod. Posłuży do automatycznego uzupełnienia klasy/ascendancji/głównej umiejętności oraz DPS/Life/EHP, jeśli go podasz.",
     authorLabel: "Autor builda (opcjonalnie)",
@@ -601,7 +666,10 @@ const ru: Dictionary = {
     login: "Войти",
     logout: "Выйти",
   },
-  footer: { disclaimer: "Этот сайт не связан с Grinding Gear Games и не поддерживается ими." },
+  footer: {
+    disclaimer:
+      "Этот сайт не связан с Grinding Gear Games и не поддерживается ими.",
+  },
   home: {
     title: "Поиск билдов",
     subtitle:
@@ -626,6 +694,12 @@ const ru: Dictionary = {
     next: "Далее",
     pageInfo: "Страница {page} из {totalPages} ({total} билдов)",
   },
+  news: {
+    title: "Новости PoE",
+    subtitle: "Последние официальные анонсы Path of Exile и Path of Exile 2.",
+    viewAll: "Все новости",
+    source: "Официальные новости",
+  },
   games: { all: "Все игры", poe1: "Path of Exile 1", poe2: "Path of Exile 2" },
   sources: {
     all: "Все источники",
@@ -636,7 +710,11 @@ const ru: Dictionary = {
     poe_ninja: "poe.ninja",
     community: "Сообщество",
   },
-  sorts: { date: "Новые", popularity: "Популярные", relevance: "Релевантность (нужен текст поиска)" },
+  sorts: {
+    date: "Новые",
+    popularity: "Популярные",
+    relevance: "Релевантность (нужен текст поиска)",
+  },
   meta: {
     title: "Обзор меты",
     subtitle: "Самые популярные одобренные билды по лиге/патчу.",
@@ -669,7 +747,8 @@ const ru: Dictionary = {
     myFavorites: "Мои избранные билды →",
     savedFilters: "Сохранённые фильтры",
     loading: "Загрузка...",
-    noFilters: 'Пока пусто — сохрани фильтр на главной странице кнопкой «Сохранить фильтр».',
+    noFilters:
+      "Пока пусто — сохрани фильтр на главной странице кнопкой «Сохранить фильтр».",
     newMatches: "новых",
     markSeen: "Отметить как просмотренное",
     delete: "Удалить",
@@ -704,7 +783,8 @@ const ru: Dictionary = {
     subtitle:
       "Вставь ссылку на свой билд (экспорт PoB, видео на YouTube, пост на Reddit, собственный гайд). Форма анонимная — контакт ниже необязателен. Билд появится публично только после ручного одобрения.",
     success: "Спасибо! Билд отправлен и ожидает одобрения.",
-    rateLimited: "С этого адреса отправлено слишком много билдов, попробуй позже.",
+    rateLimited:
+      "С этого адреса отправлено слишком много билдов, попробуй позже.",
     genericError: "Что-то пошло не так, попробуй ещё раз.",
     connectionError: "Не удалось подключиться к серверу.",
     titleLabel: "Название билда",
@@ -719,7 +799,8 @@ const ru: Dictionary = {
     tagsPlaceholder: "League Starter, Bossing, Budget",
     pobLinkLabel: "Ссылка на экспорт PoB (необязательно)",
     pobCodeLabel: "Код экспорта PoB (необязательно, для автостатистики)",
-    pobCodePlaceholder: "Вставь код из Path of Building → Export Build → Generate & copy code…",
+    pobCodePlaceholder:
+      "Вставь код из Path of Building → Export Build → Generate & copy code…",
     pobCodeHint:
       "Не вставляй сюда ссылку — только сам скопированный код. Он используется для автозаполнения класса/асценданта/основного навыка и DPS/Life/EHP, если указан.",
     authorLabel: "Автор билда (необязательно)",
@@ -748,7 +829,10 @@ const de: Dictionary = {
     login: "Anmelden",
     logout: "Abmelden",
   },
-  footer: { disclaimer: "Diese Seite steht in keiner Verbindung zu Grinding Gear Games und wird nicht von ihnen unterstützt." },
+  footer: {
+    disclaimer:
+      "Diese Seite steht in keiner Verbindung zu Grinding Gear Games und wird nicht von ihnen unterstützt.",
+  },
   home: {
     title: "Builds suchen",
     subtitle:
@@ -773,7 +857,18 @@ const de: Dictionary = {
     next: "Weiter",
     pageInfo: "Seite {page} von {totalPages} ({total} Builds)",
   },
-  games: { all: "Alle Spiele", poe1: "Path of Exile 1", poe2: "Path of Exile 2" },
+  news: {
+    title: "PoE-News",
+    subtitle:
+      "Die neuesten offiziellen Ankündigungen zu Path of Exile und Path of Exile 2.",
+    viewAll: "Alle News anzeigen",
+    source: "Offizielle News",
+  },
+  games: {
+    all: "Alle Spiele",
+    poe1: "Path of Exile 1",
+    poe2: "Path of Exile 2",
+  },
   sources: {
     all: "Alle Quellen",
     reddit: "Reddit",
@@ -783,7 +878,11 @@ const de: Dictionary = {
     poe_ninja: "poe.ninja",
     community: "Community",
   },
-  sorts: { date: "Neueste", popularity: "Beliebteste", relevance: "Relevanz (benötigt Suchtext)" },
+  sorts: {
+    date: "Neueste",
+    popularity: "Beliebteste",
+    relevance: "Relevanz (benötigt Suchtext)",
+  },
   meta: {
     title: "Meta-Übersicht",
     subtitle: "Die beliebtesten genehmigten Builds nach Liga/Patch.",
@@ -816,7 +915,8 @@ const de: Dictionary = {
     myFavorites: "Meine Lieblings-Builds →",
     savedFilters: "Gespeicherte Filter",
     loading: "Lade...",
-    noFilters: 'Noch nichts hier — speichere einen Filter auf der Startseite mit „Filter speichern“.',
+    noFilters:
+      "Noch nichts hier — speichere einen Filter auf der Startseite mit „Filter speichern“.",
     newMatches: "neu",
     markSeen: "Als gesehen markieren",
     delete: "Löschen",
@@ -851,7 +951,8 @@ const de: Dictionary = {
     subtitle:
       "Füge einen Link zu deinem Build ein (PoB-Export, YouTube-Video, Reddit-Post, eigener Guide). Das Formular ist anonym — der Kontakt unten ist optional. Der Build erscheint erst nach manueller Genehmigung öffentlich.",
     success: "Danke! Der Build wurde eingereicht und wartet auf Genehmigung.",
-    rateLimited: "Von dieser Adresse wurden zu viele Builds eingereicht, bitte versuche es später erneut.",
+    rateLimited:
+      "Von dieser Adresse wurden zu viele Builds eingereicht, bitte versuche es später erneut.",
     genericError: "Etwas ist schiefgelaufen, bitte versuche es erneut.",
     connectionError: "Verbindung zum Server fehlgeschlagen.",
     titleLabel: "Build-Titel",
@@ -866,7 +967,8 @@ const de: Dictionary = {
     tagsPlaceholder: "League Starter, Bossing, Budget",
     pobLinkLabel: "Link zum PoB-Export (optional)",
     pobCodeLabel: "PoB-Export-Code (optional, für automatische Statistiken)",
-    pobCodePlaceholder: "Code aus Path of Building → Export Build → Generate & copy code einfügen…",
+    pobCodePlaceholder:
+      "Code aus Path of Building → Export Build → Generate & copy code einfügen…",
     pobCodeHint:
       "Füge hier keinen Link ein — nur den kopierten Code selbst. Er wird verwendet, um Klasse/Aszendenz/Hauptfähigkeit sowie DPS/Life/EHP automatisch auszufüllen, falls angegeben.",
     authorLabel: "Build-Autor (optional)",
