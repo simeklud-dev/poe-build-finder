@@ -5,9 +5,11 @@ import Link from "next/link";
 import BuildCard from "@/components/BuildCard";
 import { API_URL, BuildCard as BuildCardType } from "@/lib/api";
 import { useAuth } from "@/lib/auth-context";
+import { useLocale } from "@/i18n/LocaleContext";
 
 export default function FavoritesPage() {
   const { user, token, loading: authLoading } = useAuth();
+  const { t } = useLocale();
   const [builds, setBuilds] = useState<BuildCardType[] | null>(null);
 
   useEffect(() => {
@@ -26,7 +28,7 @@ export default function FavoritesPage() {
   if (authLoading) {
     return (
       <main className="mx-auto max-w-5xl px-4 py-10">
-        <p className="text-sm text-neutral-500">Načítám...</p>
+        <p className="text-sm text-neutral-500">{t.favorites.loading}</p>
       </main>
     );
   }
@@ -35,9 +37,9 @@ export default function FavoritesPage() {
     return (
       <main className="mx-auto max-w-5xl px-4 py-10">
         <p className="text-sm text-neutral-500">
-          Pro zobrazení oblíbených buildů se{" "}
+          {t.favorites.loginPrompt}{" "}
           <Link href="/account" className="underline">
-            přihlas
+            {t.favorites.loginLink}
           </Link>
           .
         </p>
@@ -47,16 +49,16 @@ export default function FavoritesPage() {
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-10">
-      <h1 className="text-2xl font-semibold">Moje oblíbené buildy</h1>
+      <h1 className="text-2xl font-semibold">{t.favorites.title}</h1>
 
-      {builds === null && <p className="mt-4 text-sm text-neutral-500">Načítám...</p>}
+      {builds === null && <p className="mt-4 text-sm text-neutral-500">{t.favorites.loading}</p>}
       {builds?.length === 0 && (
         <p className="mt-4 text-sm text-neutral-500">
-          Zatím žádné —{" "}
+          {t.favorites.empty}{" "}
           <Link href="/" className="underline">
-            najdi si nějaký build
-          </Link>{" "}
-          a klikni na hvězdičku.
+            {t.favorites.findBuild}
+          </Link>
+          .
         </p>
       )}
 

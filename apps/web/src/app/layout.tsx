@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import NavBar from "@/components/NavBar";
+import Footer from "@/components/Footer";
 import EmberField from "@/components/EmberField";
 import { AuthProvider } from "@/lib/auth-context";
+import { LocaleProvider } from "@/i18n/LocaleContext";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -17,7 +19,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "PoE Build Finder",
-  description: "Meta-vyhledávač buildů pro Path of Exile 1 a 2",
+  description: "Meta search engine for Path of Exile 1 and 2 builds",
 };
 
 export default function RootLayout({
@@ -27,18 +29,18 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="cs"
+      lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <EmberField />
-        <AuthProvider>
-          <NavBar />
-          <div className="flex-1">{children}</div>
-        </AuthProvider>
-        <footer className="border-t px-4 py-6 text-center text-xs text-neutral-500 border-[color:var(--border-subtle)]">
-          Tento web není přidružen ke Grinding Gear Games ani jimi podporován.
-        </footer>
+        <LocaleProvider>
+          <AuthProvider>
+            <NavBar />
+            <div className="flex-1">{children}</div>
+          </AuthProvider>
+          <Footer />
+        </LocaleProvider>
       </body>
     </html>
   );

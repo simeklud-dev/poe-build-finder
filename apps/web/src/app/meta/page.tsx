@@ -3,9 +3,11 @@
 import { useEffect, useState } from "react";
 import BuildCard from "@/components/BuildCard";
 import { API_URL, BuildListResponse } from "@/lib/api";
-import { GAMES } from "@/lib/constants";
+import { useLocale } from "@/i18n/LocaleContext";
+import { gameOptions } from "@/i18n/options";
 
 export default function MetaPage() {
+  const { t } = useLocale();
   const [game, setGame] = useState("");
   const [leagues, setLeagues] = useState<string[]>([]);
   const [league, setLeague] = useState("");
@@ -38,14 +40,12 @@ export default function MetaPage() {
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-8">
-      <h1 className="text-2xl font-semibold">Meta přehled</h1>
-      <p className="mt-1 text-sm text-neutral-500">
-        Nejpopulárnější schválené buildy podle ligy/patche.
-      </p>
+      <h1 className="text-2xl font-semibold">{t.meta.title}</h1>
+      <p className="mt-1 text-sm text-neutral-500">{t.meta.subtitle}</p>
 
       <div className="mt-6 flex flex-wrap gap-3">
         <select value={game} onChange={(e) => setGame(e.target.value)} className="input w-auto">
-          {GAMES.map((g) => (
+          {gameOptions(t).map((g) => (
             <option key={g.value} value={g.value}>
               {g.label}
             </option>
@@ -57,7 +57,7 @@ export default function MetaPage() {
           className="input w-auto"
           disabled={leagues.length === 0}
         >
-          {leagues.length === 0 && <option value="">Žádná liga k dispozici</option>}
+          {leagues.length === 0 && <option value="">{t.meta.noLeague}</option>}
           {leagues.map((l) => (
             <option key={l} value={l}>
               {l}
@@ -67,9 +67,9 @@ export default function MetaPage() {
       </div>
 
       <div className="mt-8">
-        {loading && <p className="text-sm text-neutral-500">Načítám...</p>}
+        {loading && <p className="text-sm text-neutral-500">{t.meta.loading}</p>}
         {!loading && results?.items.length === 0 && (
-          <p className="text-sm text-neutral-500">Pro tuhle ligu zatím žádné buildy.</p>
+          <p className="text-sm text-neutral-500">{t.meta.noBuilds}</p>
         )}
         <ul className="flex flex-col gap-4">
           {results?.items.map((build) => <BuildCard key={build.id} build={build} />)}

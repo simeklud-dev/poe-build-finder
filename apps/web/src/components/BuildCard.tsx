@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import { API_URL, BuildCard as BuildCardType } from "@/lib/api";
-import { SOURCE_LABELS, formatStat } from "@/lib/constants";
+import { formatStat } from "@/lib/constants";
 import { useAuth } from "@/lib/auth-context";
+import { useLocale } from "@/i18n/LocaleContext";
 
 interface Props {
   build: BuildCardType;
@@ -13,6 +14,7 @@ interface Props {
 
 export default function BuildCard({ build, initiallyFavorited, onFavoriteChange }: Props) {
   const { token } = useAuth();
+  const { t, intlLocale } = useLocale();
   const [favorited, setFavorited] = useState(Boolean(initiallyFavorited));
   const [favoriteBusy, setFavoriteBusy] = useState(false);
   const [reportBusy, setReportBusy] = useState(false);
@@ -39,7 +41,7 @@ export default function BuildCard({ build, initiallyFavorited, onFavoriteChange 
 
   async function sendReport() {
     if (reportBusy || reportSent) return;
-    const reason = window.prompt("Proč tenhle build nahlašuješ? (nepovinné)") ?? "";
+    const reason = window.prompt(t.buildCard.reportPrompt) ?? "";
     setReportBusy(true);
     try {
       const response = await fetch(`${API_URL}/api/builds/${build.id}/report`, {
@@ -53,6 +55,8 @@ export default function BuildCard({ build, initiallyFavorited, onFavoriteChange 
     }
   }
 
+  const sourceLabel = t.sources[build.source as keyof typeof t.sources] ?? build.source;
+
   return (
     <li className="panel p-4">
       <div className="flex items-start justify-between gap-3">
@@ -60,7 +64,7 @@ export default function BuildCard({ build, initiallyFavorited, onFavoriteChange 
           href={build.source_url}
           target="_blank"
           rel="noreferrer"
-          className="font-medium text-blue-600 underline"
+          className="font-medium text-blue-400 underline"
         >
           {build.title}
         </a>
@@ -70,14 +74,14 @@ export default function BuildCard({ build, initiallyFavorited, onFavoriteChange 
               type="button"
               onClick={toggleFavorite}
               disabled={favoriteBusy}
-              title={favorited ? "Odebrat z oblíbených" : "Přidat do oblíbených"}
+              title={favorited ? t.buildCard.removeFavorite : t.buildCard.addFavorite}
               className="text-lg leading-none text-yellow-500 disabled:opacity-50"
             >
               {favorited ? "★" : "☆"}
             </button>
           )}
           {reportSent ? (
-            <span className="text-neutral-400">Nahlášeno</span>
+            <span className="text-neutral-400">{t.buildCard.reported}</span>
           ) : (
             <button
               type="button"
@@ -85,30 +89,32 @@ export default function BuildCard({ build, initiallyFavorited, onFavoriteChange 
               disabled={reportBusy}
               className="text-neutral-400 underline disabled:opacity-50"
             >
-              Nahlásit
+              {t.buildCard.report}
             </button>
           )}
         </div>
       </div>
       <p className="mt-1 text-sm text-neutral-500">
-        {SOURCE_LABELS[build.source] ?? build.source}
+        {sourceLabel}
         {build.author && ` · ${build.author}`} · {build.game} · {build.class ?? "?"} ·{" "}
         {build.ascendancy ?? "?"} · {build.main_skill ?? "?"}
         {build.league_patch && ` · ${build.league_patch}`}
       </p>
       {build.tags.length > 0 && (
-        <p className="mt-1 text-xs text-neutral-500">Tagy: {build.tags.join(", ")}</p>
+        <p className="mt-1 text-xs text-neutral-500">
+          {t.admin.tags}: {build.tags.join(", ")}
+        </p>
       )}
       {(build.stats_dps || build.stats_life || build.stats_ehp) && (
         <p className="mt-1 text-xs text-neutral-500">
-          {build.stats_dps && `DPS: ${formatStat(build.stats_dps)}`}
-          {build.stats_life && ` · Life: ${formatStat(build.stats_life)}`}
-          {build.stats_ehp && ` · EHP: ${formatStat(build.stats_ehp)}`}
+          {build.stats_dps && `DPS: ${formatStat(build.stats_dps, intlLocale)}`}
+          {build.stats_life && ` · Life: ${formatStat(build.stats_life, intlLocale)}`}
+          {build.stats_ehp && ` · EHP: ${formatStat(build.stats_ehp, intlLocale)}`}
         </p>
       )}
       {build.published_at && (
         <p className="mt-1 text-xs text-neutral-400">
-          {new Date(build.published_at).toLocaleDateString("cs-CZ")}
+          {new Date(build.published_at).toLocaleDateString(intlLocale)}
         </p>
       )}
     </li>

@@ -3,13 +3,15 @@
 import { useEffect, useState, FormEvent } from "react";
 import BuildCard from "@/components/BuildCard";
 import { API_URL, BuildListResponse } from "@/lib/api";
-import { GAMES, SOURCES, SORTS } from "@/lib/constants";
 import { useAuth } from "@/lib/auth-context";
+import { useLocale } from "@/i18n/LocaleContext";
+import { gameOptions, sourceOptions, sortOptions } from "@/i18n/options";
 
 const PAGE_SIZE = 20;
 
 export default function Home() {
   const { token } = useAuth();
+  const { t } = useLocale();
 
   const [q, setQ] = useState("");
   const [game, setGame] = useState("");
@@ -60,7 +62,7 @@ export default function Home() {
         setResults(data);
       } catch (err) {
         if (!(err instanceof DOMException && err.name === "AbortError")) {
-          setError("Nepodařilo se načíst buildy.");
+          setError(t.home.loadError);
         }
       } finally {
         setLoading(false);
@@ -85,7 +87,7 @@ export default function Home() {
 
   async function saveCurrentFilter() {
     if (!token) return;
-    const name = window.prompt("Název pro uložený filtr:");
+    const name = window.prompt(t.home.saveFilterPrompt);
     if (!name || !name.trim()) return;
 
     setSaveFilterMessage(null);
@@ -108,39 +110,34 @@ export default function Home() {
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
       body: JSON.stringify(payload),
     });
-    setSaveFilterMessage(
-      response.ok ? "Filtr uložen — najdeš ho na stránce Účet." : "Uložení filtru se nepovedlo."
-    );
+    setSaveFilterMessage(response.ok ? t.home.saveFilterSuccess : t.home.saveFilterError);
   }
 
   const totalPages = results ? Math.max(1, Math.ceil(results.total / results.page_size)) : 1;
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-8">
-      <h1 className="text-2xl font-semibold">Hledat buildy</h1>
-      <p className="mt-1 text-sm text-neutral-500">
-        Meta-vyhledávač buildů pro Path of Exile 1 a 2 napříč Redditem, YouTube, fóry a
-        komunitou.
-      </p>
+      <h1 className="text-2xl font-semibold">{t.home.title}</h1>
+      <p className="mt-1 text-sm text-neutral-500">{t.home.subtitle}</p>
 
       <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-4">
         <input
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="Hledat v názvu a popisu..."
+          placeholder={t.home.searchPlaceholder}
           className="input"
         />
 
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
           <select value={game} onChange={(e) => setGame(e.target.value)} className="input">
-            {GAMES.map((g) => (
+            {gameOptions(t).map((g) => (
               <option key={g.value} value={g.value}>
                 {g.label}
               </option>
             ))}
           </select>
           <select value={source} onChange={(e) => setSource(e.target.value)} className="input">
-            {SOURCES.map((s) => (
+            {sourceOptions(t).map((s) => (
               <option key={s.value} value={s.value}>
                 {s.label}
               </option>
@@ -149,35 +146,35 @@ export default function Home() {
           <input
             value={buildClass}
             onChange={(e) => setBuildClass(e.target.value)}
-            placeholder="Class"
+            placeholder={t.home.classPlaceholder}
             className="input"
           />
           <input
             value={ascendancy}
             onChange={(e) => setAscendancy(e.target.value)}
-            placeholder="Ascendancy"
+            placeholder={t.home.ascendancyPlaceholder}
             className="input"
           />
           <input
             value={mainSkill}
             onChange={(e) => setMainSkill(e.target.value)}
-            placeholder="Hlavní skill"
+            placeholder={t.home.mainSkillPlaceholder}
             className="input"
           />
           <input
             value={leaguePatch}
             onChange={(e) => setLeaguePatch(e.target.value)}
-            placeholder="Liga / patch"
+            placeholder={t.home.leaguePlaceholder}
             className="input"
           />
           <input
             value={tags}
             onChange={(e) => setTags(e.target.value)}
-            placeholder="Tagy (odděl čárkou)"
+            placeholder={t.home.tagsPlaceholder}
             className="input"
           />
           <select value={sort} onChange={(e) => setSort(e.target.value)} className="input">
-            {SORTS.map((s) => (
+            {sortOptions(t).map((s) => (
               <option key={s.value} value={s.value}>
                 {s.label}
               </option>
@@ -190,7 +187,7 @@ export default function Home() {
             type="submit"
             className="self-start rounded-md bg-neutral-900 px-4 py-2 text-white"
           >
-            Hledat
+            {t.home.searchButton}
           </button>
           {token && (
             <button
@@ -198,7 +195,7 @@ export default function Home() {
               onClick={saveCurrentFilter}
               className="self-start rounded-md border border-neutral-300 px-4 py-2 text-sm dark:border-neutral-700"
             >
-              Uložit filtr
+              {t.home.saveFilterButton}
             </button>
           )}
           {saveFilterMessage && (
@@ -208,7 +205,7 @@ export default function Home() {
       </form>
 
       <p className="mt-4 text-xs text-neutral-500">
-        Nenašel jsi, co hledáš? Zkus hledat i na{" "}
+        {t.home.notFoundHint}{" "}
         <a
           href="https://maxroll.gg/poe/build-guides"
           target="_blank"
@@ -217,8 +214,7 @@ export default function Home() {
         >
           Maxroll
         </a>{" "}
-        nebo{" "}
-        <a
+                <a
           href="https://mobalytics.gg/poe-2/builds"
           target="_blank"
           rel="noreferrer"
@@ -230,13 +226,13 @@ export default function Home() {
       </p>
 
       <div className="mt-8">
-        {loading && <p className="text-sm text-neutral-500">Načítám...</p>}
+        {loading && <p className="text-sm text-neutral-500">{t.home.loading}</p>}
         {error && <p className="text-sm text-red-600">{error}</p>}
         {!loading && !error && results && results.items.length === 0 && (
           <p className="text-sm text-neutral-500">
-            Žádné buildy neodpovídají zadaným filtrům. Zkus je uvolnit, nebo{" "}
+            {t.home.noResults}{" "}
             <a href="/submit" className="underline">
-              přidej svůj vlastní
+              {t.home.addYourOwn}
             </a>
             .
           </p>
@@ -256,10 +252,13 @@ export default function Home() {
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               className="rounded-md border border-neutral-300 px-3 py-1.5 disabled:opacity-40 dark:border-neutral-700"
             >
-              Předchozí
+              {t.home.prev}
             </button>
             <span className="text-neutral-500">
-              Strana {results.page} z {totalPages} ({results.total} buildů)
+              {t.home.pageInfo
+                .replace("{page}", String(results.page))
+                .replace("{totalPages}", String(totalPages))
+                .replace("{total}", String(results.total))}
             </span>
             <button
               type="button"
@@ -267,7 +266,7 @@ export default function Home() {
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               className="rounded-md border border-neutral-300 px-3 py-1.5 disabled:opacity-40 dark:border-neutral-700"
             >
-              Další
+              {t.home.next}
             </button>
           </div>
         )}

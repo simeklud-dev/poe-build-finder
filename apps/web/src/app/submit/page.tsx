@@ -2,15 +2,13 @@
 
 import { useState, FormEvent } from "react";
 import { API_URL } from "@/lib/api";
-
-const GAMES = [
-  { value: "poe1", label: "Path of Exile 1" },
-  { value: "poe2", label: "Path of Exile 2" },
-];
+import { useLocale } from "@/i18n/LocaleContext";
+import { gameOptions } from "@/i18n/options";
 
 type Status = "idle" | "submitting" | "success" | "error" | "rate_limited";
 
 export default function SubmitBuildPage() {
+  const { t } = useLocale();
   const [status, setStatus] = useState<Status>("idle");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -79,31 +77,27 @@ export default function SubmitBuildPage() {
       }
 
       const body = await response.json().catch(() => null);
-      setErrorMessage(body?.detail ?? "Něco se nepovedlo, zkus to prosím znovu.");
+      setErrorMessage(body?.detail ?? t.submit.genericError);
       setStatus("error");
     } catch {
-      setErrorMessage("Nepodařilo se spojit se serverem.");
+      setErrorMessage(t.submit.connectionError);
       setStatus("error");
     }
   }
 
   return (
     <main className="mx-auto max-w-2xl px-4 py-10">
-      <h1 className="text-2xl font-semibold">Přidat build</h1>
-      <p className="mt-2 text-sm text-neutral-500">
-        Vlož odkaz na svůj build (PoB export, YouTube video, reddit post, vlastní guide).
-        Formulář je anonymní — kontakt níže je nepovinný. Build se zobrazí veřejně až po
-        ručním schválení.
-      </p>
+      <h1 className="text-2xl font-semibold">{t.submit.title}</h1>
+      <p className="mt-2 text-sm text-neutral-500">{t.submit.subtitle}</p>
 
       {status === "success" && (
         <p className="mt-6 rounded-md bg-green-50 p-3 text-sm text-green-800">
-          Díky! Build byl odeslán a čeká na schválení.
+          {t.submit.success}
         </p>
       )}
       {status === "rate_limited" && (
         <p className="mt-6 rounded-md bg-yellow-50 p-3 text-sm text-yellow-800">
-          Z této adresy bylo odesláno příliš mnoho buildů, zkus to prosím později.
+          {t.submit.rateLimited}
         </p>
       )}
       {status === "error" && errorMessage && (
@@ -111,7 +105,7 @@ export default function SubmitBuildPage() {
       )}
 
       <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-4">
-        <Field label="Název buildu" required>
+        <Field label={t.submit.titleLabel} required>
           <input
             required
             minLength={3}
@@ -121,7 +115,7 @@ export default function SubmitBuildPage() {
           />
         </Field>
 
-        <Field label="Odkaz (PoB, YouTube, Reddit, guide...)" required>
+        <Field label={t.submit.linkLabel} required>
           <input
             required
             type="url"
@@ -132,9 +126,9 @@ export default function SubmitBuildPage() {
           />
         </Field>
 
-        <Field label="Hra" required>
+        <Field label={t.submit.gameLabel} required>
           <select value={game} onChange={(e) => setGame(e.target.value)} className="input">
-            {GAMES.map((g) => (
+            {gameOptions(t, false).map((g) => (
               <option key={g.value} value={g.value}>
                 {g.label}
               </option>
@@ -143,59 +137,58 @@ export default function SubmitBuildPage() {
         </Field>
 
         <div className="grid grid-cols-2 gap-4">
-          <Field label="Class">
+          <Field label={t.submit.classLabel}>
             <input value={buildClass} onChange={(e) => setBuildClass(e.target.value)} className="input" />
           </Field>
-          <Field label="Ascendancy">
+          <Field label={t.submit.ascendancyLabel}>
             <input value={ascendancy} onChange={(e) => setAscendancy(e.target.value)} className="input" />
           </Field>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <Field label="Hlavní skill">
+          <Field label={t.submit.mainSkillLabel}>
             <input value={mainSkill} onChange={(e) => setMainSkill(e.target.value)} className="input" />
           </Field>
-          <Field label="Liga / patch">
+          <Field label={t.submit.leaguePatchLabel}>
             <input
               value={leaguePatch}
               onChange={(e) => setLeaguePatch(e.target.value)}
               className="input"
-              placeholder="např. 3.29"
+              placeholder={t.submit.leaguePatchPlaceholder}
             />
           </Field>
         </div>
 
-        <Field label="Tagy (odděl čárkou)">
+        <Field label={t.submit.tagsLabel}>
           <input
             value={tags}
             onChange={(e) => setTags(e.target.value)}
             className="input"
-            placeholder="League Starter, Bossing, Budget"
+            placeholder={t.submit.tagsPlaceholder}
           />
         </Field>
 
-        <Field label="Odkaz na PoB export (nepovinné)">
+        <Field label={t.submit.pobLinkLabel}>
           <input value={pobLink} onChange={(e) => setPobLink(e.target.value)} className="input" />
         </Field>
 
-        <Field label="PoB export kód (nepovinné, pro automatické staty)">
+        <Field label={t.submit.pobCodeLabel}>
           <textarea
             value={pobCode}
             onChange={(e) => setPobCode(e.target.value)}
             className="input min-h-24 font-mono text-xs"
-            placeholder="Vlož kód z Path of Building → Export Build → Generate & copy code…"
+            placeholder={t.submit.pobCodePlaceholder}
           />
           <span className="mt-1 block text-xs font-normal text-neutral-500">
-            Nevkládej sem odkaz — jen samotný zkopírovaný kód. Použije se k automatickému
-            doplnění class/ascendancy/hlavního skillu a DPS/Life/EHP, pokud ho vložíš.
+            {t.submit.pobCodeHint}
           </span>
         </Field>
 
-        <Field label="Autor buildu (nepovinné)">
+        <Field label={t.submit.authorLabel}>
           <input value={author} onChange={(e) => setAuthor(e.target.value)} className="input" />
         </Field>
 
-        <Field label="Tvůj kontakt (nepovinné, jen pro případné dotazy)">
+        <Field label={t.submit.contactLabel}>
           <input
             value={submittedBy}
             onChange={(e) => setSubmittedBy(e.target.value)}
@@ -203,9 +196,9 @@ export default function SubmitBuildPage() {
           />
         </Field>
 
-        {/* honeypot pole — pro lidi neviditelné, boti ho typicky vyplní */}
+        {/* honeypot field — invisible to people, bots typically fill it in */}
         <div style={{ position: "absolute", left: "-9999px" }} aria-hidden="true">
-          <label htmlFor="website">Nechte prázdné</label>
+          <label htmlFor="website">{t.submit.honeypotLabel}</label>
           <input
             id="website"
             name="website"
@@ -221,7 +214,7 @@ export default function SubmitBuildPage() {
           disabled={status === "submitting"}
           className="mt-2 rounded-md bg-neutral-900 px-4 py-2 text-white disabled:opacity-50"
         >
-          {status === "submitting" ? "Odesílám..." : "Odeslat ke schválení"}
+          {status === "submitting" ? t.submit.submitting : t.submit.submitButton}
         </button>
       </form>
     </main>
