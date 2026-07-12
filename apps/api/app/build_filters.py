@@ -26,7 +26,13 @@ def build_filter_conditions(
     """Vrací (podmínky, ts_query). `ts_query` je None, pokud `q` není zadané —
     volající ho může znovupoužít pro řazení podle relevance."""
 
-    conditions = [Build.moderation_status == "approved"]
+    conditions = [
+        Build.moderation_status == "approved",
+        # Odkazy potvrzené jako rozbité (app/crawler/check_links.py) se z veřejného
+        # výpisu skryjí — "unchecked"/"ok" projdou, "broken" ne. Admin je pořád vidí
+        # přes GET /api/admin/builds.
+        Build.link_status != "broken",
+    ]
     if game:
         conditions.append(Build.game == game)
     if source:

@@ -159,6 +159,16 @@ def list_leagues(game: Optional[str] = None, db: Session = Depends(get_db)) -> l
     return list(rows)
 
 
+@router.get("/{build_id}", response_model=BuildCardOut)
+def get_build(build_id: UUID, db: Session = Depends(get_db)) -> Build:
+    """Detail jednoho (schváleného) buildu — libovolný zdroj, včetně admin-přidaných
+    odkazů z Maxroll/PoE Vault/Mobalytics."""
+    build = db.get(Build, build_id)
+    if build is None or build.moderation_status != "approved":
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Build not found")
+    return build
+
+
 @router.get("/{build_id}/similar", response_model=list[BuildCardOut])
 def similar_builds(
     build_id: UUID,

@@ -65,6 +65,25 @@ Cílem je veřejný web, který funguje jako **meta-vyhledávač buildů** pro P
 
 **Doporučení pro MVP:** začít Redditem, YouTube (obě mají legální API) a komunitně přidanými buildy (vlastní formulář, žádné právní riziko). poe.ninja lze zkusit přidat brzy, protože jde jen o čtení strukturovaných dat bez porušení autorských práv na obsah. Fóra přidat, jakmile bude fungovat základ. Mobalytics/Maxroll/PoE-Vault řešit jen jako odkazy-prokliky, nikdy ne jako scraping obsahu.
 
+**Implementováno (2026-07-12): admin CRUD pro Maxroll/PoE-Vault/Mobalytics odkazy.**
+Místo samostatné tabulky je to rozšíření stávající `builds` tabulky/modelu (stejné
+API/search/moderace jako u ostatních zdrojů, žádná duplikace):
+- `source` enum rozšířen o `maxroll`/`poevault`/`mobalytics` (`ADMIN_EXTERNAL_SOURCES`
+  v `app/models/build.py`).
+- Nová pole: `build_type` (text, volný typ buildu — "league starter" apod.),
+  `link_status` (`ok`/`broken`/`unchecked`, default `unchecked`), `last_checked_at`.
+- Admin CRUD: `GET/POST /api/admin/builds`, `GET/PUT/DELETE /api/admin/builds/{id}`
+  (HTTP Basic, stejné jako moderace) — vytváří rovnou `moderation_status=approved`
+  (ruční ověřený vstup, ne anonymní formulář). Endpoint omezen jen na tři externí
+  zdroje, nejde jím editovat/mazat crawlerem spravované buildy.
+- Veřejné čtení: existující `GET /api/builds` (+ nový `GET /api/builds/{id}` detail)
+  fungují beze změny, navíc teď skrývají buildy s `link_status='broken'` napříč
+  všemi zdroji.
+- Denní cron `app/crawler/check_links.py`: HEAD (fallback streamovaný GET bez čtení
+  těla) na `source_url` každého buildu, nastaví `link_status`/`last_checked_at`.
+  Rate-limit 2 s mezi requesty na stejnou doménu, žádný obsah stránky se nestahuje
+  ani neukládá — jen HTTP status kód.
+
 ---
 
 ## 5. Právní a etické aspekty (důležité probrat s vývojářem/právníkem)

@@ -4,6 +4,8 @@ from uuid import UUID
 
 from pydantic import BaseModel, Field, field_validator
 
+from app.models.build import ADMIN_EXTERNAL_SOURCES
+
 GAME_VALUES = ("poe1", "poe2")
 
 
@@ -111,6 +113,7 @@ class BuildCardOut(BaseModel):
     ascendancy: Optional[str] = None
     main_skill: Optional[str] = None
     league_patch: Optional[str] = None
+    build_type: Optional[str] = None
     tags: list[str]
     thumbnail_url: Optional[str] = None
     popularity_score: Optional[float] = None
@@ -128,3 +131,133 @@ class BuildListResponse(BaseModel):
     total: int
     page: int
     page_size: int
+
+
+class AdminBuildCreateRequest(BaseModel):
+    """Ruční přidání odkazu na build z Maxroll/PoE Vault/Mobalytics admin uživatelem
+    (routers/admin.py) — ukládají se jen metadata a odkaz na originál, nikdy obsah
+    stránky (CLAUDE.md, sekce 'Komerční weby'). Rovnou moderation_status=approved,
+    protože jde o ručně ověřený vstup, ne anonymní community formulář."""
+
+    title: str = Field(min_length=3, max_length=200)
+    source_site: str
+    url: str = Field(max_length=1000)
+    game: str
+    class_tag: Optional[str] = Field(default=None, max_length=100)
+    build_type: Optional[str] = Field(default=None, max_length=100)
+    league_version: Optional[str] = Field(default=None, max_length=50)
+    short_note: Optional[str] = Field(default=None, max_length=2000)
+    author: Optional[str] = Field(default=None, max_length=200)
+    tags: list[str] = Field(default_factory=list)
+
+    @field_validator("source_site")
+    @classmethod
+    def validate_source_site(cls, v: str) -> str:
+        if v not in ADMIN_EXTERNAL_SOURCES:
+            raise ValueError(f"source_site must be one of {ADMIN_EXTERNAL_SOURCES}")
+        return v
+
+    @field_validator("game")
+    @classmethod
+    def validate_game(cls, v: str) -> str:
+        if v not in GAME_VALUES:
+            raise ValueError(f"game must be one of {GAME_VALUES}")
+        return v
+
+    @field_validator("url")
+    @classmethod
+    def validate_url(cls, v: str) -> str:
+        result = _validate_url(v)
+        if result is None:
+            raise ValueError("url is required")
+        return result
+
+    @field_validator("tags")
+    @classmethod
+    def validate_tags(cls, v: list[str]) -> list[str]:
+        return [t.strip() for t in v if t.strip()][:10]
+
+
+class AdminBuildUpdateRequest(BaseModel):
+    """Stejná pole jako `AdminBuildCreateRequest`, ale všechna nepovinná — PATCH-like
+    částečná úprava přes PUT (nastavené pole se přepíše, nenastavené zůstane beze
+    změny). `link_status`/`last_checked_at` se tudy neupravují, ty spravuje jen
+    app/crawler/check_links.py."""
+
+    title: Optional[str] = Field(default=None, min_length=3, max_length=200)
+    source_site: Optional[str] = None
+    url: Optional[str] = Field(default=None, max_length=1000)
+    game: Optional[str] = None
+    class_tag: Optional[str] = Field(default=None, max_length=100)
+    build_type: Optional[str] = Field(default=None, max_length=100)
+    league_version: Optional[str] = Field(default=None, max_length=50)
+    short_note: Optional[str] = Field(default=None, max_length=2000)
+    author: Optional[str] = Field(default=None, max_length=200)
+    tags: Optional[list[str]] = None
+
+    @field_validator("source_site")
+    @classmethod
+    def validate_source_site(cls, v: Optional[str]) -> Optional[str]:
+        if v is not None and v not in ADMIN_EXTERNAL_SOURCES:
+            raise ValueError(f"source_site must be one of {ADMIN_EXTERNAL_SOURCES}")
+        return v
+
+    @field_validator("game")
+    @classmethod
+    def validate_game(cls, v: Optional[str]) -> Optional[str]:
+        if v is not None and v not in GAME_VALUES:
+            raise ValueError(f"game must be one of {GAME_VALUES}")
+        return v
+
+    @field_validator("url")
+    @classmethod
+    def validate_url(cls, v: Optional[str]) -> Optional[str]:
+        if v is None:
+            return None
+        result = _validate_url(v)
+        if result is None:
+            raise ValueError("url must not be empty")
+        return result
+
+    @field_validator("tags")
+    @classmethod
+    def validate_tags(cls, v: Optional[list[str]]) -> Optional[list[str]]:
+        if v is None:
+            return None
+        return [t.strip() for t in v if t.strip()][:10]
+
+
+class AdminBuildOut(BaseModel):
+    """Admin pohled na odkaz z Maxroll/PoE Vault/Mobalytics — pole pojmenovaná podle
+    zadání (source_site/url/class_tag/league_version/short_note/added_at), interně
+    čtená z ORM atributů `source`/`source_url`/`class_`/`league_patch`/`description`/
+    `created_at` skrze `validation_alias` (stejný trik jako `serialization_alias`
+    u `class_` v BuildCardOut výše, jen obousměrně)."""
+
+    id: UUID
+    title: str
+    source_site: str = Field(validation_alias="source", serialization_alias="source_site")
+    url: str = Field(validation_alias="source_url", serialization_alias="url")
+    game: str
+    class_tag: Optional[str] = Field(
+        default=None, validation_alias="class_", serialization_alias="class_tag"
+    )
+    build_type: Optional[str] = None
+    league_version: Optional[str] = Field(
+        default=None, validation_alias="league_patch", serialization_alias="league_version"
+    )
+    short_note: Optional[str] = Field(
+        default=None, validation_alias="description", serialization_alias="short_note"
+    )
+    author: Optional[str] = None
+    tags: list[str]
+    link_status: str
+    added_at: datetime = Field(validation_alias="created_at", serialization_alias="added_at")
+    last_checked_at: Optional[datetime] = None
+
+    model_config = {"from_attributes": True, "populate_by_name": True}
+
+
+class AdminBuildListResponse(BaseModel):
+    items: list[AdminBuildOut]
+    total: int

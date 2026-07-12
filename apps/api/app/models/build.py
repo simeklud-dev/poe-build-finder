@@ -14,9 +14,27 @@ from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db import Base
 
-SOURCES = ("reddit", "youtube", "poe_forum", "pob_forum", "poe_ninja", "community")
+SOURCES = (
+    "reddit",
+    "youtube",
+    "poe_forum",
+    "pob_forum",
+    "poe_ninja",
+    "community",
+    # Odkazy-prokliky na komerční buildové weby (CLAUDE.md / SPEC.md sekce 5+7:
+    # nikdy scraping obsahu, jen admin ručně zadané metadata + odkaz na originál).
+    "maxroll",
+    "poevault",
+    "mobalytics",
+)
 MODERATION_STATUSES = ("pending", "approved", "rejected")
 GAMES = ("poe1", "poe2")
+# Stav dostupnosti odkazu, viz app/crawler/check_links.py (denní cron) — "unchecked"
+# dokud ho cron poprvé nezkontroluje, pak "ok"/"broken" podle HTTP status kódu.
+LINK_STATUSES = ("ok", "broken", "unchecked")
+# Zdroje spravovatelné přes admin CRUD (routers/admin.py) — jde vždy jen o odkaz,
+# nikdy o zkopírovaný obsah stránky (viz CLAUDE.md, "Komerční weby").
+ADMIN_EXTERNAL_SOURCES = ("maxroll", "poevault", "mobalytics")
 
 SEARCH_VECTOR_EXPR = (
     "setweight(to_tsvector('simple', coalesce(title, '')), 'A') || "
@@ -57,6 +75,15 @@ class Build(Base):
         ARRAY(Text), nullable=False, server_default=text("'{}'")
     )
 
+    # Typ buildu (např. "league starter", "endgame boss killer") — hlavně u ručně
+    # přidaných odkazů z Maxroll/PoE Vault/Mobalytics, kde nejde spolehlivě odvodit
+    # z textu jako u Reddit/YouTube (viz app/crawler/classify.py).
+    build_type: Mapped[str | None] = mapped_column(Text)
+
+    # Dostupnost odkazu — viz LINK_STATUSES výše a app/crawler/check_links.py.
+    link_status: Mapped[str] = mapped_column(Text, nullable=False, server_default="unchecked")
+    last_checked_at: Mapped[object | None] = mapped_column(TIMESTAMP(timezone=True))
+
     # PoB a statistiky
     pob_link: Mapped[str | None] = mapped_column(Text)
     stats_dps: Mapped[float | None] = mapped_column(Numeric)
@@ -90,6 +117,7 @@ class Build(Base):
             f"moderation_status IN {MODERATION_STATUSES}", name="ck_builds_moderation_status"
         ),
         CheckConstraint(f"game IN {GAMES}", name="ck_builds_game"),
+        CheckConstraint(f"link_status IN {LINK_STATUSES}", name="ck_builds_link_status"),
         UniqueConstraint("source", "source_url", name="uq_builds_source_url"),
         # deklarováno explicitně, aby je `alembic revision --autogenerate` nepovažoval
         # za odchylku a nenavrhoval jejich smazání (byly vytvořené ručně v migraci 0001)
@@ -100,6 +128,7 @@ class Build(Base):
         Index("idx_builds_league_patch", "league_patch"),
         Index("idx_builds_source", "source"),
         Index("idx_builds_moderation", "moderation_status"),
+        Index("idx_builds_link_status", "link_status"),
         Index("idx_builds_tags", "tags", postgresql_using="gin"),
         Index("idx_builds_search_vector", "search_vector", postgresql_using="gin"),
         Index("idx_builds_published_at", text("published_at DESC")),
