@@ -12,7 +12,7 @@ export default function NavBar() {
 
   return (
     <header
-      className="border-b px-4 py-3 border-[color:var(--border-subtle)]"
+      className="relative z-50 border-b px-4 py-3 border-[color:var(--border-subtle)]"
       style={{ background: "rgba(8,7,10,0.6)", backdropFilter: "blur(6px)" }}
     >
       <nav className="mx-auto flex max-w-5xl items-center justify-between">
