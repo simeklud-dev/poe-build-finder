@@ -25,15 +25,19 @@ body {
   position: relative;
   min-height: 100%;
   background-color: var(--background);
+  background-image: url("/images/poe/background.webp");
+  background-size: cover;
+  background-position: center top;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
   isolation: isolate;
 }
 
-/* Original procedural PoE-inspired backdrop: layered dark gradients,
-   a subtle rune-lattice texture and softly drifting embers.
-   No game assets or third-party artwork are used — everything here
-   is generated purely from CSS gradients / SVG data URIs. */
+/* Darkening overlay on top of the background artwork (pictures/pozadi.png,
+   served from /images/poe/background.webp) so page text stays readable —
+   plus a bit of the original warm PoE-inspired color accents. */
 body::before {
   content: "";
   position: fixed;
@@ -41,10 +45,10 @@ body::before {
   z-index: -3;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 90% 60% at 50% -10%, rgba(176, 54, 27, 0.28), transparent 60%),
-    radial-gradient(ellipse 70% 50% at 100% 100%, rgba(201, 162, 74, 0.12), transparent 65%),
-    radial-gradient(ellipse 70% 50% at 0% 100%, rgba(255, 138, 61, 0.10), transparent 65%),
-    linear-gradient(180deg, #0b090d 0%, #08070a 45%, #050408 100%);
+    radial-gradient(ellipse 90% 60% at 50% -10%, rgba(176, 54, 27, 0.22), transparent 60%),
+    radial-gradient(ellipse 70% 50% at 100% 100%, rgba(201, 162, 74, 0.10), transparent 65%),
+    radial-gradient(ellipse 70% 50% at 0% 100%, rgba(255, 138, 61, 0.08), transparent 65%),
+    linear-gradient(180deg, rgba(6, 5, 8, 0.66) 0%, rgba(6, 5, 8, 0.8) 45%, rgba(4, 3, 6, 0.92) 100%);
 }
 
 /* Faint rune / lattice texture, tiled */
