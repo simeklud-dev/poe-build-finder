@@ -54,7 +54,7 @@ export default function BuildCard({ build, initiallyFavorited, onFavoriteChange 
   }
 
   return (
-    <li className="rounded-md border border-neutral-200 p-4 dark:border-neutral-700">
+    <li className="panel p-4">
       <div className="flex items-start justify-between gap-3">
         <a
           href={build.source_url}

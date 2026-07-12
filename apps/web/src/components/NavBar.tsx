@@ -7,9 +7,9 @@ export default function NavBar() {
   const { user, loading, logout } = useAuth();
 
   return (
-    <header className="border-b border-neutral-200 px-4 py-3 dark:border-neutral-800">
+    <header className="border-b px-4 py-3 border-[color:var(--border-subtle)]" style={{ background: "rgba(8,7,10,0.6)", backdropFilter: "blur(6px)" }}>
       <nav className="mx-auto flex max-w-5xl items-center justify-between">
-        <Link href="/" className="font-semibold">
+        <Link href="/" className="font-semibold" style={{ color: "var(--accent-gold)" }}>
           PoE Build Finder
         </Link>
         <div className="flex items-center gap-4 text-sm">

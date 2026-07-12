@@ -1,8 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #08070a;
+  --background-elevated: #100d12;
+  --foreground: #ece6da;
+  --ember: #ff8a3d;
+  --ember-deep: #b0361b;
+  --accent-gold: #c9a24a;
+  --border-subtle: rgba(201, 162, 74, 0.18);
 }
 
 @theme inline {
@@ -12,21 +17,104 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
+  position: relative;
+  min-height: 100%;
+  background-color: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  isolation: isolate;
+}
+
+/* Original procedural PoE-inspired backdrop: layered dark gradients,
+   a subtle rune-lattice texture and softly drifting embers.
+   No game assets or third-party artwork are used — everything here
+   is generated purely from CSS gradients / SVG data URIs. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 90% 60% at 50% -10%, rgba(176, 54, 27, 0.28), transparent 60%),
+    radial-gradient(ellipse 70% 50% at 100% 100%, rgba(201, 162, 74, 0.12), transparent 65%),
+    radial-gradient(ellipse 70% 50% at 0% 100%, rgba(255, 138, 61, 0.10), transparent 65%),
+    linear-gradient(180deg, #0b090d 0%, #08070a 45%, #050408 100%);
+}
+
+/* Faint rune / lattice texture, tiled */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: screen;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cg fill='none' stroke='%23c9a24a' stroke-opacity='0.06' stroke-width='1'%3E%3Ccircle cx='110' cy='110' r='70'/%3E%3Ccircle cx='110' cy='110' r='46'/%3E%3Cpath d='M110 8 L110 212 M8 110 L212 110'/%3E%3Cpath d='M40 40 L180 180 M180 40 L40 180'/%3E%3Cpath d='M110 40 L146 90 L200 90 L160 122 L176 176 L110 142 L44 176 L60 122 L20 90 L74 90 Z'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 420px 420px;
+}
+
+.ember-field {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ember-field span {
+  position: absolute;
+  bottom: -10%;
+  width: 3px;
+  height: 3px;
+  border-radius: 9999px;
+  background: radial-gradient(circle, var(--ember) 0%, var(--ember-deep) 60%, transparent 100%);
+  box-shadow: 0 0 6px 1px rgba(255, 138, 61, 0.6);
+  animation-name: ember-rise;
+  animation-timing-function: ease-in;
+  animation-iteration-count: infinite;
+  opacity: 0;
+}
+
+@keyframes ember-rise {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.9;
+  }
+  90% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(-110vh) translateX(var(--drift, 20px));
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ember-field span {
+    animation: none;
+    display: none;
+  }
 }
 
 @layer components {
   .input {
     @apply w-full rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm text-neutral-900 focus:border-neutral-500 focus:outline-none dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-100;
+  }
+
+  .panel {
+    @apply rounded-lg border;
+    background: rgba(16, 13, 18, 0.72);
+    border-color: var(--border-subtle);
+    backdrop-filter: blur(6px);
   }
 }
