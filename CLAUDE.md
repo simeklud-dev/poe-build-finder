@@ -26,7 +26,8 @@ Meta-vyhledávač buildů pro Path of Exile 1 a Path of Exile 2. Agreguje buildy
 | YouTube | oficiální Data API v3 |
 | poe.ninja | neoficiální JSON endpointy, chovat se šetrně (rate limiting, cache) |
 | PoE fórum, PoB Community | scraping HTML, respektovat robots.txt |
-| Mobalytics, Maxroll, PoE-Vault | **jen odkazy-prokliky**, nikdy scraping obsahu |
+| Mobalytics, PoE-Vault | **jen odkazy-prokliky** (title+URL z veřejných přehledových stránek, ne obsah build guide) — viz `app/crawler/external_discover.py` a SPEC.md sekce 4 |
+| Maxroll | **NIC automaticky** — robots.txt výslovně zakazuje jakýkoliv automatizovaný přístup; odkazy jen ručně přes admin CRUD |
 | Komunita | vlastní formulář, pre-moderace |
 
 ## Doporučené pořadí implementace
@@ -45,7 +46,7 @@ Meta-vyhledávač buildů pro Path of Exile 1 a Path of Exile 2. Agreguje buildy
 
 - **Autorská práva:** nikdy nekopírovat plné texty/obrázky/PoB kódy ze zdrojových webů — jen metadata (název, autor, datum) a odkaz na originál.
 - **Scraping:** vždy respektovat `robots.txt`, rate limitovat požadavky, používat identifikovatelný User-Agent.
-- **Komerční weby (Mobalytics, Maxroll, PoE-Vault):** nikdy plný scraping obsahu, jen prokliky.
+- **Komerční weby (Mobalytics, Maxroll, PoE-Vault):** nikdy plný scraping obsahu, jen prokliky. U Mobalytics/PoE-Vault smí automatizovaný crawler číst jen veřejné přehledové/hub stránky (title+URL, nikdy stránku samotného build guide) — Maxroll má v robots.txt výslovný zákaz automatizovaného přístupu, tam se nesmí sahat vůbec, ani takhle lehce.
 - **Disclaimer v patičce:** web není přidružený ke Grinding Gear Games ani jimi podporovaný.
 - **Datový model:** nové buildy ze source = `community` mají `moderation_status = pending`, automaticky nalezené rovnou `approved`.
 

@@ -84,6 +84,36 @@ API/search/moderace jako u ostatních zdrojů, žádná duplikace):
   Rate-limit 2 s mezi requesty na stejnou doménu, žádný obsah stránky se nestahuje
   ani neukládá — jen HTTP status kód.
 
+**Implementováno (2026-07-12): automatické objevování odkazů pro PoE Vault a
+Mobalytics — Maxroll záměrně vynechán.** Před implementací byl ověřen skutečný
+`robots.txt` všech tří domén (ne jen obecný předpoklad z tabulky výše):
+
+- **maxroll.gg** — obsahuje výslovné právní upozornění ("Use of any robot,
+  crawler, or other tool to scrape, harvest, extract, or retrieve any content on
+  this website using automated means is prohibited without written permission
+  from Ziff Davis...", včetně explicitního zákazu "creating data sets containing
+  our content") a rozsáhlý seznam jmenovitě blokovaných botů (generické scrapery
+  i AI crawlery). **Rozhodnutí: Maxroll se automaticky neprochází vůbec, ani jen
+  pro title+URL.** Odkazy na Maxroll lze nadále přidávat jen ručně přes admin CRUD
+  výše.
+- **poe-vault.com** a **mobalytics.gg** — `robots.txt` obou domén je standardní,
+  bez podobného upozornění, a cesty použité crawlerem (`/guides/builds-for-path-of-exile`,
+  `/poe2/<class>`, `/poe/creator-builds`, `/poe-2/creator-builds`) nejsou v
+  `Disallow`. Pro tyto dva zdroje proto existuje `app/crawler/external_discover.py`
+  + `run_external_discover.py`:
+  - Stahuje **jen veřejné přehledové/hub stránky** (seznam buildů jedné třídy nebo
+    tvůrců), nikdy stránku samotného build guide (žádné skilly/gear/staty).
+  - Z nalezených odkazů vytáhne pouze title + URL (regex na vzor URL, ne parsování
+    obsahu stránky). U PoE Vault se `class_`/`ascendancy` čtou přímo ze struktury
+    URL (`/poe2/<class>/<ascendancy>/...`), u Mobalytics (kde to URL neobsahuje) se
+    na titulek pustí stejný klíčeslovní klasifikátor jako u Reddit/YouTube
+    (`classify_text`) — když nic nenajde, pole zůstanou `None`.
+  - Nově nalezené buildy se ukládají rovnou jako `moderation_status='approved'`
+    (rozhodnutí 2026-07-12, na přání projektu) — na rozdíl od anonymního
+    community formuláře, který má stále pre-moderaci.
+  - `--dry-run` flag vypíše, co by se našlo, bez zápisu do databáze — pro ověření
+    po nasazení, než se poprvé spustí naostro.
+
 ---
 
 ## 5. Právní a etické aspekty (důležité probrat s vývojářem/právníkem)
