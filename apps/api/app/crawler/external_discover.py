@@ -32,7 +32,7 @@ from dataclasses import dataclass, field
 from urllib.parse import urljoin
 
 import httpx
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Tag
 
 from app.crawler.classify import classify_text
 
@@ -133,6 +133,28 @@ def parse_poevault_poe2_class_html(html: str) -> list[DiscoveredBuild]:
     return results
 
 
+def _mobalytics_title_for(a: Tag) -> str:
+    """Mobalytics's build cards render the <a> itself empty (it's just a
+    full-card overlay link over an image) — the actual title text lives in
+    the *next sibling* element, as its first text node, e.g.:
+
+        <a href="/poe/builds/foo"></a>
+        <div>
+          <div>Foo Build Title</div>
+          <div>By SomeCreator ∙ Updated on ...</div>
+        </div>
+
+    We can't rely on the auto-generated CSS class names (atomic/hashed,
+    e.g. "x1hl2dhg"), so we just take the first non-empty text node inside
+    the next sibling — the title is always rendered before the byline in
+    document order, regardless of exact nesting depth.
+    """
+    sibling = a.find_next_sibling()
+    if sibling is None:
+        return ""
+    return next(sibling.stripped_strings, "")
+
+
 def parse_mobalytics_html(html: str, game: str) -> list[DiscoveredBuild]:
     soup = BeautifulSoup(html, "html.parser")
     href_re = MOBALYTICS_BUILD_HREF_RE[game]
@@ -145,7 +167,11 @@ def parse_mobalytics_html(html: str, game: str) -> list[DiscoveredBuild]:
         url = urljoin(MOBALYTICS_BASE, href)
         if url in seen:
             continue
-        title = a.get_text(strip=True)
+        # the anchor itself is usually empty (full-card overlay link over an
+        # image) — fall back to the link's own text first, then the sibling
+        # title element, so this keeps working if Mobalytics ever puts the
+        # title back inside the <a> too.
+        title = a.get_text(strip=True) or _mobalytics_title_for(a)
         if not title:
             continue
         seen.add(url)
