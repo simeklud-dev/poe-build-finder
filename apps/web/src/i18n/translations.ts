@@ -117,6 +117,15 @@ export interface Dictionary {
     reason: string;
     removeBuild: string;
     dismissReport: string;
+    bulkAddTitle: string;
+    bulkAddHint: string;
+    bulkAddPlaceholder: string;
+    bulkAddSourceLabel: string;
+    bulkAddSubmit: string;
+    bulkAddRunning: string;
+    bulkAddResultsTitle: string;
+    bulkAddSuccess: string;
+    bulkAddError: string;
   };
   submit: {
     title: string;
@@ -278,6 +287,17 @@ const en: Dictionary = {
     reason: "Reason",
     removeBuild: "Remove build",
     dismissReport: "Dismiss report",
+    bulkAddTitle: "Bulk-add external links",
+    bulkAddHint:
+      "For sites that must not be auto-crawled (e.g. Maxroll) — browse the site yourself, then paste one build per line here: title | url | game (poe1/poe2) | class | build type | league | note. Only title, url and game are required; leave the rest blank between the pipes if unknown. Lines are published immediately (no moderation queue).",
+    bulkAddPlaceholder:
+      "Righteous Fire Juggernaut League Starter | https://maxroll.gg/poe/build-guides/rf-juggernaut | poe1 | Juggernaut | league starter | 3.25 | Tanky, good clear and bossing",
+    bulkAddSourceLabel: "Source site",
+    bulkAddSubmit: "Upload",
+    bulkAddRunning: "Uploading...",
+    bulkAddResultsTitle: "Results",
+    bulkAddSuccess: "added",
+    bulkAddError: "failed",
   },
   submit: {
     title: "Submit a build",
@@ -448,6 +468,17 @@ const cs: Dictionary = {
     reason: "Důvod",
     removeBuild: "Odebrat build",
     dismissReport: "Zamítnout nahlášení",
+    bulkAddTitle: "Hromadné přidání externích odkazů",
+    bulkAddHint:
+      "Pro weby, které se nesmí automaticky procházet (např. Maxroll) — projdi web sám a sem vlož jeden build na řádek ve tvaru: název | url | hra (poe1/poe2) | class | typ buildu | liga | poznámka. Povinné je jen název, url a hra, zbytek klidně nech mezi svislítky prázdný. Řádky se publikují rovnou (bez fronty ke schválení).",
+    bulkAddPlaceholder:
+      "Righteous Fire Juggernaut League Starter | https://maxroll.gg/poe/build-guides/rf-juggernaut | poe1 | Juggernaut | league starter | 3.25 | Tanky, dobrý clear i bossing",
+    bulkAddSourceLabel: "Zdrojový web",
+    bulkAddSubmit: "Nahrát",
+    bulkAddRunning: "Nahrávám...",
+    bulkAddResultsTitle: "Výsledky",
+    bulkAddSuccess: "přidáno",
+    bulkAddError: "selhalo",
   },
   submit: {
     title: "Přidat build",
@@ -617,6 +648,17 @@ const pl: Dictionary = {
     reason: "Powód",
     removeBuild: "Usuń build",
     dismissReport: "Odrzuć zgłoszenie",
+    bulkAddTitle: "Masowe dodawanie linków zewnętrznych",
+    bulkAddHint:
+      "Dla stron, których nie wolno automatycznie przeszukiwać (np. Maxroll) — przejrzyj stronę sam, a potem wklej tutaj jeden build na wiersz: tytuł | url | gra (poe1/poe2) | klasa | typ builda | liga | notatka. Wymagane są tylko tytuł, url i gra, resztę możesz zostawić pustą między znakami |. Wiersze publikują się od razu (bez kolejki moderacji).",
+    bulkAddPlaceholder:
+      "Righteous Fire Juggernaut League Starter | https://maxroll.gg/poe/build-guides/rf-juggernaut | poe1 | Juggernaut | league starter | 3.25 | Wytrzymały, dobry clear i bossing",
+    bulkAddSourceLabel: "Strona źródłowa",
+    bulkAddSubmit: "Wyślij",
+    bulkAddRunning: "Wysyłanie...",
+    bulkAddResultsTitle: "Wyniki",
+    bulkAddSuccess: "dodano",
+    bulkAddError: "błąd",
   },
   submit: {
     title: "Dodaj build",
@@ -782,6 +824,17 @@ const ru: Dictionary = {
     reason: "Причина",
     removeBuild: "Удалить билд",
     dismissReport: "Отклонить жалобу",
+    bulkAddTitle: "Массовое добавление внешних ссылок",
+    bulkAddHint:
+      "Для сайтов, которые нельзя автоматически сканировать (например, Maxroll) — просмотри сайт сам, затем вставь сюда по одному билду на строку: название | url | игра (poe1/poe2) | класс | тип билда | лига | заметка. Обязательны только название, url и игра, остальное можно оставить пустым между разделителями. Строки публикуются сразу, без очереди модерации.",
+    bulkAddPlaceholder:
+      "Righteous Fire Juggernaut League Starter | https://maxroll.gg/poe/build-guides/rf-juggernaut | poe1 | Juggernaut | league starter | 3.25 | Танк, хороший клир и боссинг",
+    bulkAddSourceLabel: "Сайт-источник",
+    bulkAddSubmit: "Загрузить",
+    bulkAddRunning: "Загрузка...",
+    bulkAddResultsTitle: "Результаты",
+    bulkAddSuccess: "добавлено",
+    bulkAddError: "ошибка",
   },
   submit: {
     title: "Добавить билд",
@@ -951,6 +1004,17 @@ const de: Dictionary = {
     reason: "Grund",
     removeBuild: "Build entfernen",
     dismissReport: "Meldung verwerfen",
+    bulkAddTitle: "Externe Links im Sammelimport hinzufügen",
+    bulkAddHint:
+      "Für Seiten, die nicht automatisch gecrawlt werden dürfen (z. B. Maxroll) — durchsuche die Seite selbst und füge hier pro Zeile einen Build ein: Titel | URL | Spiel (poe1/poe2) | Klasse | Build-Typ | Liga | Notiz. Nur Titel, URL und Spiel sind Pflicht, den Rest kannst du zwischen den Strichen leer lassen. Zeilen werden sofort veröffentlicht (keine Moderationswarteschlange).",
+    bulkAddPlaceholder:
+      "Righteous Fire Juggernaut League Starter | https://maxroll.gg/poe/build-guides/rf-juggernaut | poe1 | Juggernaut | league starter | 3.25 | Robust, guter Clear und Bossing",
+    bulkAddSourceLabel: "Quellseite",
+    bulkAddSubmit: "Hochladen",
+    bulkAddRunning: "Lädt hoch...",
+    bulkAddResultsTitle: "Ergebnisse",
+    bulkAddSuccess: "hinzugefügt",
+    bulkAddError: "fehlgeschlagen",
   },
   submit: {
     title: "Build einreichen",

@@ -91,3 +91,28 @@ export interface SavedFilter {
   created_at: string;
 }
 
+// Ruční hromadné přidání odkazů na cizí buildy (Maxroll apod.), které se z
+// právních důvodů (robots.txt) nesmí automaticky procházet — admin je sám
+// nakopíruje z webu a vloží sem, tenhle typ jen popisuje tvar jednoho řádku
+// před odesláním na POST /api/admin/builds.
+export interface AdminBuildCreatePayload {
+  title: string;
+  source_site: "maxroll" | "poevault" | "mobalytics";
+  url: string;
+  game: "poe1" | "poe2";
+  class_tag?: string;
+  build_type?: string;
+  league_version?: string;
+  short_note?: string;
+  author?: string;
+  tags?: string[];
+}
+
+export interface AdminBuildOut {
+  id: string;
+  title: string;
+  source_site: string;
+  url: string;
+  game: string;
+}
+

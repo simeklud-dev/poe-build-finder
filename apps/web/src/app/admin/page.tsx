@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState, FormEvent } from "react";
-import { API_URL, AdminReport, PendingBuild, basicAuthHeader } from "@/lib/api";
+import { API_URL, AdminBuildCreatePayload, AdminReport, PendingBuild, basicAuthHeader } from "@/lib/api";
 import { useLocale } from "@/i18n/LocaleContext";
 
 const SESSION_KEY = "poe-build-finder-admin-auth";
@@ -18,6 +18,17 @@ export default function AdminPage() {
   const [reports, setReports] = useState<AdminReport[]>([]);
   const [loading, setLoading] = useState(false);
   const [listError, setListError] = useState<string | null>(null);
+
+  // Hromadné ruční přidání odkazů (Maxroll a podobné weby, které se nesmí
+  // automaticky procházet — viz app/crawler/external_discover.py docstring).
+  // Admin sám nakopíruje title+URL z webu, vloží sem po řádcích, tady se to
+  // jen odešle jednotlivě na POST /api/admin/builds (žádné stahování webu).
+  type BulkLineResult = { line: string; ok: boolean; message: string };
+  const [bulkSource, setBulkSource] =
+    useState<AdminBuildCreatePayload["source_site"]>("maxroll");
+  const [bulkText, setBulkText] = useState("");
+  const [bulkRunning, setBulkRunning] = useState(false);
+  const [bulkResults, setBulkResults] = useState<BulkLineResult[]>([]);
 
   useEffect(() => {
     // picking up a pre-existing session from sessionStorage after mount (see comment above)
@@ -104,6 +115,61 @@ export default function AdminPage() {
     } else {
       window.alert(t.admin.actionFailed);
     }
+  }
+
+  async function submitBulkAdd() {
+    if (!authHeader) return;
+    const lines = bulkText
+      .split("\n")
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0 && !line.startsWith("#"));
+    if (lines.length === 0) return;
+
+    setBulkRunning(true);
+    const results: BulkLineResult[] = [];
+    for (const line of lines) {
+      const parts = line.split("|").map((p) => p.trim());
+      const [title, url, game, class_tag, build_type, league_version, short_note] = parts;
+      if (!title || !url || (game !== "poe1" && game !== "poe2")) {
+        results.push({
+          line,
+          ok: false,
+          message: "title / url / game (poe1|poe2) required",
+        });
+        continue;
+      }
+      const payload: AdminBuildCreatePayload = {
+        title,
+        source_site: bulkSource,
+        url,
+        game,
+        ...(class_tag ? { class_tag } : {}),
+        ...(build_type ? { build_type } : {}),
+        ...(league_version ? { league_version } : {}),
+        ...(short_note ? { short_note } : {}),
+      };
+      try {
+        const response = await fetch(`${API_URL}/api/admin/builds`, {
+          method: "POST",
+          headers: { Authorization: authHeader, "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        if (response.ok) {
+          results.push({ line, ok: true, message: title });
+        } else {
+          const body = await response.json().catch(() => null);
+          results.push({
+            line,
+            ok: false,
+            message: `HTTP ${response.status}${body?.detail ? `: ${body.detail}` : ""}`,
+          });
+        }
+      } catch {
+        results.push({ line, ok: false, message: t.admin.listError });
+      }
+    }
+    setBulkResults(results);
+    setBulkRunning(false);
   }
 
   if (!authHeader) {
@@ -253,6 +319,58 @@ export default function AdminPage() {
           </li>
         ))}
       </ul>
+
+      <h2 className="mt-10 text-xl font-semibold">{t.admin.bulkAddTitle}</h2>
+      <p className="mt-2 text-sm text-neutral-500">{t.admin.bulkAddHint}</p>
+      <div className="mt-4 flex flex-col gap-3">
+        <label className="flex flex-col gap-1 text-sm font-medium">
+          {t.admin.bulkAddSourceLabel}
+          <select
+            value={bulkSource}
+            onChange={(e) =>
+              setBulkSource(e.target.value as AdminBuildCreatePayload["source_site"])
+            }
+            className="input w-40"
+          >
+            <option value="maxroll">maxroll</option>
+            <option value="poevault">poevault</option>
+            <option value="mobalytics">mobalytics</option>
+          </select>
+        </label>
+        <textarea
+          value={bulkText}
+          onChange={(e) => setBulkText(e.target.value)}
+          placeholder={t.admin.bulkAddPlaceholder}
+          rows={6}
+          className="input font-mono text-sm"
+        />
+        <button
+          type="button"
+          onClick={() => void submitBulkAdd()}
+          disabled={bulkRunning || bulkText.trim().length === 0}
+          className="self-start rounded-md bg-neutral-900 px-4 py-2 text-white disabled:opacity-40"
+        >
+          {bulkRunning ? t.admin.bulkAddRunning : t.admin.bulkAddSubmit}
+        </button>
+
+        {bulkResults.length > 0 && (
+          <div className="mt-2">
+            <p className="text-sm font-medium">{t.admin.bulkAddResultsTitle}</p>
+            <ul className="mt-2 flex flex-col gap-1 text-sm">
+              {bulkResults.map((result, index) => (
+                <li
+                  key={index}
+                  className={result.ok ? "text-green-600" : "text-red-600"}
+                >
+                  {result.ok ? "✓" : "✗"}{" "}
+                  {result.ok ? t.admin.bulkAddSuccess : t.admin.bulkAddError}:{" "}
+                  {result.message}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
     </main>
   );
 }
