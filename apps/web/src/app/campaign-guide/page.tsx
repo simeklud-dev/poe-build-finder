@@ -3,12 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useLocale } from "@/i18n/LocaleContext";
-import {
-  CAMPAIGN_ACTS,
-  CAMPAIGN_WALKTHROUGH_VIDEO,
-  GENERAL_TIPS,
-  TERMINOLOGY,
-} from "@/data/campaign-guide";
+import { CAMPAIGN_ACTS, CAMPAIGN_WALKTHROUGH_VIDEO } from "@/data/campaign-guide";
 
 export default function CampaignGuidePage() {
   const { t } = useLocale();
@@ -42,7 +37,7 @@ export default function CampaignGuidePage() {
       <div className="panel mt-8 flex flex-col gap-4 p-4">
         <h2 className="text-lg font-semibold">{t.campaignGuide.tipsTitle}</h2>
         <ul className="flex flex-col gap-2 text-sm text-neutral-300">
-          {GENERAL_TIPS.map((tip) => (
+          {t.campaignGuide.tips.map((tip) => (
             <li key={tip} className="flex gap-2">
               <span className="text-[color:var(--accent-gold)]">&bull;</span>
               <span>{tip}</span>
@@ -52,7 +47,7 @@ export default function CampaignGuidePage() {
 
         <h2 className="mt-2 text-lg font-semibold">{t.campaignGuide.terminologyTitle}</h2>
         <ul className="flex flex-col gap-2 text-sm text-neutral-300">
-          {TERMINOLOGY.map((entry) => (
+          {t.campaignGuide.terminology.map((entry) => (
             <li key={entry.term}>
               <span className="font-semibold text-neutral-100">{entry.term}</span> —{" "}
               {entry.meaning}
@@ -89,7 +84,9 @@ export default function CampaignGuidePage() {
               <p className="text-xs text-neutral-500">
                 {t.campaignGuide.town}: {entry.town} &middot; {t.campaignGuide.boss}: {entry.boss}
               </p>
-              <p className="text-sm text-neutral-300">{entry.summary}</p>
+              <p className="text-sm text-neutral-300">
+                {t.campaignGuide.actSummaries[entry.act - 1]}
+              </p>
               <div className="mt-1 flex flex-wrap gap-3 text-xs">
                 <span className="text-neutral-500">{t.campaignGuide.fullGuides}:</span>
                 {entry.links.map((link) => (

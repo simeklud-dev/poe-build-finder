@@ -33,6 +33,9 @@ export interface Dictionary {
     close: string;
     tipsTitle: string;
     terminologyTitle: string;
+    tips: string[];
+    terminology: { term: string; meaning: string }[];
+    actSummaries: string[];
   };
   home: {
     title: string;
@@ -218,6 +221,39 @@ const en: Dictionary = {
     close: "Close",
     tipsTitle: "General campaign tips",
     terminologyTitle: "Terminology",
+    tips: [
+      "Don't waste time farming regular monsters — chase quest objectives, and only stop to clear packs of blue (magic) monsters. Rares aren't worth the risk on starting gear until you're well into Act 2.",
+      "Decide your build before you start: sketch a rough passive tree in Path of Building and keep it open in a second window so you're not standing around mid-run figuring out where points go.",
+      "Movement is king. Pair a travel skill (Flame Dash, Frostblink) with a movement skill (Leap Slam, Shield Charge) and alternate two Quicksilver Flasks whenever you're just running between objectives.",
+      "Learn the shape of each zone over repeat playthroughs — knowing roughly where the exit sits relative to your entry point saves far more time than any single item or flask.",
+      "Check every vendor when you pass through town for movement-speed boots, life-rolled rings, resistance pieces and useful link colors — but don't backtrack to a town without a real reason to.",
+      "Grab your ascendancy as soon as it's available rather than saving Labyrinth runs for later, and try to finish the Merciless Labyrinth before you fight Kitava at the end of Act 10 — the resistance penalty afterward makes any endgame content noticeably harder.",
+      "Gear priority while leveling: Life and resistances first, damage second. Once your resistances are capped (75%), shift the priority to Life, then damage.",
+    ],
+    terminology: [
+      {
+        term: "WP",
+        meaning:
+          "Waypoint — a shrine you activate once per zone that lets you fast-travel between any two waypoints you've unlocked, instead of walking the whole level again.",
+      },
+      {
+        term: "TP",
+        meaning:
+          "Teleport/Portal — using a Portal Scroll, the Portal skill gem, or simply exiting to character select and reloading, all of which drop you back in the last town you visited.",
+      },
+    ],
+    actSummaries: [
+      "You wash up on the Twilight Strand with nothing and fight your way to Lioneye's Watch, the first town. From there the coastline splits into the Coast and Mud Flats — worth a short detour to the Tidal Island for an optional fight against Hailrake, which rewards a Quicksilver Flask, and a hidden Medicine Chest nearby. The path then climbs through the Ledge and Climb into the Prison district, where Brutus guards the way out, before the Ship Graveyard (home to an optional Fairgraves encounter) and finally the Cavern of Anger, where Merveil waits in her lair.",
+      "Act 2 opens up considerably — the Southern Forest leads to the Crossroads, a hub connecting the Chamber of Sins, Broken Bridge and Fellshrine Ruins. This act is where the bandit quest lives: you'll cross paths with Kraityn, Alira and Oak, and can choose to kill or spare each of them for a permanent passive bonus or a one-off reward, so it's worth deciding your build's priorities ahead of time. The road continues through the Western Forest and Wetlands into the Vaal Ruins, and the act closes at the Ancient Pyramid, where the Vaal Oversoul waits at the top.",
+      "The City of Sarn gives way to a proper town, the Sarn Encampment, and from there the act sprawls through the Slums, Crematorium and a set of Sewers that double back on themselves — worth remembering the layout, since you'll pass through more than once. The Marketplace and Battlefront lead up to a pair of mirrored dungeons, the Solaris and Lunaris Temples, both of which reappear later in the campaign. From the Ebony Barracks the route climbs the Imperial Gardens into the Sceptre of God, ending on the Tower Rooftop against Dominus. If your build needs specific gems early, Siosa in the Library (reachable from the Imperial Gardens) sells almost the full gem list for a one-time quest.",
+      "Highgate is a small town, but Act 4 packs in some of the campaign's most memorable side-fights: the Dried Lake against Voll, and — reached through the Mines and Crystal Veins — two entirely optional boss encounters in Kaom's Dream and Daresso's Dream, both well worth doing for the unique item rewards if you're not in a rush. The main path continues into the Belly of the Beast and down through the Harvest to the Black Core, where three named bosses (Shavronne, Maligaro, Doedre) each drop a piece of Malachai needed to open the final fight in the Black Heart.",
+      "Act 5 moves the story to Oriath itself. From the Slave Pens and Control Blocks you reach Oriath Square, the new town, and from there the Templar Courts lead to a fight against High Templar Avarius and Innocence in the Sanctum of Innocence. The Ruined Square area branches out to the Ossuary and Reliquary, both worth visiting for quest items before you press on to the Cathedral Rooftop and Cathedral Apex, where Kitava makes the first of several appearances in the campaign.",
+      "The campaign loops back to a changed Wraeclast, revisiting Lioneye's Watch, the Coast and Mud Flats from Act 1, but with new areas branching off them — the Karui Fortress hides an optional Tukohama fight, and the Prisoner's Gate leads to a two-part encounter with Abberath. The Wetlands hold their own optional boss (Ryslatha), and the act's main path runs through the Southern Forest and Beacon out to sea, ending at the Brine King's Reef where Tsoagoth awaits.",
+      "Act 7 revisits Act 2's zones with a darker palette. The Crossroads and Fellshrine Ruins lead into the Crypt, where a map item opens an optional side dungeon, Maligaro's Sanctum. From the Den and Ashen Fields, the Dread Thicket hides another optional fight against Gruthkul, while the Causeway holds a lockbox worth grabbing before you head to Vaal City and down through the two-level Temple of Decay, where Arakaali lurks at the bottom.",
+      "A flooded, rebuilt Sarn frames Act 8. The Toxic Conduits and Doedre's Cesspool (with an optional Doedre fight) lead to the Grand Promenade and Bath House, from where the path splits toward the Lunaris and Solaris Temples — each holding one of the two Harbinger bosses whose orbs you need. Along the way the Quay and Grain Gate offer a few side objectives worth grabbing, and the act ends at the Harbour Bridge, where activating the Statue of the Sisters triggers a joint fight against both Lunaris and Solaris.",
+      "Act 9 trades forests for desert. From Highgate's Descent you drop into the Vastiri Desert, where an optional chest and a bottled-storm side quest are worth picking up before the Oasis, home to Shakari. The Foothills branch off toward the Boiling Lake for an optional Basilisk fight, while the Tunnel and Quarry lead to the Shrine of the Winds and Refinery, each with their own side boss. The act's main line finishes in the Belly of the Beast and Rotting Core, where you'll face Doedre, Maligaro and Shavronne again before the Depraved Trinity itself.",
+      "The final act brings you back to Oriath one last time. From the Cathedral Rooftop and Ravaged Square, a side trip to the Sanctum of Innocence yields a fight against Avarius, Reassembled, while the Control Blocks hold an optional Vilenta encounter. The Canals and Feeding Trough lead to the Altar of Hunger for the last fight against Kitava — be aware it applies a lasting resistance penalty afterward, so many players level up a little first and consider running the Merciless Labyrinth before committing to the kill.",
+    ],
   },
   home: {
     title: "Find builds",
@@ -417,6 +453,39 @@ const cs: Dictionary = {
     close: "Zavřít",
     tipsTitle: "Obecné tipy ke kampani",
     terminologyTitle: "Terminologie",
+    tips: [
+      "Neztrácejte čas zabíjením běžných příšer — honte se za cíli questů a zastavte se jen kvůli skupinkám modrých (magic) monster. Vzácné (žluté) monstra se nevyplatí riskovat na startovním vybavení, dokud nejste pořádně v Aktu 2.",
+      "Naplánujte si build předem: připravte si hrubý pasivní strom v Path of Building a nechte ho otevřený v druhém okně, ať nestojíte uprostřed hraní a nepřemýšlíte, kam dát body.",
+      "Pohyb je král. Zkombinujte přesunový skill (Flame Dash, Frostblink) s pohybovým skillem (Leap Slam, Shield Charge) a střídejte dva Quicksilver Flasky, kdykoliv jen běžíte mezi cíli.",
+      "Naučte se rozvržení jednotlivých zón opakovaným hraním — přibližná znalost, kde bývá východ vzhledem ke vstupu, ušetří mnohem víc času než jakýkoliv jeden item nebo flask.",
+      "Při každém průchodu městem zkontrolujte prodejce — hledejte boty se zrychlením pohybu, prsteny se životy, itemy s resisty a užitečnými barvami linků — ale nevracejte se do města bez skutečného důvodu.",
+      "Vezměte si ascendancy hned, jak je dostupná, místo abyste si Labyrinth šetřili na později, a zkuste dokončit Merciless Labyrinth ještě před bojem s Kitavou na konci Aktu 10 — postih na resisty po něm citelně ztíží jakýkoliv endgame obsah.",
+      "Priorita vybavení při levelování: nejdřív životy a resisty, pak damage. Jakmile máte resisty na capu (75 %), přesuňte prioritu na životy a pak damage.",
+    ],
+    terminology: [
+      {
+        term: "WP",
+        meaning:
+          "Waypoint — svatyně, kterou aktivujete jednou za zónu a která umožňuje rychlý přesun mezi libovolnými dvěma odemčenými waypointy, místo aby se muselo znovu procházet celou úrovní.",
+      },
+      {
+        term: "TP",
+        meaning:
+          "Teleport/Portal — použití Portal Scrollu, skillu Portal, nebo prosté opuštění do výběru postavy a znovunačtení — všechny tyto možnosti vás vrátí do posledního města, ve kterém jste byli.",
+      },
+    ],
+    actSummaries: [
+      "Vyplavíte se na Twilight Strand bez ničeho a probojujete se do Lioneye's Watch, prvního města. Odtud se pobřeží rozděluje na Coast a Mud Flats — stojí za to odbočit na Tidal Island na volitelný souboj s Hailrakem, který dává Quicksilver Flask, a poblíž je i skrytá Medicine Chest. Cesta pak stoupá přes Ledge a Climb do vězeňské čtvrti, kde cestu ven hlídá Brutus, než dorazíte na Ship Graveyard (s volitelným soubojem s Fairgraves) a nakonec do Cavern of Anger, kde ve své sluji čeká Merveil.",
+      "Akt 2 se výrazně otevírá — Southern Forest vede na Crossroads, uzel spojující Chamber of Sins, Broken Bridge a Fellshrine Ruins. V tomto aktu je i bandit quest: potkáte Kraityna, Aliru a Oaka a u každého si můžete vybrat, jestli ho zabijete nebo ušetříte, za trvalý pasivní bonus nebo jednorázovou odměnu — stojí za to si předem promyslet priority buildu. Cesta pokračuje přes Western Forest a Wetlands do Vaal Ruins a akt končí na Ancient Pyramid, kde nahoře čeká Vaal Oversoul.",
+      "City of Sarn přechází do skutečného města, Sarn Encampment, a odtud se akt rozprostírá přes Slums, Crematorium a soustavu Sewers, která se sama zacyklí — stojí za to zapamatovat si rozvržení, protože tudy projdete víckrát. Marketplace a Battlefront vedou k dvojici zrcadlových dungeonů, Solaris a Lunaris Temple, které se v kampani objeví ještě jednou později. Z Ebony Barracks vede trasa přes Imperial Gardens do Sceptre of God a končí na Tower Rooftop proti Dominovi. Pokud váš build potřebuje konkrétní gemy brzy, Siosa v Library (dostupná z Imperial Gardens) prodává za jednorázový quest skoro celý seznam gemů.",
+      "Highgate je malé město, ale Akt 4 nabízí jedny z nejzapamatovatelnějších vedlejších soubojů kampaně: Dried Lake proti Vollovi a — dostupné přes Mines a Crystal Veins — dva zcela volitelné boss souboje v Kaom's Dream a Daresso's Dream, oba stojí za to kvůli unikátním itemům, pokud nespěcháte. Hlavní cesta pokračuje do Belly of the Beast a přes Harvest do Black Core, kde tři pojmenovaní bossové (Shavronne, Maligaro, Doedre) každý pustí jednu část Malachaie potřebnou k otevření finálního souboje v Black Heart.",
+      "Akt 5 přesouvá příběh do samotného Oriathu. Ze Slave Pens a Control Blocks se dostanete do Oriath Square, nového města, odkud Templar Courts vedou k souboji s High Templar Avariem a Innocence v Sanctum of Innocence. Oblast Ruined Square se větví do Ossuary a Reliquary, obě stojí za návštěvu kvůli questovým itemům, než se vydáte na Cathedral Rooftop a Cathedral Apex, kde se poprvé z několika v kampani objeví Kitava.",
+      "Kampaň se vrací zpět na proměněný Wraeclast, znovu navštívíte Lioneye's Watch, Coast a Mud Flats z Aktu 1, ale s novými oblastmi, které se z nich větví — Karui Fortress skrývá volitelný souboj s Tukohamou a Prisoner's Gate vede k dvoufázovému souboji s Abberathem. Wetlands mají vlastního volitelného bosse (Ryslatha) a hlavní cesta aktu vede přes Southern Forest a Beacon na moře, konče na Brine King's Reef, kde čeká Tsoagoth.",
+      "Akt 7 znovu navštěvuje zóny z Aktu 2, ale v temnějším provedení. Crossroads a Fellshrine Ruins vedou do Crypt, kde mapový item otevírá volitelný vedlejší dungeon Maligaro's Sanctum. Z Den a Ashen Fields skrývá Dread Thicket další volitelný souboj s Gruthkul, zatímco Causeway ukrývá schránku, kterou stojí za to sebrat, než zamíříte do Vaal City a dolů přes dvouúrovňový Temple of Decay, kde na dně číhá Arakaali.",
+      "Akt 8 se odehrává v zatopeném, přestavěném Sarnu. Toxic Conduits a Doedre's Cesspool (s volitelným soubojem s Doedre) vedou na Grand Promenade a Bath House, odkud se cesta dělí směrem k Lunaris a Solaris Temple — každý ukrývá jednoho z dvojice Harbinger bossů, jejichž orb potřebujete. Cestou nabízí Quay a Grain Gate pár vedlejších cílů, které stojí za sebrání, a akt končí na Harbour Bridge, kde aktivace Statue of the Sisters spustí společný souboj proti Lunaris i Solaris.",
+      "Akt 9 vyměňuje lesy za poušť. Z Descent v Highgate se dostanete do Vastiri Desert, kde stojí za sebrání volitelná truhla a vedlejší quest s bottled stormem, než dorazíte do Oasis, domova Shakari. Foothills se větví k Boiling Lake na volitelný souboj s Basiliskem, zatímco Tunnel a Quarry vedou do Shrine of the Winds a Refinery, každé s vlastním vedlejším bossem. Hlavní linka aktu končí v Belly of the Beast a Rotting Core, kde znovu potkáte Doedre, Maligara a Shavronne, než dojde na samotnou Depraved Trinity.",
+      "Poslední akt vás naposledy přivádí zpět do Oriathu. Z Cathedral Rooftop a Ravaged Square vede odbočka do Sanctum of Innocence k souboji s Avariem, Reassembled, zatímco Control Blocks ukrývají volitelný souboj s Vilentou. Canals a Feeding Trough vedou k Altar of Hunger na poslední souboj s Kitavou — počítejte s tím, že po něm zůstává trvalý postih na resisty, takže spousta hráčů se nejdřív trochu dolevelí a zváží Merciless Labyrinth, než souboj podstoupí.",
+    ],
   },
   home: {
     title: "Hledat buildy",
@@ -621,6 +690,39 @@ const pl: Dictionary = {
     close: "Zamknij",
     tipsTitle: "Ogólne wskazówki do kampanii",
     terminologyTitle: "Terminologia",
+    tips: [
+      "Nie trać czasu na zabijanie zwykłych potworów — goń za celami zadań i zatrzymuj się tylko na grupki niebieskich (magicznych) potworów. Rzadkie (żółte) potwory nie są warte ryzyka na startowym sprzęcie, dopóki nie wejdziesz solidnie w Akt 2.",
+      "Zaplanuj build zanim zaczniesz: naszkicuj wstępne drzewko pasywne w Path of Building i trzymaj je otwarte w drugim oknie, żeby nie stać w miejscu i zastanawiać się, gdzie przydzielić punkty.",
+      "Ruch to podstawa. Połącz umiejętność podróżną (Flame Dash, Frostblink) z umiejętnością ruchu (Leap Slam, Shield Charge) i naprzemiennie używaj dwóch Quicksilver Flasków, gdy tylko biegniesz między celami.",
+      "Poznaj układ każdej strefy dzięki wielokrotnym przejściom — orientacyjna wiedza, gdzie znajduje się wyjście względem wejścia, oszczędza znacznie więcej czasu niż jakikolwiek pojedynczy przedmiot czy flaszka.",
+      "Sprawdzaj każdego handlarza podczas przechodzenia przez miasto — szukaj butów ze zwiększoną prędkością ruchu, pierścieni z życiem, przedmiotów z odpornościami i przydatnymi kolorami linków — ale nie wracaj do miasta bez realnego powodu.",
+      "Zdobądź swoją ascendancy jak najszybciej, zamiast odkładać Labirynt na później, i spróbuj ukończyć Merciless Labirynt przed walką z Kitavą na końcu Aktu 10 — kara do odporności po niej zauważalnie utrudnia całą zawartość endgame.",
+      "Priorytet ekwipunku podczas levelowania: najpierw życie i odporności, potem obrażenia. Gdy odporności osiągną limit (75%), priorytet przesuwa się na życie, a potem obrażenia.",
+    ],
+    terminology: [
+      {
+        term: "WP",
+        meaning:
+          "Waypoint — sanktuarium aktywowane raz na strefę, które pozwala szybko podróżować między dowolnymi dwoma odblokowanymi waypointami, zamiast przemierzać cały poziom od nowa.",
+      },
+      {
+        term: "TP",
+        meaning:
+          "Teleport/Portal — użycie Zwoju Portalu, umiejętności Portal, albo po prostu wyjście do wyboru postaci i ponowne wejście — wszystko to przenosi cię z powrotem do ostatniego odwiedzonego miasta.",
+      },
+    ],
+    actSummaries: [
+      "Wypływasz na brzeg Twilight Strand bez niczego i przebijasz się do Lioneye's Watch, pierwszego miasta. Stamtąd wybrzeże rozgałęzia się na Coast i Mud Flats — warto zboczyć na Tidal Island na opcjonalną walkę z Hailrakiem, za którą dostajesz Quicksilver Flask, oraz pobliską ukrytą Medicine Chest. Ścieżka wspina się dalej przez Ledge i Climb do dzielnicy więziennej, gdzie drogę blokuje Brutus, po czym trafiasz do Ship Graveyard (z opcjonalnym starciem z Fairgraves), a na końcu do Cavern of Anger, gdzie w swojej kryjówce czeka Merveil.",
+      "Akt 2 znacznie się otwiera — Southern Forest prowadzi do Crossroads, węzła łączącego Chamber of Sins, Broken Bridge i Fellshrine Ruins. To w tym akcie znajduje się zadanie bandytów: spotkasz Kraityna, Alirę i Oaka, a przy każdym możesz wybrać, czy go zabić, czy oszczędzić, za stały bonus pasywny albo jednorazową nagrodę — warto wcześniej przemyśleć priorytety builda. Droga prowadzi dalej przez Western Forest i Wetlands do Vaal Ruins, a akt kończy się na Ancient Pyramid, gdzie na szczycie czeka Vaal Oversoul.",
+      "City of Sarn przechodzi w prawdziwe miasto, Sarn Encampment, a stamtąd akt rozciąga się przez Slums, Crematorium i sieć Sewers, która zapętla się sama w sobie — warto zapamiętać układ, bo przejdziesz tędy więcej niż raz. Marketplace i Battlefront prowadzą do pary lustrzanych lochów, Solaris i Lunaris Temple, które pojawią się jeszcze raz później w kampanii. Z Ebony Barracks trasa wspina się przez Imperial Gardens do Sceptre of God i kończy się na Tower Rooftop w starciu z Dominusem. Jeśli twój build potrzebuje konkretnych gemów wcześnie, Siosa w Library (dostępnej z Imperial Gardens) sprzedaje za jednorazowe zadanie niemal cały zestaw gemów.",
+      "Highgate to niewielkie miasto, ale Akt 4 oferuje jedne z najbardziej zapadających w pamięć walk pobocznych kampanii: Dried Lake przeciwko Vollowi oraz — dostępne przez Mines i Crystal Veins — dwie całkowicie opcjonalne walki z bossami w Kaom's Dream i Daresso's Dream, obie warte zachodu ze względu na unikatowe przedmioty, jeśli się nie spieszysz. Główna ścieżka prowadzi dalej do Belly of the Beast i przez Harvest do Black Core, gdzie trzej nazwani bossowie (Shavronne, Maligaro, Doedre) upuszczają fragment Malachaia potrzebny do otwarcia finałowej walki w Black Heart.",
+      "Akt 5 przenosi fabułę do samego Oriath. Ze Slave Pens i Control Blocks docierasz do Oriath Square, nowego miasta, skąd Templar Courts prowadzą do walki z High Templar Avariusem i Innocence w Sanctum of Innocence. Obszar Ruined Square rozgałęzia się do Ossuary i Reliquary, obu wartych odwiedzenia dla przedmiotów zadaniowych, zanim ruszysz na Cathedral Rooftop i Cathedral Apex, gdzie Kitava pojawia się po raz pierwszy z kilku w kampanii.",
+      "Kampania zawraca na odmieniony Wraeclast, odwiedzasz ponownie Lioneye's Watch, Coast i Mud Flats z Aktu 1, ale z nowymi obszarami odchodzącymi od nich — Karui Fortress skrywa opcjonalną walkę z Tukohamą, a Prisoner's Gate prowadzi do dwuczęściowego starcia z Abberathem. Wetlands mają własnego opcjonalnego bossa (Ryslatha), a główna ścieżka aktu biegnie przez Southern Forest i Beacon aż nad morze, kończąc się na Brine King's Reef, gdzie czeka Tsoagoth.",
+      "Akt 7 odwiedza ponownie strefy z Aktu 2, ale w mroczniejszej odsłonie. Crossroads i Fellshrine Ruins prowadzą do Crypt, gdzie przedmiot-mapa otwiera opcjonalny loch poboczny, Maligaro's Sanctum. Z Den i Ashen Fields, Dread Thicket skrywa kolejną opcjonalną walkę z Gruthkul, podczas gdy Causeway ukrywa skrzynkę wartą zabrania, zanim skierujesz się do Vaal City i w dół przez dwupoziomowy Temple of Decay, gdzie na dnie czai się Arakaali.",
+      "Zalany, odbudowany Sarn stanowi tło Aktu 8. Toxic Conduits i Doedre's Cesspool (z opcjonalną walką z Doedre) prowadzą do Grand Promenade i Bath House, skąd ścieżka rozdziela się w kierunku Lunaris i Solaris Temple — każda kryje jednego z dwóch bossów Harbinger, których orby są potrzebne. Po drodze Quay i Grain Gate oferują kilka pobocznych celów wartych zebrania, a akt kończy się na Harbour Bridge, gdzie aktywacja Statue of the Sisters wywołuje wspólną walkę z Lunaris i Solaris.",
+      "Akt 9 zamienia lasy na pustynię. Z Descent w Highgate schodzisz do Vastiri Desert, gdzie warto zebrać opcjonalną skrzynię i poboczne zadanie z bottled storm, zanim dotrzesz do Oasis, domu Shakari. Foothills rozgałęziają się do Boiling Lake na opcjonalną walkę z Bazyliszkiem, podczas gdy Tunnel i Quarry prowadzą do Shrine of the Winds i Refinery, każde z własnym pobocznym bossem. Główna linia aktu kończy się w Belly of the Beast i Rotting Core, gdzie ponownie spotkasz Doedre, Maligaro i Shavronne, zanim dojdzie do starcia z samą Depraved Trinity.",
+      "Ostatni akt po raz ostatni sprowadza cię do Oriath. Z Cathedral Rooftop i Ravaged Square poboczna wyprawa do Sanctum of Innocence prowadzi do walki z Avariusem, Reassembled, podczas gdy Control Blocks kryją opcjonalne starcie z Vilentą. Canals i Feeding Trough prowadzą do Altar of Hunger na ostatnią walkę z Kitavą — pamiętaj, że pozostawia ona trwałą karę do odporności, więc wielu graczy najpierw trochę się dolevelowuje i rozważa Merciless Labirynt, zanim zdecyduje się na to starcie.",
+    ],
   },
   home: {
     title: "Szukaj buildów",
@@ -825,6 +927,39 @@ const ru: Dictionary = {
     close: "Закрыть",
     tipsTitle: "Общие советы по кампании",
     terminologyTitle: "Терминология",
+    tips: [
+      "Не тратьте время на фарм обычных монстров — гонитесь за целями квестов и останавливайтесь только ради групп синих (магических) монстров. Редкие (жёлтые) монстры не стоят риска на стартовом снаряжении, пока вы не окажетесь глубоко во 2 акте.",
+      "Продумайте билд заранее: набросайте примерное пассивное дерево в Path of Building и держите его открытым во втором окне, чтобы не стоять на месте и не думать, куда вложить очки.",
+      "Передвижение — это всё. Сочетайте передвигающий скилл (Flame Dash, Frostblink) с движковым скиллом (Leap Slam, Shield Charge) и чередуйте два Quicksilver Flask, когда просто бежите между целями.",
+      "Изучайте планировку каждой зоны за счёт повторных прохождений — примерное знание, где находится выход относительно входа, экономит куда больше времени, чем любой отдельный предмет или флакон.",
+      "Проверяйте каждого торговца при проходе через город — ищите ботинки со скоростью передвижения, кольца с жизнью, предметы с сопротивлениями и нужными цветами линков — но не возвращайтесь в город без реальной причины.",
+      "Берите асцендансию сразу, как только она доступна, вместо того чтобы откладывать Лабиринт на потом, и постарайтесь пройти Merciless Лабиринт до боя с Китавой в конце 10 акта — штраф к сопротивлениям после него заметно усложняет любой эндгейм-контент.",
+      "Приоритет экипировки при левелинге: сначала жизнь и сопротивления, потом урон. Как только сопротивления упираются в потолок (75%), приоритет смещается на жизнь, а затем на урон.",
+    ],
+    terminology: [
+      {
+        term: "WP",
+        meaning:
+          "Waypoint — путевая точка, активируемая один раз за зону, которая позволяет быстро перемещаться между любыми двумя открытыми точками, вместо повторного прохождения всего уровня.",
+      },
+      {
+        term: "TP",
+        meaning:
+          "Teleport/Portal — использование свитка портала, скилла Portal, либо просто выход в выбор персонажа и повторный вход — всё это возвращает вас в последний город, в котором вы были.",
+      },
+    ],
+    actSummaries: [
+      "Вас выбрасывает на Twilight Strand без ничего, и вы пробиваетесь к Lioneye's Watch, первому городу. Оттуда побережье разделяется на Coast и Mud Flats — стоит заглянуть на Tidal Island ради необязательного боя с Hailrake, за которого дают Quicksilver Flask, и спрятанного рядом Medicine Chest. Дальше путь поднимается через Ledge и Climb в тюремный район, где выход стережёт Brutus, затем идёт Ship Graveyard (с необязательной встречей с Fairgraves) и, наконец, Cavern of Anger, где в своём логове ждёт Merveil.",
+      "Акт 2 заметно раскрывается — Southern Forest ведёт к Crossroads, узлу, соединяющему Chamber of Sins, Broken Bridge и Fellshrine Ruins. Именно здесь находится квест бандитов: вы встретите Kraityn, Alira и Oak, и по каждому из них можно выбрать — убить или пощадить — за постоянный пассивный бонус или разовую награду, так что стоит заранее продумать приоритеты билда. Дорога продолжается через Western Forest и Wetlands в Vaal Ruins, а акт заканчивается на Ancient Pyramid, где наверху ждёт Vaal Oversoul.",
+      "City of Sarn переходит в настоящий город, Sarn Encampment, а дальше акт разворачивается через Slums, Crematorium и сеть Sewers, которая закольцовывается сама на себя — стоит запомнить планировку, так как вы пройдёте здесь не раз. Marketplace и Battlefront ведут к паре зеркальных подземелий, Solaris и Lunaris Temple, которые ещё раз появятся позже в кампании. Из Ebony Barracks маршрут поднимается через Imperial Gardens в Sceptre of God и заканчивается на Tower Rooftop боем с Dominus. Если вашему билду нужны конкретные гемы пораньше, Siosa в Library (доступна из Imperial Gardens) продаёт за одноразовый квест почти весь список гемов.",
+      "Highgate — небольшой город, но Акт 4 включает одни из самых запоминающихся побочных боёв кампании: Dried Lake против Voll, а также — доступные через Mines и Crystal Veins — два полностью необязательных босс-боя в Kaom's Dream и Daresso's Dream, оба стоят того ради уникальных предметов, если вы не торопитесь. Основной путь продолжается в Belly of the Beast и через Harvest к Black Core, где три именных босса (Shavronne, Maligaro, Doedre) каждый роняет часть Malachai, нужную для открытия финального боя в Black Heart.",
+      "Акт 5 переносит сюжет в сам Oriath. Из Slave Pens и Control Blocks вы попадаете в Oriath Square, новый город, откуда Templar Courts ведут к бою с High Templar Avarius и Innocence в Sanctum of Innocence. Область Ruined Square разветвляется на Ossuary и Reliquary, обе стоят посещения ради квестовых предметов, прежде чем вы направитесь на Cathedral Rooftop и Cathedral Apex, где Kitava впервые из нескольких раз появляется в кампании.",
+      "Кампания возвращается на изменившийся Wraeclast, вы снова посещаете Lioneye's Watch, Coast и Mud Flats из 1 акта, но с новыми зонами, ответвляющимися от них — Karui Fortress скрывает необязательный бой с Tukohama, а Prisoner's Gate ведёт к двухчастной встрече с Abberath. У Wetlands есть свой необязательный босс (Ryslatha), а основной путь акта проходит через Southern Forest и Beacon к морю, заканчиваясь на Brine King's Reef, где ждёт Tsoagoth.",
+      "Акт 7 повторно посещает зоны из Акта 2, но в более мрачном исполнении. Crossroads и Fellshrine Ruins ведут в Crypt, где предмет-карта открывает необязательное побочное подземелье, Maligaro's Sanctum. Из Den и Ashen Fields, Dread Thicket скрывает ещё один необязательный бой с Gruthkul, а Causeway прячет сундук, который стоит забрать перед тем, как отправиться в Vaal City и вниз через двухуровневый Temple of Decay, где на дне таится Arakaali.",
+      "Затопленный, отстроенный заново Sarn служит фоном Акта 8. Toxic Conduits и Doedre's Cesspool (с необязательным боем с Doedre) ведут к Grand Promenade и Bath House, откуда путь разделяется в сторону Lunaris и Solaris Temple — в каждом скрывается один из двух боссов Harbinger, чьи сферы вам нужны. По пути Quay и Grain Gate предлагают несколько побочных целей, которые стоит собрать, а акт заканчивается на Harbour Bridge, где активация Statue of the Sisters вызывает совместный бой против Lunaris и Solaris.",
+      "Акт 9 меняет леса на пустыню. Из Descent в Highgate вы спускаетесь в Vastiri Desert, где стоит забрать необязательный сундук и побочный квест с bottled storm, прежде чем добраться до Oasis, дома Shakari. Foothills разветвляются к Boiling Lake ради необязательного боя с Basilisk, а Tunnel и Quarry ведут к Shrine of the Winds и Refinery, у каждого свой побочный босс. Основная линия акта заканчивается в Belly of the Beast и Rotting Core, где вы снова встретите Doedre, Maligaro и Shavronne, прежде чем дойдёт до самой Depraved Trinity.",
+      "Финальный акт в последний раз возвращает вас в Oriath. Из Cathedral Rooftop и Ravaged Square побочный визит в Sanctum of Innocence ведёт к бою с Avarius, Reassembled, а Control Blocks скрывают необязательную встречу с Vilenta. Canals и Feeding Trough ведут к Altar of Hunger для последнего боя с Kitava — учтите, что после него остаётся постоянный штраф к сопротивлениям, поэтому многие игроки сначала немного повышают уровень и рассматривают Merciless Лабиринт, прежде чем решиться на этот бой.",
+    ],
   },
   home: {
     title: "Поиск билдов",
@@ -1023,6 +1158,39 @@ const de: Dictionary = {
     close: "Schließen",
     tipsTitle: "Allgemeine Kampagnen-Tipps",
     terminologyTitle: "Begriffe",
+    tips: [
+      "Verschwende keine Zeit mit normalen Monstern — jage Questzielen nach und halte nur für Gruppen blauer (magischer) Monster an. Seltene (gelbe) Monster sind mit Startausrüstung nicht das Risiko wert, bis du gut in Akt 2 bist.",
+      "Plane deinen Build vorher: skizziere einen groben Passiv-Baum in Path of Building und lass ihn in einem zweiten Fenster geöffnet, damit du mitten im Spiel nicht stehen bleibst, um zu überlegen, wo Punkte hingehören.",
+      "Bewegung ist König. Kombiniere einen Reise-Skill (Flame Dash, Frostblink) mit einem Bewegungs-Skill (Leap Slam, Shield Charge) und wechsle zwischen zwei Quicksilver Flasks, wann immer du nur zwischen Zielen unterwegs bist.",
+      "Lerne die Form jeder Zone durch wiederholtes Spielen — ungefähr zu wissen, wo der Ausgang relativ zum Eingang liegt, spart weit mehr Zeit als jeder einzelne Gegenstand oder Flask.",
+      "Prüfe jeden Händler, wenn du durch eine Stadt kommst, nach Stiefeln mit Laufgeschwindigkeit, Ringen mit Leben, Gegenständen mit Resistenzen und passenden Link-Farben — kehre aber nicht ohne echten Grund in eine Stadt zurück.",
+      "Hol dir deine Ascendancy, sobald sie verfügbar ist, statt Labyrinth-Läufe aufzusparen, und versuche, das Merciless Labyrinth vor dem Kampf gegen Kitava am Ende von Akt 10 abzuschließen — die Resistenz-Strafe danach erschwert jeden Endgame-Inhalt spürbar.",
+      "Ausrüstungspriorität beim Leveln: zuerst Leben und Resistenzen, dann Schaden. Sobald deine Resistenzen das Cap (75 %) erreichen, verschiebt sich die Priorität auf Leben, dann Schaden.",
+    ],
+    terminology: [
+      {
+        term: "WP",
+        meaning:
+          "WP (Waypoint) — ein Schrein, den du einmal pro Zone aktivierst und der Schnellreisen zwischen zwei beliebigen freigeschalteten Wegpunkten erlaubt, statt die ganze Zone erneut zu durchqueren.",
+      },
+      {
+        term: "TP",
+        meaning:
+          "TP (Teleport/Portal) — die Nutzung einer Portalrolle, des Portal-Skillgems, oder einfach das Verlassen zur Charakterauswahl und erneutes Laden, was dich jeweils zurück in die zuletzt besuchte Stadt bringt.",
+      },
+    ],
+    actSummaries: [
+      "Du strandest ohne alles am Twilight Strand und kämpfst dich zu Lioneye's Watch durch, der ersten Stadt. Von dort teilt sich die Küste in Coast und Mud Flats — ein kurzer Abstecher zur Tidal Island lohnt sich für den optionalen Kampf gegen Hailrake, der einen Quicksilver Flask belohnt, sowie eine versteckte Medicine Chest in der Nähe. Der Weg steigt weiter über Ledge und Climb ins Gefängnisviertel, wo Brutus den Ausgang bewacht, bevor es zum Ship Graveyard (mit optionaler Begegnung mit Fairgraves) und schließlich zur Cavern of Anger geht, wo Merveil in ihrer Höhle wartet.",
+      "Akt 2 öffnet sich deutlich — der Southern Forest führt zu den Crossroads, einem Knotenpunkt, der Chamber of Sins, Broken Bridge und Fellshrine Ruins verbindet. In diesem Akt befindet sich auch die Banditen-Quest: Du triffst auf Kraityn, Alira und Oak und kannst bei jedem wählen, ob du ihn tötest oder verschonst, für einen dauerhaften Passiv-Bonus oder eine einmalige Belohnung — es lohnt sich, die Prioritäten deines Builds vorher festzulegen. Der Weg führt weiter durch Western Forest und Wetlands in die Vaal Ruins, und der Akt endet am Ancient Pyramid, wo oben der Vaal Oversoul wartet.",
+      "Die City of Sarn geht in eine richtige Stadt über, das Sarn Encampment, und von dort erstreckt sich der Akt über Slums, Crematorium und ein Sewers-Netz, das sich selbst zurückschleift — die Aufteilung zu merken lohnt sich, da du hier mehrfach durchkommst. Marketplace und Battlefront führen zu einem Paar gespiegelter Dungeons, dem Solaris- und Lunaris-Tempel, die später in der Kampagne erneut auftauchen. Von den Ebony Barracks steigt die Route durch die Imperial Gardens ins Sceptre of God und endet auf dem Tower Rooftop im Kampf gegen Dominus. Braucht dein Build früh bestimmte Gems, verkauft Siosa in der Library (erreichbar über die Imperial Gardens) für eine einmalige Quest fast die gesamte Gem-Liste.",
+      "Highgate ist eine kleine Stadt, aber Akt 4 bietet einige der einprägsamsten Nebenkämpfe der Kampagne: den Dried Lake gegen Voll sowie — erreichbar über Mines und Crystal Veins — zwei komplett optionale Bosskämpfe in Kaom's Dream und Daresso's Dream, beide wegen der einzigartigen Beute lohnenswert, wenn du es nicht eilig hast. Der Hauptweg führt weiter in die Belly of the Beast und durch die Harvest zum Black Core, wo drei benannte Bosse (Shavronne, Maligaro, Doedre) jeweils ein Teil von Malachai fallen lassen, das für den finalen Kampf im Black Heart benötigt wird.",
+      "Akt 5 verlegt die Handlung nach Oriath selbst. Von Slave Pens und Control Blocks erreichst du den Oriath Square, die neue Stadt, von wo die Templar Courts zu einem Kampf gegen High Templar Avarius und Innocence im Sanctum of Innocence führen. Das Gebiet Ruined Square verzweigt sich zu Ossuary und Reliquary, beide einen Besuch wegen Questgegenständen wert, bevor du weiter zum Cathedral Rooftop und Cathedral Apex ziehst, wo Kitava zum ersten von mehreren Malen in der Kampagne auftaucht.",
+      "Die Kampagne kehrt auf ein verändertes Wraeclast zurück — du besuchst Lioneye's Watch, Coast und Mud Flats aus Akt 1 erneut, aber mit neuen Gebieten, die davon abzweigen: Die Karui Fortress verbirgt einen optionalen Kampf gegen Tukohama, und das Prisoner's Gate führt zu einer zweiteiligen Begegnung mit Abberath. Die Wetlands haben ihren eigenen optionalen Boss (Ryslatha), und der Hauptweg des Akts führt durch Southern Forest und Beacon aufs Meer hinaus, endend am Brine King's Reef, wo Tsoagoth wartet.",
+      "Akt 7 besucht die Zonen aus Akt 2 erneut, allerdings düsterer eingefärbt. Crossroads und Fellshrine Ruins führen in die Crypt, wo ein Karten-Gegenstand einen optionalen Neben-Dungeon öffnet, Maligaro's Sanctum. Von Den und Ashen Fields verbirgt das Dread Thicket einen weiteren optionalen Kampf gegen Gruthkul, während der Causeway eine Schatulle versteckt, die sich zu holen lohnt, bevor es zur Vaal City und hinab durch den zweistufigen Temple of Decay geht, wo Arakaali am Grund lauert.",
+      "Ein überflutetes, wieder aufgebautes Sarn bildet den Rahmen für Akt 8. Toxic Conduits und Doedre's Cesspool (mit optionalem Kampf gegen Doedre) führen zur Grand Promenade und zum Bath House, von wo sich der Weg Richtung Lunaris- und Solaris-Tempel teilt — jeder verbirgt einen der beiden Harbinger-Bosse, deren Orbs du brauchst. Unterwegs bieten Quay und Grain Gate ein paar Nebenziele, die sich zu holen lohnen, und der Akt endet an der Harbour Bridge, wo die Aktivierung der Statue of the Sisters einen gemeinsamen Kampf gegen Lunaris und Solaris auslöst.",
+      "Akt 9 tauscht Wälder gegen Wüste. Vom Descent in Highgate steigst du in die Vastiri Desert hinab, wo sich eine optionale Truhe und eine Nebenquest mit Bottled Storm lohnen, bevor du die Oasis erreichst, die Heimat von Shakari. Die Foothills verzweigen sich zum Boiling Lake für einen optionalen Kampf gegen den Basilisken, während Tunnel und Quarry zum Shrine of the Winds und zur Refinery führen, jeweils mit eigenem Nebenboss. Die Hauptlinie des Akts endet in der Belly of the Beast und im Rotting Core, wo du erneut auf Doedre, Maligaro und Shavronne triffst, bevor es zur Depraved Trinity selbst kommt.",
+      "Der letzte Akt bringt dich ein letztes Mal zurück nach Oriath. Von Cathedral Rooftop und Ravaged Square führt ein Abstecher ins Sanctum of Innocence zu einem Kampf gegen Avarius, Reassembled, während die Control Blocks eine optionale Begegnung mit Vilenta verbergen. Canals und Feeding Trough führen zum Altar of Hunger für den letzten Kampf gegen Kitava — beachte, dass danach eine dauerhafte Resistenz-Strafe bleibt, weshalb viele Spieler zunächst etwas leveln und das Merciless Labyrinth in Betracht ziehen, bevor sie sich dem Kampf stellen.",
+    ],
   },
   home: {
     title: "Builds suchen",
