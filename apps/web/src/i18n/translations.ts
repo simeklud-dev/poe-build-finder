@@ -29,6 +29,10 @@ export interface Dictionary {
     town: string;
     boss: string;
     fullGuides: string;
+    enlarge: string;
+    close: string;
+    tipsTitle: string;
+    terminologyTitle: string;
   };
   home: {
     title: string;
@@ -210,6 +214,10 @@ const en: Dictionary = {
     town: "Town",
     boss: "Act boss",
     fullGuides: "Full guides",
+    enlarge: "Enlarge",
+    close: "Close",
+    tipsTitle: "General campaign tips",
+    terminologyTitle: "Terminology",
   },
   home: {
     title: "Find builds",
@@ -405,6 +413,10 @@ const cs: Dictionary = {
     town: "Město",
     boss: "Boss aktu",
     fullGuides: "Kompletní návody",
+    enlarge: "Zvětšit",
+    close: "Zavřít",
+    tipsTitle: "Obecné tipy ke kampani",
+    terminologyTitle: "Terminologie",
   },
   home: {
     title: "Hledat buildy",
@@ -605,6 +617,10 @@ const pl: Dictionary = {
     town: "Miasto",
     boss: "Boss aktu",
     fullGuides: "Pełne poradniki",
+    enlarge: "Powiększ",
+    close: "Zamknij",
+    tipsTitle: "Ogólne wskazówki do kampanii",
+    terminologyTitle: "Terminologia",
   },
   home: {
     title: "Szukaj buildów",
@@ -805,6 +821,10 @@ const ru: Dictionary = {
     town: "Город",
     boss: "Босс акта",
     fullGuides: "Полные гайды",
+    enlarge: "Увеличить",
+    close: "Закрыть",
+    tipsTitle: "Общие советы по кампании",
+    terminologyTitle: "Терминология",
   },
   home: {
     title: "Поиск билдов",
@@ -999,6 +1019,10 @@ const de: Dictionary = {
     town: "Stadt",
     boss: "Akt-Boss",
     fullGuides: "Vollständige Guides",
+    enlarge: "Vergrößern",
+    close: "Schließen",
+    tipsTitle: "Allgemeine Kampagnen-Tipps",
+    terminologyTitle: "Begriffe",
   },
   home: {
     title: "Builds suchen",
