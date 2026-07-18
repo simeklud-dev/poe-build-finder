@@ -253,7 +253,7 @@ Místo odhadu pro externí dodavatele jde o pořadí kroků, ve kterém dává s
 
 ## 11. Rozhodnutá zadání
 
-- **Monetizace:** žádná — čistě komunitní, nekomerční projekt.
+- **Monetizace:** Google AdSense (Auto ads) přidáno 2026-07-18 — viz `POZNATKY.md`, sekce "Malé reklamy". Rozhodnutí "žádná monetizace" tímto padlo; **cookie consent banner pro EU/GDPR zatím chybí** a je potřeba ho doplnit před tím, než reklamy reálně naběhnou.
 - **Název:** pracovní název "PoE Build Finder" zůstává, dokud nevznikne finální branding.
 - **Podpora her:** PoE1 i PoE2 od první verze (ne postupné přidávání).
 - **Komunitní obsah:** ano, uživatelé mohou od začátku (MVP) přidávat vlastní buildy formulářem.

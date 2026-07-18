@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import EmberField from "@/components/EmberField";
+import CookieConsentBanner from "@/components/CookieConsentBanner";
 import { AuthProvider } from "@/lib/auth-context";
 import { LocaleProvider } from "@/i18n/LocaleContext";
 import "./globals.css";
@@ -39,14 +39,6 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        {ADSENSE_CLIENT_ID && (
-          <Script
-            async
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT_ID}`}
-            crossOrigin="anonymous"
-            strategy="afterInteractive"
-          />
-        )}
         <EmberField />
         <LocaleProvider>
           <AuthProvider>
@@ -54,6 +46,7 @@ export default function RootLayout({
             <div className="flex-1">{children}</div>
           </AuthProvider>
           <Footer />
+          <CookieConsentBanner />
         </LocaleProvider>
       </body>
     </html>

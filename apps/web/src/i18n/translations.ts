@@ -16,6 +16,11 @@ export interface Dictionary {
   footer: {
     disclaimer: string;
   };
+  cookieConsent: {
+    message: string;
+    accept: string;
+    decline: string;
+  };
   home: {
     title: string;
     subtitle: string;
@@ -178,6 +183,12 @@ const en: Dictionary = {
   footer: {
     disclaimer:
       "This site is not affiliated with or endorsed by Grinding Gear Games.",
+  },
+  cookieConsent: {
+    message:
+      "We use cookies to serve ads. Accept to allow personalized ads, or decline to browse without them.",
+    accept: "Accept",
+    decline: "Decline",
   },
   home: {
     title: "Find builds",
@@ -355,6 +366,12 @@ const cs: Dictionary = {
   footer: {
     disclaimer:
       "Tento web není přidružen ke Grinding Gear Games ani jimi podporován.",
+  },
+  cookieConsent: {
+    message:
+      "Používáme cookies pro zobrazování reklam. Souhlaste s personalizovanými reklamami, nebo je odmítněte a prohlížejte web bez nich.",
+    accept: "Souhlasím",
+    decline: "Odmítnout",
   },
   home: {
     title: "Hledat buildy",
@@ -538,6 +555,12 @@ const pl: Dictionary = {
     disclaimer:
       "Ta strona nie jest powiązana z Grinding Gear Games ani przez nich wspierana.",
   },
+  cookieConsent: {
+    message:
+      "Używamy plików cookie do wyświetlania reklam. Zaakceptuj, aby zezwolić na spersonalizowane reklamy, lub odrzuć, aby przeglądać bez nich.",
+    accept: "Akceptuję",
+    decline: "Odrzuć",
+  },
   home: {
     title: "Szukaj buildów",
     subtitle:
@@ -720,6 +743,12 @@ const ru: Dictionary = {
     disclaimer:
       "Этот сайт не связан с Grinding Gear Games и не поддерживается ими.",
   },
+  cookieConsent: {
+    message:
+      "Мы используем файлы cookie для показа рекламы. Согласитесь, чтобы разрешить персонализированную рекламу, или откажитесь, чтобы просматривать сайт без неё.",
+    accept: "Согласен",
+    decline: "Отклонить",
+  },
   home: {
     title: "Поиск билдов",
     subtitle:
@@ -895,6 +924,12 @@ const de: Dictionary = {
   footer: {
     disclaimer:
       "Diese Seite steht in keiner Verbindung zu Grinding Gear Games und wird nicht von ihnen unterstützt.",
+  },
+  cookieConsent: {
+    message:
+      "Wir verwenden Cookies, um Werbung anzuzeigen. Stimme zu, um personalisierte Werbung zuzulassen, oder lehne ab, um ohne sie weiter zu surfen.",
+    accept: "Zustimmen",
+    decline: "Ablehnen",
   },
   home: {
     title: "Builds suchen",
