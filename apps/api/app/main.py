@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from app.config import settings
 from app.db import get_db
-from app.routers import admin, auth, builds, favorites, reports, saved_filters
+from app.routers import admin, auth, builds, favorites, poe_news, reports, saved_filters
 
 app = FastAPI(title="PoE Build Finder API")
 
@@ -22,6 +22,7 @@ app.include_router(auth.router)
 app.include_router(favorites.router)
 app.include_router(saved_filters.router)
 app.include_router(reports.router)
+app.include_router(poe_news.router)
 
 
 @app.get("/health")

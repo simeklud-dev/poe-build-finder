@@ -60,6 +60,8 @@ export interface Dictionary {
     subtitle: string;
     viewAll: string;
     source: string;
+    loading: string;
+    error: string;
   };
   games: { all: string; poe1: string; poe2: string };
   sources: {
@@ -241,6 +243,8 @@ const en: Dictionary = {
       "Latest official announcements from Path of Exile and Path of Exile 2.",
     viewAll: "View all news",
     source: "Official news",
+    loading: "Loading news...",
+    error: "Couldn't load news.",
   },
   games: { all: "All games", poe1: "Path of Exile 1", poe2: "Path of Exile 2" },
   sources: {
@@ -435,6 +439,8 @@ const cs: Dictionary = {
       "Nejnovější oficiální oznámení z Path of Exile a Path of Exile 2.",
     viewAll: "Zobrazit všechny novinky",
     source: "Oficiální novinky",
+    loading: "Načítám novinky...",
+    error: "Novinky se nepodařilo načíst.",
   },
   games: {
     all: "Všechny hry",
@@ -632,6 +638,8 @@ const pl: Dictionary = {
       "Najnowsze oficjalne ogłoszenia z Path of Exile i Path of Exile 2.",
     viewAll: "Zobacz wszystkie nowości",
     source: "Oficjalne nowości",
+    loading: "Ładowanie nowości...",
+    error: "Nie udało się załadować nowości.",
   },
   games: {
     all: "Wszystkie gry",
@@ -829,6 +837,8 @@ const ru: Dictionary = {
     subtitle: "Последние официальные анонсы Path of Exile и Path of Exile 2.",
     viewAll: "Все новости",
     source: "Официальные новости",
+    loading: "Загрузка новостей...",
+    error: "Не удалось загрузить новости.",
   },
   games: { all: "Все игры", poe1: "Path of Exile 1", poe2: "Path of Exile 2" },
   sources: {
@@ -1022,6 +1032,8 @@ const de: Dictionary = {
       "Die neuesten offiziellen Ankündigungen zu Path of Exile und Path of Exile 2.",
     viewAll: "Alle News anzeigen",
     source: "Offizielle News",
+    loading: "News werden geladen...",
+    error: "News konnten nicht geladen werden.",
   },
   games: {
     all: "Alle Spiele",

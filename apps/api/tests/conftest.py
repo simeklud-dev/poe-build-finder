@@ -3,6 +3,7 @@ from sqlalchemy import delete
 
 from app.db import SessionLocal
 from app.models.build import Build
+from app.models.poe_news import PoeNewsItem
 from app.models.submission_attempt import SubmissionAttempt
 from app.models.user import User
 
@@ -22,6 +23,7 @@ def clean_db():
         db = SessionLocal()
         db.execute(delete(SubmissionAttempt))
         db.execute(delete(Build))
+        db.execute(delete(PoeNewsItem))
         db.execute(delete(User))
         db.commit()
         db.close()

@@ -1,11 +1,34 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useLocale } from "@/i18n/LocaleContext";
-import { POE_NEWS } from "@/data/poe-news";
+import { API_URL } from "@/lib/api";
+
+interface PoeNewsItem {
+  id: string;
+  title: string;
+  url: string;
+  published_at: string;
+}
 
 export default function PoeNewsWidget() {
   const { t, intlLocale } = useLocale();
+  const [items, setItems] = useState<PoeNewsItem[] | null>(null);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch(`${API_URL}/api/poe-news?limit=6`, { signal: controller.signal })
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error("request failed"))))
+      .then(setItems)
+      .catch((err) => {
+        if (!(err instanceof DOMException && err.name === "AbortError")) {
+          setError(true);
+        }
+      });
+    return () => controller.abort();
+  }, []);
 
   return (
     <aside className="panel flex flex-col overflow-hidden p-0">
@@ -36,30 +59,37 @@ export default function PoeNewsWidget() {
       <div className="flex flex-col gap-3 p-4">
         <p className="text-xs text-neutral-400">{t.news.subtitle}</p>
 
-        <ul className="flex flex-col gap-3">
-          {POE_NEWS.map((item) => (
-            <li
-              key={item.url}
-              className="border-b border-[color:var(--border-subtle)] pb-2 last:border-none last:pb-0"
-            >
-              <a
-                href={item.url}
-                target="_blank"
-                rel="noreferrer"
-                className="text-sm font-medium leading-snug hover:underline"
+        {error && <p className="text-xs text-neutral-500">{t.news.error}</p>}
+        {!error && items === null && (
+          <p className="text-xs text-neutral-500">{t.news.loading}</p>
+        )}
+
+        {items !== null && (
+          <ul className="flex flex-col gap-3">
+            {items.map((item) => (
+              <li
+                key={item.id}
+                className="border-b border-[color:var(--border-subtle)] pb-2 last:border-none last:pb-0"
               >
-                {item.title}
-              </a>
-              <div className="mt-1 text-xs text-neutral-500">
-                {new Date(item.date).toLocaleDateString(intlLocale, {
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
-                })}
-              </div>
-            </li>
-          ))}
-        </ul>
+                <a
+                  href={item.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-sm font-medium leading-snug hover:underline"
+                >
+                  {item.title}
+                </a>
+                <div className="mt-1 text-xs text-neutral-500">
+                  {new Date(item.published_at).toLocaleDateString(intlLocale, {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })}
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
 
         <a
           href="https://www.pathofexile.com/news"
