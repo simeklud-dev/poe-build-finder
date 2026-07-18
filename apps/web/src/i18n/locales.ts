@@ -4,7 +4,7 @@ export type Locale = (typeof LOCALES)[number];
 export const DEFAULT_LOCALE: Locale = "en";
 
 export const LOCALE_META: Record<Locale, { label: string; flag: string; intl: string }> = {
-  en: { label: "English", flag: "🇬🇧", intl: "en-US" },
+  en: { label: "English", flag: "EN", intl: "en-US" },
   cs: { label: "Čeština", flag: "🇨🇿", intl: "cs-CZ" },
   pl: { label: "Polski", flag: "🇵🇱", intl: "pl-PL" },
   ru: { label: "Русский", flag: "🇷🇺", intl: "ru-RU" },
