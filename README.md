@@ -269,14 +269,28 @@ nešla spustit):
   `DATABASE_URL` ve tvaru `postgresql://...` (bez `+psycopg` driveru, který
   SQLAlchemy vyžaduje) — backend si to teď opraví sám, není potřeba proměnnou ručně
   upravovat.
+- **Bezpečné načítání `.env`** (`app/config.py`) — dřív appka spadla (`IndexError`)
+  na hostingu, kde je Root Directory service nastavený na `apps/api` (kratší
+  adresářová struktura než lokální monorepo checkout). Teď se v takovém případě
+  `.env` soubor jednoduše nenačítá a spoléhá se čistě na proměnné prostředí z UI
+  hostingu — což je na hostingu i tak jediný zdroj konfigurace.
 
 ### Postup
 
 1. **PostgreSQL** — v Railway projektu "New" → "Database" → "PostgreSQL". Railway
    vytvoří proměnnou `DATABASE_URL` (dostupnou dalším službám přes referenci).
 2. **Backend service** — "New" → "GitHub Repo" → tenhle repozitář, nastav **Root
-   Directory** na `apps/api`. Environment variables (kromě `DATABASE_URL`, kterou
-   nastav jako referenci na Postgres plugin, `${{Postgres.DATABASE_URL}}`):
+   Directory** na `apps/api`. Environment variables:
+   - `DATABASE_URL` — **nespoléhej na `${{Postgres.DATABASE_URL}}` napsané ručně do
+     pole hodnoty** — u nás to Railway přijalo, ale po deployi se proměnná
+     vyhodnotila jako prázdný řetězec (ověřeno). Spolehlivě funguje poskládat URL
+     ručně z proměnných, které Postgres plugin do ostatních služeb sdílí automaticky,
+     + pevné interní síťové adresy Postgres service (Postgres service → Settings →
+     Networking → Private Networking, typicky `<jméno-service>.railway.internal`,
+     port `5432`):
+     ```
+     postgresql://${{POSTGRES_USER}}:${{POSTGRES_PASSWORD}}@postgres.railway.internal:5432/${{POSTGRES_DB}}
+     ```
    - `CORS_ORIGINS` — URL frontendové služby, jakmile ji založíš (viz krok 3); do
      té doby klidně `http://localhost:3000`, doplníš později
    - `ADMIN_USERNAME`, `ADMIN_PASSWORD` — **změň** oproti dev hodnotám
