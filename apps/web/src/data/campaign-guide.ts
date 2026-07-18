@@ -108,7 +108,7 @@ export const CAMPAIGN_ACTS: CampaignAct[] = [
     act: 9,
     image: "/images/campaign/a9.webp",
     town: "The Terrasse",
-    boss: "Shakari, Queen of the Sands",
+    boss: "The Depraved Trinity",
     links: [
       { label: "PoE Wiki", url: "https://www.poewiki.net/wiki/Act_9" },
       { label: "Mobalytics", url: "https://mobalytics.gg/poe/guides/campaign-act-9" },

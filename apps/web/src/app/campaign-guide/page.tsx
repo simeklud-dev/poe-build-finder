@@ -84,7 +84,7 @@ export default function CampaignGuidePage() {
               <p className="text-xs text-neutral-500">
                 {t.campaignGuide.town}: {entry.town} &middot; {t.campaignGuide.boss}: {entry.boss}
               </p>
-              <p className="text-sm text-neutral-300">
+              <p className="whitespace-pre-line text-sm text-neutral-300">
                 {t.campaignGuide.actSummaries[entry.act - 1]}
               </p>
               <div className="mt-1 flex flex-wrap gap-3 text-xs">
