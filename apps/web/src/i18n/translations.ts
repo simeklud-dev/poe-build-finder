@@ -10,6 +10,7 @@ export interface Dictionary {
     submit: string;
     admin: string;
     favorites: string;
+    campaignGuide: string;
     login: string;
     logout: string;
   };
@@ -20,6 +21,14 @@ export interface Dictionary {
     message: string;
     accept: string;
     decline: string;
+  };
+  campaignGuide: {
+    title: string;
+    subtitle: string;
+    watchVideo: string;
+    town: string;
+    boss: string;
+    fullGuides: string;
   };
   home: {
     title: string;
@@ -177,6 +186,7 @@ const en: Dictionary = {
     submit: "Submit build",
     admin: "Admin",
     favorites: "Favorites",
+    campaignGuide: "Campaign Guide",
     login: "Sign in",
     logout: "Sign out",
   },
@@ -189,6 +199,15 @@ const en: Dictionary = {
       "We use cookies to serve ads. Accept to allow personalized ads, or decline to browse without them.",
     accept: "Accept",
     decline: "Decline",
+  },
+  campaignGuide: {
+    title: "PoE1 Campaign Guide",
+    subtitle:
+      "Act-by-act landmark maps for the Path of Exile 1 campaign, with links to full written guides.",
+    watchVideo: "Watch a full campaign walkthrough on YouTube",
+    town: "Town",
+    boss: "Act boss",
+    fullGuides: "Full guides",
   },
   home: {
     title: "Find builds",
@@ -360,6 +379,7 @@ const cs: Dictionary = {
     submit: "Přidat build",
     admin: "Admin",
     favorites: "Oblíbené",
+    campaignGuide: "Průvodce kampaní",
     login: "Přihlásit",
     logout: "Odhlásit",
   },
@@ -372,6 +392,15 @@ const cs: Dictionary = {
       "Používáme cookies pro zobrazování reklam. Souhlaste s personalizovanými reklamami, nebo je odmítněte a prohlížejte web bez nich.",
     accept: "Souhlasím",
     decline: "Odmítnout",
+  },
+  campaignGuide: {
+    title: "Průvodce kampaní PoE1",
+    subtitle:
+      "Mapy klíčových míst pro každý akt kampaně Path of Exile 1, s odkazy na kompletní psané návody.",
+    watchVideo: "Podívej se na kompletní průchod kampaní na YouTube",
+    town: "Město",
+    boss: "Boss aktu",
+    fullGuides: "Kompletní návody",
   },
   home: {
     title: "Hledat buildy",
@@ -548,6 +577,7 @@ const pl: Dictionary = {
     submit: "Dodaj build",
     admin: "Admin",
     favorites: "Ulubione",
+    campaignGuide: "Przewodnik po kampanii",
     login: "Zaloguj się",
     logout: "Wyloguj się",
   },
@@ -560,6 +590,15 @@ const pl: Dictionary = {
       "Używamy plików cookie do wyświetlania reklam. Zaakceptuj, aby zezwolić na spersonalizowane reklamy, lub odrzuć, aby przeglądać bez nich.",
     accept: "Akceptuję",
     decline: "Odrzuć",
+  },
+  campaignGuide: {
+    title: "Przewodnik po kampanii PoE1",
+    subtitle:
+      "Mapy kluczowych miejsc dla każdego aktu kampanii Path of Exile 1, z odnośnikami do pełnych poradników.",
+    watchVideo: "Obejrzyj pełne przejście kampanii na YouTube",
+    town: "Miasto",
+    boss: "Boss aktu",
+    fullGuides: "Pełne poradniki",
   },
   home: {
     title: "Szukaj buildów",
@@ -736,6 +775,7 @@ const ru: Dictionary = {
     submit: "Добавить билд",
     admin: "Админ",
     favorites: "Избранное",
+    campaignGuide: "Гайд по кампании",
     login: "Войти",
     logout: "Выйти",
   },
@@ -748,6 +788,15 @@ const ru: Dictionary = {
       "Мы используем файлы cookie для показа рекламы. Согласитесь, чтобы разрешить персонализированную рекламу, или откажитесь, чтобы просматривать сайт без неё.",
     accept: "Согласен",
     decline: "Отклонить",
+  },
+  campaignGuide: {
+    title: "Гайд по кампании PoE1",
+    subtitle:
+      "Карты ключевых мест для каждого акта кампании Path of Exile 1, со ссылками на полные текстовые гайды.",
+    watchVideo: "Смотреть полное прохождение кампании на YouTube",
+    town: "Город",
+    boss: "Босс акта",
+    fullGuides: "Полные гайды",
   },
   home: {
     title: "Поиск билдов",
@@ -918,6 +967,7 @@ const de: Dictionary = {
     submit: "Build einreichen",
     admin: "Admin",
     favorites: "Favoriten",
+    campaignGuide: "Kampagnenführer",
     login: "Anmelden",
     logout: "Abmelden",
   },
@@ -930,6 +980,15 @@ const de: Dictionary = {
       "Wir verwenden Cookies, um Werbung anzuzeigen. Stimme zu, um personalisierte Werbung zuzulassen, oder lehne ab, um ohne sie weiter zu surfen.",
     accept: "Zustimmen",
     decline: "Ablehnen",
+  },
+  campaignGuide: {
+    title: "PoE1 Kampagnenführer",
+    subtitle:
+      "Karten mit wichtigen Orten für jeden Akt der Path of Exile 1 Kampagne, mit Links zu vollständigen Guides.",
+    watchVideo: "Vollständigen Kampagnen-Walkthrough auf YouTube ansehen",
+    town: "Stadt",
+    boss: "Akt-Boss",
+    fullGuides: "Vollständige Guides",
   },
   home: {
     title: "Builds suchen",

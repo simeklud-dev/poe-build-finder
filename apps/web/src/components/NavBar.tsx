@@ -32,6 +32,7 @@ export default function NavBar() {
         </Link>
         <div className="flex items-center gap-4 text-sm">
           <Link href="/meta">{t.nav.meta}</Link>
+          <Link href="/campaign-guide">{t.nav.campaignGuide}</Link>
           <Link href="/submit">{t.nav.submit}</Link>
           <Link href="/admin">{t.nav.admin}</Link>
           {!loading && user && (
