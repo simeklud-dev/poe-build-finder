@@ -60,12 +60,12 @@ export default function CampaignGuidePage() {
         {CAMPAIGN_ACTS.map((entry) => (
           <div
             key={entry.act}
-            className="panel flex flex-col gap-4 p-4 sm:flex-row"
+            className="panel flex flex-col gap-4 p-4 sm:flex-row sm:items-start"
           >
             <button
               type="button"
               onClick={() => setZoomedAct(entry.act)}
-              className="group relative h-64 w-full shrink-0 overflow-hidden rounded-md sm:h-auto sm:w-96"
+              className="group relative h-64 w-full shrink-0 overflow-hidden rounded-md sm:h-64 sm:w-96"
               aria-label={t.campaignGuide.enlarge}
             >
               <Image
