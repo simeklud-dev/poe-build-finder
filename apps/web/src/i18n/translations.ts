@@ -192,7 +192,7 @@ const en: Dictionary = {
   nav: {
     brand: "PoE Build Finder",
     meta: "Meta overview",
-    submit: "Submit build",
+    submit: "ADD Build",
     admin: "Admin",
     favorites: "Favorites",
     campaignGuide: "Campaign Guide",
@@ -561,7 +561,7 @@ const cs: Dictionary = {
     loginTitle: "Přihlášení",
     registerTitle: "Registrace",
     authHint:
-      "Účet je potřeba pro oblíbené buildy a uložené filtry. Bez emailové služby — zapomenuté heslo bohužel zatím nejde obnovit, jen založit nový účet.",
+      "Účet je potřeba jen pro oblíbené buildy a uložené filtry. Pro vlastní bezpečnost NEPOUŽÍVEJTE žádné své skutečné účty prosím!",
     email: "Email",
     password: "Heslo",
     loginButton: "Přihlásit",

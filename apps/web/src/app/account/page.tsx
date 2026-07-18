@@ -151,6 +151,11 @@ export default function AccountPage() {
       <Link href="/favorites" className="mt-6 inline-block underline">
         {t.account.myFavorites}
       </Link>
+      {user.is_admin && (
+        <Link href="/admin" className="mt-2 block underline">
+          {t.nav.admin}
+        </Link>
+      )}
 
       <h2 className="mt-8 text-lg font-semibold">{t.account.savedFilters}</h2>
       {filters === null && <p className="mt-2 text-sm text-neutral-500">{t.account.loading}</p>}

@@ -70,6 +70,7 @@ export interface BuildListResponse {
 export interface AuthUser {
   id: string;
   email: string;
+  is_admin: boolean;
   created_at: string;
 }
 

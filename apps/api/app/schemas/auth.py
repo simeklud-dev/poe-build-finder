@@ -18,6 +18,7 @@ class LoginRequest(BaseModel):
 class UserOut(BaseModel):
     id: UUID
     email: str
+    is_admin: bool
     created_at: datetime
 
     model_config = {"from_attributes": True}

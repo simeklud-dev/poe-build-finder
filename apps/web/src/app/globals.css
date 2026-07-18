@@ -121,4 +121,64 @@ body::after {
     border-color: var(--border-subtle);
     backdrop-filter: blur(6px);
   }
+
+  .nav-link {
+    @apply relative text-neutral-200 transition-colors duration-150;
+  }
+  .nav-link:hover {
+    color: var(--accent-gold);
+  }
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -6px;
+    height: 1px;
+    background: var(--accent-gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s ease;
+  }
+  .nav-link:hover::after {
+    transform: scaleX(1);
+  }
+
+  /* Styled after an active Path of Exile skill gem: a glossy green orb
+     with a socket-ring border, used for the primary "add a build" CTA. */
+  .gem-button {
+    @apply inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold text-white;
+    background: radial-gradient(
+      circle at 32% 28%,
+      #cdf29a 0%,
+      #8fc94f 35%,
+      #4f8a26 65%,
+      #234a10 100%
+    );
+    border: 2px solid rgba(201, 162, 74, 0.55);
+    box-shadow:
+      0 0 10px 1px rgba(143, 201, 79, 0.5),
+      inset 0 1px 3px rgba(255, 255, 255, 0.45),
+      inset 0 -3px 5px rgba(0, 0, 0, 0.4);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
+    transition:
+      transform 0.15s ease,
+      box-shadow 0.15s ease;
+  }
+  .gem-button:hover {
+    transform: scale(1.06);
+    box-shadow:
+      0 0 16px 3px rgba(143, 201, 79, 0.75),
+      inset 0 1px 3px rgba(255, 255, 255, 0.55),
+      inset 0 -3px 5px rgba(0, 0, 0, 0.4);
+  }
+  .gem-button::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 9999px;
+    background: radial-gradient(circle at 35% 30%, #f2ffe0, #a9df6c 60%, #3f7020 100%);
+    box-shadow: 0 0 4px 1px rgba(200, 255, 150, 0.8);
+  }
 }

@@ -2,18 +2,27 @@
 
 import { useCallback, useEffect, useState, FormEvent } from "react";
 import { API_URL, AdminBuildCreatePayload, AdminReport, PendingBuild, basicAuthHeader } from "@/lib/api";
+import { useAuth } from "@/lib/auth-context";
 import { useLocale } from "@/i18n/LocaleContext";
 
 const SESSION_KEY = "poe-build-finder-admin-auth";
 
 export default function AdminPage() {
   const { t, intlLocale } = useLocale();
+  const { user: signedInUser, token: signedInToken, logout: signOut } = useAuth();
   // authHeader starts as null on both server and client so the first client render
   // matches the SSR markup exactly; the stored session (if any) is picked up
   // afterwards in an effect, avoiding a hydration mismatch from sessionStorage
   // (which the server can never see).
   const [authHeader, setAuthHeader] = useState<string | null>(null);
   const [loginError, setLoginError] = useState<string | null>(null);
+
+  // Prefer a regular account with is_admin=true (same Bearer token used for
+  // favorites/saved filters) over the legacy shared HTTP Basic credentials,
+  // which now only serve as a fallback — see app/security.py require_admin.
+  const jwtAdminHeader =
+    signedInUser?.is_admin && signedInToken ? `Bearer ${signedInToken}` : null;
+  const activeAuthHeader = jwtAdminHeader ?? authHeader;
   const [pending, setPending] = useState<PendingBuild[]>([]);
   const [reports, setReports] = useState<AdminReport[]>([]);
   const [loading, setLoading] = useState(false);
@@ -66,8 +75,8 @@ export default function AdminPage() {
     // fetching the moderation queue whenever the admin (re)authenticates is the point
     // of this effect — loadPending's internal setState calls are intentional here.
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    if (authHeader) void loadPending(authHeader);
-  }, [authHeader, loadPending]);
+    if (activeAuthHeader) void loadPending(activeAuthHeader);
+  }, [activeAuthHeader, loadPending]);
 
   function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -81,20 +90,24 @@ export default function AdminPage() {
   }
 
   function handleLogout() {
+    if (jwtAdminHeader) {
+      signOut();
+      return;
+    }
     sessionStorage.removeItem(SESSION_KEY);
     setAuthHeader(null);
     setPending([]);
   }
 
   async function decide(buildId: string, action: "approve" | "reject") {
-    if (!authHeader) return;
+    if (!activeAuthHeader) return;
     let note: string | undefined;
     if (action === "reject") {
       note = window.prompt(t.admin.rejectPrompt) ?? undefined;
     }
     const response = await fetch(`${API_URL}/api/admin/builds/${buildId}/${action}`, {
       method: "POST",
-      headers: { Authorization: authHeader, "Content-Type": "application/json" },
+      headers: { Authorization: activeAuthHeader, "Content-Type": "application/json" },
       body: action === "reject" ? JSON.stringify({ note }) : undefined,
     });
     if (response.ok) {
@@ -105,10 +118,10 @@ export default function AdminPage() {
   }
 
   async function decideReport(reportId: string, action: "dismiss" | "remove-build") {
-    if (!authHeader) return;
+    if (!activeAuthHeader) return;
     const response = await fetch(`${API_URL}/api/admin/reports/${reportId}/${action}`, {
       method: "POST",
-      headers: { Authorization: authHeader },
+      headers: { Authorization: activeAuthHeader },
     });
     if (response.ok) {
       setReports((prev) => prev.filter((r) => r.id !== reportId));
@@ -118,7 +131,7 @@ export default function AdminPage() {
   }
 
   async function submitBulkAdd() {
-    if (!authHeader) return;
+    if (!activeAuthHeader) return;
     const lines = bulkText
       .split("\n")
       .map((line) => line.trim())
@@ -151,7 +164,7 @@ export default function AdminPage() {
       try {
         const response = await fetch(`${API_URL}/api/admin/builds`, {
           method: "POST",
-          headers: { Authorization: authHeader, "Content-Type": "application/json" },
+          headers: { Authorization: activeAuthHeader, "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         });
         if (response.ok) {
@@ -172,7 +185,7 @@ export default function AdminPage() {
     setBulkRunning(false);
   }
 
-  if (!authHeader) {
+  if (!activeAuthHeader) {
     return (
       <main className="mx-auto max-w-sm px-4 py-10">
         <h1 className="text-2xl font-semibold">{t.admin.loginTitle}</h1>
