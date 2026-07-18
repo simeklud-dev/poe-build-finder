@@ -93,6 +93,25 @@ export default function Home() {
     }
   }
 
+  function handleReset() {
+    setQ("");
+    setGame("");
+    setSource("");
+    setBuildClass("");
+    setAscendancy("");
+    setCreator("");
+    setMainSkill("");
+    setLeaguePatch("");
+    setTags("");
+    setSort("date");
+    setSaveFilterMessage(null);
+    if (page !== 1) {
+      setPage(1);
+    } else {
+      setRefreshKey((k) => k + 1);
+    }
+  }
+
   async function saveCurrentFilter() {
     if (!token) return;
     const name = window.prompt(t.home.saveFilterPrompt);
@@ -224,6 +243,13 @@ export default function Home() {
                 className="self-start rounded-md bg-neutral-900 px-4 py-2 text-white"
               >
                 {t.home.searchButton}
+              </button>
+              <button
+                type="button"
+                onClick={handleReset}
+                className="self-start rounded-md border border-neutral-300 px-4 py-2 text-sm dark:border-neutral-700"
+              >
+                {t.home.resetButton}
               </button>
               {token && (
                 <button

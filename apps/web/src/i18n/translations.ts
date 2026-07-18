@@ -27,6 +27,7 @@ export interface Dictionary {
     leaguePlaceholder: string;
     tagsPlaceholder: string;
     searchButton: string;
+    resetButton: string;
     saveFilterButton: string;
     saveFilterPrompt: string;
     saveFilterSuccess: string;
@@ -190,6 +191,7 @@ const en: Dictionary = {
     leaguePlaceholder: "League / patch",
     tagsPlaceholder: "Tags (comma separated)",
     searchButton: "Search",
+    resetButton: "Reset filters",
     saveFilterButton: "Save filter",
     saveFilterPrompt: "Name for the saved filter:",
     saveFilterSuccess: "Filter saved — find it on the Account page.",
@@ -366,6 +368,7 @@ const cs: Dictionary = {
     leaguePlaceholder: "Liga / patch",
     tagsPlaceholder: "Tagy (odděl čárkou)",
     searchButton: "Hledat",
+    resetButton: "Vymazat filtry",
     saveFilterButton: "Uložit filtr",
     saveFilterPrompt: "Název pro uložený filtr:",
     saveFilterSuccess: "Filtr uložen — najdeš ho na stránce Účet.",
@@ -547,6 +550,7 @@ const pl: Dictionary = {
     leaguePlaceholder: "Liga / patch",
     tagsPlaceholder: "Tagi (oddziel przecinkiem)",
     searchButton: "Szukaj",
+    resetButton: "Wyczyść filtry",
     saveFilterButton: "Zapisz filtr",
     saveFilterPrompt: "Nazwa zapisanego filtra:",
     saveFilterSuccess: "Filtr zapisany — znajdziesz go na stronie Konto.",
@@ -728,6 +732,7 @@ const ru: Dictionary = {
     leaguePlaceholder: "Лига / патч",
     tagsPlaceholder: "Теги (через запятую)",
     searchButton: "Искать",
+    resetButton: "Сбросить фильтры",
     saveFilterButton: "Сохранить фильтр",
     saveFilterPrompt: "Название сохранённого фильтра:",
     saveFilterSuccess: "Фильтр сохранён — найдёшь его на странице Аккаунт.",
@@ -903,6 +908,7 @@ const de: Dictionary = {
     leaguePlaceholder: "Liga / Patch",
     tagsPlaceholder: "Tags (kommagetrennt)",
     searchButton: "Suchen",
+    resetButton: "Filter zurücksetzen",
     saveFilterButton: "Filter speichern",
     saveFilterPrompt: "Name für den gespeicherten Filter:",
     saveFilterSuccess: "Filter gespeichert — zu finden auf der Konto-Seite.",
