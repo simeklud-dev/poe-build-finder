@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useLocale } from "@/i18n/LocaleContext";
-import { CAMPAIGN_ACTS, CAMPAIGN_WALKTHROUGH_VIDEO } from "@/data/campaign-guide";
+import { CAMPAIGN_ACTS, CAMPAIGN_VIDEOS } from "@/data/campaign-guide";
 
 export default function CampaignGuidePage() {
   const { t } = useLocale();
@@ -25,14 +25,19 @@ export default function CampaignGuidePage() {
       <h1 className="text-2xl font-semibold">{t.campaignGuide.title}</h1>
       <p className="mt-1 text-sm text-neutral-500">{t.campaignGuide.subtitle}</p>
 
-      <a
-        href={CAMPAIGN_WALKTHROUGH_VIDEO}
-        target="_blank"
-        rel="noreferrer"
-        className="mt-4 inline-flex items-center gap-2 rounded-md bg-neutral-900 px-4 py-2 text-sm text-white hover:opacity-90"
-      >
-        ▶ {t.campaignGuide.watchVideo}
-      </a>
+      <div className="mt-4 flex flex-wrap gap-3">
+        {CAMPAIGN_VIDEOS.map((video) => (
+          <a
+            key={video.url}
+            href={video.url}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 rounded-md bg-neutral-900 px-4 py-2 text-sm text-white hover:opacity-90"
+          >
+            ▶ {t.campaignGuide.videos[video.key]}
+          </a>
+        ))}
+      </div>
 
       <div className="panel mt-8 flex flex-col gap-4 p-4">
         <h2 className="text-lg font-semibold">{t.campaignGuide.tipsTitle}</h2>

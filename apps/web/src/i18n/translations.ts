@@ -25,7 +25,11 @@ export interface Dictionary {
   campaignGuide: {
     title: string;
     subtitle: string;
-    watchVideo: string;
+    videos: {
+      secrets: string;
+      walkthroughPart1: string;
+      walkthroughPart2: string;
+    };
     town: string;
     boss: string;
     fullGuides: string;
@@ -213,7 +217,11 @@ const en: Dictionary = {
     title: "PoE1 Campaign Guide",
     subtitle:
       "Act-by-act landmark maps for the Path of Exile 1 campaign, with links to full written guides.",
-    watchVideo: "Watch a full campaign walkthrough on YouTube",
+    videos: {
+      secrets: "Campaign secrets A1 – A10",
+      walkthroughPart1: "Campaign walkthrough part 1",
+      walkthroughPart2: "Campaign walkthrough part 2",
+    },
     town: "Town",
     boss: "Act boss",
     fullGuides: "Full guides",
@@ -324,7 +332,7 @@ const en: Dictionary = {
     loginTitle: "Sign in",
     registerTitle: "Register",
     authHint:
-      "An account is needed for favorites and saved filters. There's no email service — a forgotten password can't be recovered yet, only a new account created.",
+      "An account is only needed for favorites and saved filters. For your own safety, please do NOT use any of your real accounts!",
     email: "Email",
     password: "Password",
     loginButton: "Sign in",
@@ -445,7 +453,11 @@ const cs: Dictionary = {
     title: "Průvodce kampaní PoE1",
     subtitle:
       "Mapy klíčových míst pro každý akt kampaně Path of Exile 1, s odkazy na kompletní psané návody.",
-    watchVideo: "Podívej se na kompletní průchod kampaní na YouTube",
+    videos: {
+      secrets: "Tajemství kampaně A1 – A10",
+      walkthroughPart1: "Průchod kampaní, část 1",
+      walkthroughPart2: "Průchod kampaní, část 2",
+    },
     town: "Město",
     boss: "Boss aktu",
     fullGuides: "Kompletní návody",
@@ -682,7 +694,11 @@ const pl: Dictionary = {
     title: "Przewodnik po kampanii PoE1",
     subtitle:
       "Mapy kluczowych miejsc dla każdego aktu kampanii Path of Exile 1, z odnośnikami do pełnych poradników.",
-    watchVideo: "Obejrzyj pełne przejście kampanii na YouTube",
+    videos: {
+      secrets: "Sekrety kampanii A1 – A10",
+      walkthroughPart1: "Przejście kampanii, część 1",
+      walkthroughPart2: "Przejście kampanii, część 2",
+    },
     town: "Miasto",
     boss: "Boss aktu",
     fullGuides: "Pełne poradniki",
@@ -797,7 +813,7 @@ const pl: Dictionary = {
     loginTitle: "Logowanie",
     registerTitle: "Rejestracja",
     authHint:
-      "Konto jest potrzebne do ulubionych i zapisanych filtrów. Brak usługi e-mail — zapomnianego hasła nie da się jeszcze odzyskać, można tylko założyć nowe konto.",
+      "Konto jest potrzebne tylko do ulubionych i zapisanych filtrów. Dla własnego bezpieczeństwa NIE UŻYWAJ żadnych swoich prawdziwych kont!",
     email: "E-mail",
     password: "Hasło",
     loginButton: "Zaloguj się",
@@ -919,7 +935,11 @@ const ru: Dictionary = {
     title: "Гайд по кампании PoE1",
     subtitle:
       "Карты ключевых мест для каждого акта кампании Path of Exile 1, со ссылками на полные текстовые гайды.",
-    watchVideo: "Смотреть полное прохождение кампании на YouTube",
+    videos: {
+      secrets: "Секреты кампании А1 – А10",
+      walkthroughPart1: "Прохождение кампании, часть 1",
+      walkthroughPart2: "Прохождение кампании, часть 2",
+    },
     town: "Город",
     boss: "Босс акта",
     fullGuides: "Полные гайды",
@@ -1029,7 +1049,7 @@ const ru: Dictionary = {
     loginTitle: "Вход",
     registerTitle: "Регистрация",
     authHint:
-      "Аккаунт нужен для избранного и сохранённых фильтров. Почтовой службы нет — забытый пароль пока нельзя восстановить, можно только создать новый аккаунт.",
+      "Аккаунт нужен только для избранного и сохранённых фильтров. Ради собственной безопасности НЕ ИСПОЛЬЗУЙТЕ никакие свои настоящие аккаунты!",
     email: "Email",
     password: "Пароль",
     loginButton: "Войти",
@@ -1150,7 +1170,11 @@ const de: Dictionary = {
     title: "PoE1 Kampagnenführer",
     subtitle:
       "Karten mit wichtigen Orten für jeden Akt der Path of Exile 1 Kampagne, mit Links zu vollständigen Guides.",
-    watchVideo: "Vollständigen Kampagnen-Walkthrough auf YouTube ansehen",
+    videos: {
+      secrets: "Kampagnen-Geheimnisse A1 – A10",
+      walkthroughPart1: "Kampagnen-Walkthrough, Teil 1",
+      walkthroughPart2: "Kampagnen-Walkthrough, Teil 2",
+    },
     town: "Stadt",
     boss: "Akt-Boss",
     fullGuides: "Vollständige Guides",
@@ -1265,7 +1289,7 @@ const de: Dictionary = {
     loginTitle: "Anmeldung",
     registerTitle: "Registrierung",
     authHint:
-      "Ein Konto wird für Favoriten und gespeicherte Filter benötigt. Es gibt keinen E-Mail-Dienst — ein vergessenes Passwort kann derzeit nicht wiederhergestellt werden, nur ein neues Konto erstellt.",
+      "Ein Konto wird nur für Favoriten und gespeicherte Filter benötigt. Verwende zu deiner eigenen Sicherheit bitte KEINE deiner echten Konten!",
     email: "E-Mail",
     password: "Passwort",
     loginButton: "Anmelden",

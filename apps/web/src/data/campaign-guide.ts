@@ -128,4 +128,10 @@ export const CAMPAIGN_ACTS: CampaignAct[] = [
   },
 ];
 
-export const CAMPAIGN_WALKTHROUGH_VIDEO = "https://www.youtube.com/watch?v=zFSthWZFtTc";
+// Labels are translated per-locale (see i18n/translations.ts, campaignGuide.videos);
+// only the key + URL live here.
+export const CAMPAIGN_VIDEOS: { key: "secrets" | "walkthroughPart1" | "walkthroughPart2"; url: string }[] = [
+  { key: "secrets", url: "https://www.youtube.com/watch?v=zFSthWZFtTc" },
+  { key: "walkthroughPart1", url: "https://www.youtube.com/watch?v=kFB6Je37RhE&t=35s" },
+  { key: "walkthroughPart2", url: "https://www.youtube.com/watch?v=YY8bp8vJoK8" },
+];
