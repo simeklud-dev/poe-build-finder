@@ -8,15 +8,22 @@ export function gameOptions(t: Dictionary, withAll: boolean = true) {
   return withAll ? [{ value: "", label: t.games.all }, ...opts] : opts;
 }
 
-export function sourceOptions(t: Dictionary) {
+// Popisek zdroje podle DB hodnoty (Reddit/YouTube/...) — s fallbackem na syrovou
+// hodnotu, kdyby v `translations.ts` chyběl (viz sources sekce Dictionary).
+export function sourceLabel(t: Dictionary, value: string): string {
+  return (t.sources as Record<string, string>)[value] ?? value;
+}
+
+// Dropdown možnosti z reálných DB hodnot (viz GET /api/builds/facets) — "autofilter"
+// styl místo napevno psaného seznamu. `allLabel` je popisek prázdné "vše" volby.
+export function dynamicOptions(
+  values: string[],
+  allLabel: string,
+  labels?: (value: string) => string,
+) {
   return [
-    { value: "", label: t.sources.all },
-    { value: "reddit", label: t.sources.reddit },
-    { value: "youtube", label: t.sources.youtube },
-    { value: "poe_forum", label: t.sources.poe_forum },
-    { value: "pob_forum", label: t.sources.pob_forum },
-    { value: "poe_ninja", label: t.sources.poe_ninja },
-    { value: "community", label: t.sources.community },
+    { value: "", label: allLabel },
+    ...values.map((v) => ({ value: v, label: labels ? labels(v) : v })),
   ];
 }
 

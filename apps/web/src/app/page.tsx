@@ -3,10 +3,10 @@
 import { useEffect, useState, FormEvent } from "react";
 import BuildCard from "@/components/BuildCard";
 import PoeNewsWidget from "@/components/PoeNewsWidget";
-import { API_URL, BuildListResponse } from "@/lib/api";
+import { API_URL, BuildFacets, BuildListResponse } from "@/lib/api";
 import { useAuth } from "@/lib/auth-context";
 import { useLocale } from "@/i18n/LocaleContext";
-import { gameOptions, sourceOptions, sortOptions } from "@/i18n/options";
+import { gameOptions, sortOptions, dynamicOptions, sourceLabel } from "@/i18n/options";
 
 const PAGE_SIZE = 20;
 
@@ -22,11 +22,12 @@ export default function Home() {
   const [creator, setCreator] = useState("");
   const [mainSkill, setMainSkill] = useState("");
   const [leaguePatch, setLeaguePatch] = useState("");
-  const [tags, setTags] = useState("");
+  const [tags, setTags] = useState<string[]>([]);
   const [sort, setSort] = useState("date");
   const [page, setPage] = useState(1);
   const [refreshKey, setRefreshKey] = useState(0);
 
+  const [facets, setFacets] = useState<BuildFacets | null>(null);
   const [results, setResults] = useState<BuildListResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -50,11 +51,7 @@ export default function Home() {
         if (creator.trim()) params.set("author", creator.trim());
         if (mainSkill) params.set("main_skill", mainSkill);
         if (leaguePatch) params.set("league_patch", leaguePatch);
-        tags
-          .split(",")
-          .map((t) => t.trim())
-          .filter(Boolean)
-          .forEach((t) => params.append("tags", t));
+        tags.forEach((tg) => params.append("tags", tg));
         params.set("sort", sort);
         params.set("page", String(page));
         params.set("page_size", String(PAGE_SIZE));
@@ -84,6 +81,40 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, sort, refreshKey]);
 
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function run() {
+      try {
+        const params = new URLSearchParams();
+        if (game) params.set("game", game);
+        const response = await fetch(
+          `${API_URL}/api/builds/facets?${params.toString()}`,
+          { signal: controller.signal },
+        );
+        if (!response.ok) return;
+        const data: BuildFacets = await response.json();
+        setFacets(data);
+        // hra může zneplatnit dřív vybranou hodnotu (např. PoE1 třída po přepnutí na
+        // PoE2) — dropdown možnosti jsou scoped jen podle `game`, ne křížově.
+        setBuildClass((v) => (v && !data.class.includes(v) ? "" : v));
+        setAscendancy((v) => (v && !data.ascendancy.includes(v) ? "" : v));
+        setMainSkill((v) => (v && !data.main_skill.includes(v) ? "" : v));
+        setLeaguePatch((v) => (v && !data.league_patch.includes(v) ? "" : v));
+        setSource((v) => (v && !data.source.includes(v) ? "" : v));
+        setTags((prev) => prev.filter((tg) => data.tags.includes(tg)));
+      } catch (err) {
+        if (!(err instanceof DOMException && err.name === "AbortError")) {
+          // facety jsou jen UX vylepšení dropdownů — chyba se tiše ignoruje, hlavní
+          // vyhledávání (efekt výše) na nich nezávisí
+        }
+      }
+    }
+
+    void run();
+    return () => controller.abort();
+  }, [game]);
+
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
     if (page !== 1) {
@@ -102,7 +133,7 @@ export default function Home() {
     setCreator("");
     setMainSkill("");
     setLeaguePatch("");
-    setTags("");
+    setTags([]);
     setSort("date");
     setSaveFilterMessage(null);
     if (page !== 1) {
@@ -127,11 +158,7 @@ export default function Home() {
     if (creator.trim()) payload.author = creator.trim();
     if (mainSkill) payload.main_skill = mainSkill;
     if (leaguePatch) payload.league_patch = leaguePatch;
-    const tagList = tags
-      .split(",")
-      .map((t) => t.trim())
-      .filter(Boolean);
-    if (tagList.length > 0) payload.tags = tagList;
+    if (tags.length > 0) payload.tags = tags;
 
     const response = await fetch(`${API_URL}/api/saved-filters`, {
       method: "POST",
@@ -182,48 +209,92 @@ export default function Home() {
                 onChange={(e) => setSource(e.target.value)}
                 className="input"
               >
-                {sourceOptions(t).map((s) => (
+                {dynamicOptions(facets?.source ?? [], t.sources.all, (v) =>
+                  sourceLabel(t, v),
+                ).map((s) => (
                   <option key={s.value} value={s.value}>
                     {s.label}
                   </option>
                 ))}
               </select>
-              <input
+              <select
                 value={buildClass}
                 onChange={(e) => setBuildClass(e.target.value)}
-                placeholder={t.home.classPlaceholder}
                 className="input"
-              />
-              <input
+              >
+                {dynamicOptions(facets?.class ?? [], t.home.classPlaceholder).map(
+                  (o) => (
+                    <option key={o.value} value={o.value}>
+                      {o.label}
+                    </option>
+                  ),
+                )}
+              </select>
+              <select
                 value={ascendancy}
                 onChange={(e) => setAscendancy(e.target.value)}
-                placeholder={t.home.ascendancyPlaceholder}
                 className="input"
-              />
+              >
+                {dynamicOptions(
+                  facets?.ascendancy ?? [],
+                  t.home.ascendancyPlaceholder,
+                ).map((o) => (
+                  <option key={o.value} value={o.value}>
+                    {o.label}
+                  </option>
+                ))}
+              </select>
               <input
                 value={creator}
                 onChange={(e) => setCreator(e.target.value)}
                 placeholder={t.home.creatorPlaceholder}
                 className="input"
               />
-              <input
+              <select
                 value={mainSkill}
                 onChange={(e) => setMainSkill(e.target.value)}
-                placeholder={t.home.mainSkillPlaceholder}
                 className="input"
-              />
-              <input
+              >
+                {dynamicOptions(
+                  facets?.main_skill ?? [],
+                  t.home.mainSkillPlaceholder,
+                ).map((o) => (
+                  <option key={o.value} value={o.value}>
+                    {o.label}
+                  </option>
+                ))}
+              </select>
+              <select
                 value={leaguePatch}
                 onChange={(e) => setLeaguePatch(e.target.value)}
-                placeholder={t.home.leaguePlaceholder}
                 className="input"
-              />
-              <input
+              >
+                {dynamicOptions(
+                  facets?.league_patch ?? [],
+                  t.home.leaguePlaceholder,
+                ).map((o) => (
+                  <option key={o.value} value={o.value}>
+                    {o.label}
+                  </option>
+                ))}
+              </select>
+              <select
+                multiple
                 value={tags}
-                onChange={(e) => setTags(e.target.value)}
-                placeholder={t.home.tagsPlaceholder}
+                onChange={(e) =>
+                  setTags(
+                    Array.from(e.target.selectedOptions, (o) => o.value),
+                  )
+                }
                 className="input"
-              />
+                title={t.home.tagsPlaceholder}
+              >
+                {(facets?.tags ?? []).map((tag) => (
+                  <option key={tag} value={tag}>
+                    {tag}
+                  </option>
+                ))}
+              </select>
               <select
                 value={sort}
                 onChange={(e) => setSort(e.target.value)}

@@ -67,6 +67,17 @@ export interface BuildListResponse {
   page_size: number;
 }
 
+// Distinct hodnoty pro filtr-dropdowny (GET /api/builds/facets) — "autofilter"
+// styl, hodnoty se natahují z reálné DB místo napevno psaného seznamu.
+export interface BuildFacets {
+  source: string[];
+  class: string[];
+  ascendancy: string[];
+  main_skill: string[];
+  league_patch: string[];
+  tags: string[];
+}
+
 export interface AuthUser {
   id: string;
   email: string;

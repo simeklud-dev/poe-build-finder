@@ -15,6 +15,7 @@ from app.pob.parse import try_parse_pob_code
 from app.rate_limit import is_rate_limited, record_attempt
 from app.schemas.build import (
     BuildCardOut,
+    BuildFacetsOut,
     BuildListResponse,
     BuildSubmitRequest,
     BuildSubmitResponse,
@@ -157,6 +158,33 @@ def list_leagues(game: Optional[str] = None, db: Session = Depends(get_db)) -> l
         select(Build.league_patch).where(*conditions).distinct().order_by(Build.league_patch.desc())
     ).all()
     return list(rows)
+
+
+@router.get("/facets", response_model=BuildFacetsOut)
+def build_facets(game: Optional[str] = None, db: Session = Depends(get_db)) -> BuildFacetsOut:
+    """Distinct hodnoty pro filtr-dropdowny na hlavní stránce, volitelně podle hry
+    (BuildFacetsOut) — 'autofilter' styl místo napevno psaného seznamu ve frontendu."""
+    base = [Build.moderation_status == "approved"]
+    if game:
+        base.append(Build.game == game)
+
+    def distinct_values(column) -> list[str]:
+        rows = db.scalars(
+            select(column).where(*base, column.isnot(None)).distinct().order_by(column)
+        ).all()
+        return [r for r in rows if r]
+
+    tag_col = func.unnest(Build.tags).label("tag")
+    tag_rows = db.scalars(select(tag_col).where(*base).distinct().order_by(tag_col)).all()
+
+    return BuildFacetsOut(
+        source=distinct_values(Build.source),
+        class_=distinct_values(Build.class_),
+        ascendancy=distinct_values(Build.ascendancy),
+        main_skill=distinct_values(Build.main_skill),
+        league_patch=sorted(distinct_values(Build.league_patch), reverse=True),
+        tags=[t for t in tag_rows if t],
+    )
 
 
 @router.get("/{build_id}", response_model=BuildCardOut)

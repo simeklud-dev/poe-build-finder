@@ -133,6 +133,20 @@ class BuildListResponse(BaseModel):
     page_size: int
 
 
+class BuildFacetsOut(BaseModel):
+    """Distinct hodnoty pro filtr-dropdowny na hlavní stránce (GET /api/builds/facets)
+    — 'autofilter' styl: jen hodnoty, co v DB mezi schválenými buildy skutečně
+    existují, místo napevno psaného seznamu ve frontendu. Scoped jen podle `game`
+    (ne křížově podle ostatních vybraných filtrů — vědomé zjednodušení)."""
+
+    source: list[str]
+    class_: list[str] = Field(default_factory=list, serialization_alias="class")
+    ascendancy: list[str]
+    main_skill: list[str]
+    league_patch: list[str]
+    tags: list[str]
+
+
 class AdminBuildCreateRequest(BaseModel):
     """Ruční přidání odkazu na build z Maxroll/PoE Vault/Mobalytics admin uživatelem
     (routers/admin.py) — ukládají se jen metadata a odkaz na originál, nikdy obsah

@@ -83,6 +83,9 @@ export interface Dictionary {
     pob_forum: string;
     poe_ninja: string;
     community: string;
+    maxroll: string;
+    poevault: string;
+    mobalytics: string;
   };
   sorts: { date: string; popularity: string; relevance: string };
   meta: {
@@ -307,6 +310,9 @@ const en: Dictionary = {
     pob_forum: "PoB Community",
     poe_ninja: "poe.ninja",
     community: "Community",
+    maxroll: "Maxroll",
+    poevault: "PoE Vault",
+    mobalytics: "Mobalytics",
   },
   sorts: {
     date: "Newest",
@@ -548,6 +554,9 @@ const cs: Dictionary = {
     pob_forum: "PoB Community",
     poe_ninja: "poe.ninja",
     community: "Komunita",
+    maxroll: "Maxroll",
+    poevault: "PoE Vault",
+    mobalytics: "Mobalytics",
   },
   sorts: {
     date: "Nejnovější",
@@ -788,6 +797,9 @@ const pl: Dictionary = {
     pob_forum: "PoB Community",
     poe_ninja: "poe.ninja",
     community: "Społeczność",
+    maxroll: "Maxroll",
+    poevault: "PoE Vault",
+    mobalytics: "Mobalytics",
   },
   sorts: {
     date: "Najnowsze",
@@ -1024,6 +1036,9 @@ const ru: Dictionary = {
     pob_forum: "PoB Community",
     poe_ninja: "poe.ninja",
     community: "Сообщество",
+    maxroll: "Maxroll",
+    poevault: "PoE Vault",
+    mobalytics: "Mobalytics",
   },
   sorts: {
     date: "Новые",
@@ -1264,6 +1279,9 @@ const de: Dictionary = {
     pob_forum: "PoB Community",
     poe_ninja: "poe.ninja",
     community: "Community",
+    maxroll: "Maxroll",
+    poevault: "PoE Vault",
+    mobalytics: "Mobalytics",
   },
   sorts: {
     date: "Neueste",
