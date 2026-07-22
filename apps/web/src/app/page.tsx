@@ -3,6 +3,7 @@
 import { useEffect, useState, FormEvent } from "react";
 import BuildCard from "@/components/BuildCard";
 import PoeNewsWidget from "@/components/PoeNewsWidget";
+import TagsDropdown from "@/components/TagsDropdown";
 import { API_URL, BuildFacets, BuildListResponse } from "@/lib/api";
 import { useAuth } from "@/lib/auth-context";
 import { useLocale } from "@/i18n/LocaleContext";
@@ -278,23 +279,12 @@ export default function Home() {
                   </option>
                 ))}
               </select>
-              <select
-                multiple
-                value={tags}
-                onChange={(e) =>
-                  setTags(
-                    Array.from(e.target.selectedOptions, (o) => o.value),
-                  )
-                }
-                className="input"
-                title={t.home.tagsPlaceholder}
-              >
-                {(facets?.tags ?? []).map((tag) => (
-                  <option key={tag} value={tag}>
-                    {tag}
-                  </option>
-                ))}
-              </select>
+              <TagsDropdown
+                options={facets?.tags ?? []}
+                selected={tags}
+                onChange={setTags}
+                placeholder={t.home.tagsPlaceholder}
+              />
               <select
                 value={sort}
                 onChange={(e) => setSort(e.target.value)}

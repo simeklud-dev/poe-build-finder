@@ -11,6 +11,7 @@ export interface Dictionary {
     admin: string;
     favorites: string;
     campaignGuide: string;
+    buildAdvisor: string;
     login: string;
     logout: string;
   };
@@ -203,6 +204,7 @@ const en: Dictionary = {
     admin: "Admin",
     favorites: "Favorites",
     campaignGuide: "Campaign Guide",
+    buildAdvisor: "Build Advisor",
     login: "Sign in",
     logout: "Sign out",
   },
@@ -276,7 +278,7 @@ const en: Dictionary = {
     creatorPlaceholder: "Content creator (e.g. Zizaran)",
     mainSkillPlaceholder: "Main skill",
     leaguePlaceholder: "League / patch",
-    tagsPlaceholder: "Tags (comma separated)",
+    tagsPlaceholder: "Tags",
     searchButton: "Search",
     resetButton: "Reset filters",
     saveFilterButton: "Save filter",
@@ -442,6 +444,7 @@ const cs: Dictionary = {
     admin: "Admin",
     favorites: "Oblíbené",
     campaignGuide: "Průvodce kampaní",
+    buildAdvisor: "Build Advisor",
     login: "Přihlásit",
     logout: "Odhlásit",
   },
@@ -515,7 +518,7 @@ const cs: Dictionary = {
     creatorPlaceholder: "Content creator (např. Zizaran)",
     mainSkillPlaceholder: "Hlavní skill",
     leaguePlaceholder: "Liga / patch",
-    tagsPlaceholder: "Tagy (odděl čárkou)",
+    tagsPlaceholder: "Tagy",
     searchButton: "Hledat",
     resetButton: "Vymazat filtry",
     saveFilterButton: "Uložit filtr",
@@ -686,6 +689,7 @@ const pl: Dictionary = {
     admin: "Admin",
     favorites: "Ulubione",
     campaignGuide: "Przewodnik po kampanii",
+    buildAdvisor: "Build Advisor",
     login: "Zaloguj się",
     logout: "Wyloguj się",
   },
@@ -759,7 +763,7 @@ const pl: Dictionary = {
     creatorPlaceholder: "Twórca treści (np. Zizaran)",
     mainSkillPlaceholder: "Główna umiejętność",
     leaguePlaceholder: "Liga / patch",
-    tagsPlaceholder: "Tagi (oddziel przecinkiem)",
+    tagsPlaceholder: "Tagi",
     searchButton: "Szukaj",
     resetButton: "Wyczyść filtry",
     saveFilterButton: "Zapisz filtr",
@@ -930,6 +934,7 @@ const ru: Dictionary = {
     admin: "Админ",
     favorites: "Избранное",
     campaignGuide: "Гайд по кампании",
+    buildAdvisor: "Build Advisor",
     login: "Войти",
     logout: "Выйти",
   },
@@ -1003,7 +1008,7 @@ const ru: Dictionary = {
     creatorPlaceholder: "Автор контента (напр. Zizaran)",
     mainSkillPlaceholder: "Основной навык",
     leaguePlaceholder: "Лига / патч",
-    tagsPlaceholder: "Теги (через запятую)",
+    tagsPlaceholder: "Теги",
     searchButton: "Искать",
     resetButton: "Сбросить фильтры",
     saveFilterButton: "Сохранить фильтр",
@@ -1168,6 +1173,7 @@ const de: Dictionary = {
     admin: "Admin",
     favorites: "Favoriten",
     campaignGuide: "Kampagnenführer",
+    buildAdvisor: "Build Advisor",
     login: "Anmelden",
     logout: "Abmelden",
   },
@@ -1241,7 +1247,7 @@ const de: Dictionary = {
     creatorPlaceholder: "Content Creator (z. B. Zizaran)",
     mainSkillPlaceholder: "Hauptfähigkeit",
     leaguePlaceholder: "Liga / Patch",
-    tagsPlaceholder: "Tags (kommagetrennt)",
+    tagsPlaceholder: "Tags",
     searchButton: "Suchen",
     resetButton: "Filter zurücksetzen",
     saveFilterButton: "Filter speichern",

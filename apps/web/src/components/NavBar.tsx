@@ -37,6 +37,14 @@ export default function NavBar() {
           <Link href="/campaign-guide" className="nav-link">
             {t.nav.campaignGuide}
           </Link>
+          <a
+            href="https://unique-presence-production-b5e6.up.railway.app"
+            target="_blank"
+            rel="noreferrer"
+            className="nav-link"
+          >
+            {t.nav.buildAdvisor}
+          </a>
           {!loading && user && (
             <>
               <Link href="/favorites" className="nav-link">
