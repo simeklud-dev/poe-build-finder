@@ -10,13 +10,22 @@ Naplánování: připojeno `&&`-em k existující denní cron službě (check_li
              takže nová vlastní cron služba nešla přidat.
 """
 
+import httpx
+
 from app.crawler.poe_news_client import fetch_news_rss, parse_news_rss
 from app.crawler.poe_news_ingest import ingest_poe_news
 from app.db import SessionLocal
 
 
 def run() -> None:
-    xml_text = fetch_news_rss()
+    try:
+        xml_text = fetch_news_rss()
+    except httpx.HTTPError as exc:
+        # pathofexile.com občas dočasně odmítne požadavek (např. 403) — nemá smysl kvůli
+        # tomu shazovat celý cron běh (sdílený `&&`-em s check_links), příští běh to zkusí znovu.
+        print(f"poe_news: fetch failed, skipping this run ({exc!r})")
+        return
+
     entries = parse_news_rss(xml_text)
 
     db = SessionLocal()
